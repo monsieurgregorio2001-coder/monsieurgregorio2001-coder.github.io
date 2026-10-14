@@ -1,0 +1,6 @@
+[
+  {"title":"PaperLab","pitch":"Type a sentence and watch it travel through the Transformer from Attention Is All You Need.","proves":"AI theory and teaching","tags":["React","TypeScript","Attention","Visualization"],"demoUrl":"https://monsieurgregorio2001-coder.github.io/paperlab/","repoUrl":"https://github.com/monsieurgregorio2001-coder/paperlab","status":"coming-soon"},
+  {"title":"Online Paluwagan","pitch":"A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders.","proves":"Fintech and the Philippine market","tags":["React","TypeScript","Ledger","Claude"],"demoUrl":"https://monsieurgregorio2001-coder.github.io/paluwagan/","repoUrl":"https://github.com/monsieurgregorio2001-coder/paluwagan","status":"coming-soon"},
+  {"title":"Mindmap MCP","pitch":"An MCP server that lets Claude read and build mind maps as tools.","proves":"Agents and MCP","tags":["MCP","Claude","TypeScript"],"demoUrl":null,"repoUrl":"https://github.com/monsieurgregorio2001-coder/mindmap-mcp","status":"coming-soon"},
+  {"title":"Slop Editorial","pitch":"Editorial project. Details coming soon.","proves":"Taste and editorial judgment","tags":[],"demoUrl":null,"repoUrl":null,"status":"coming-soon"}
+]
