@@ -61,17 +61,22 @@
   },
   {
     "title": "Slop Editorial",
-    "pitch": "An AI-native editorial studio toolkit with a multi-provider image pipeline, spend caps, approval gates, and provenance.",
+    "pitch": "A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.",
     "proves": "Taste and editorial judgment",
-    "problem": "",
-    "build": "",
-    "result": "",
-    "tags": [],
-    "image": null,
-    "imageAlt": "",
-    "demoUrl": null,
+    "problem": "AI makes images nearly free, so publications drift into content that nobody decided to make.",
+    "build": "A Python pipeline that estimates, caps, approves, and logs every paid generation, plus an Astro and Three.js site whose build gates enforce voice, honesty, links, and speed.",
+    "result": "49 pipeline tests, 147 real-browser checks, 0 accessibility violations, Lighthouse 100 on accessibility, best practices, and SEO.",
+    "tags": [
+      "Astro",
+      "Three.js",
+      "Python",
+      "Human-in-the-loop"
+    ],
+    "image": "assets/shots/slop",
+    "imageAlt": "Slop Editorial home page: a too-perfect synthetic sunset titled The Still with a Free, limited availability sticker and a rank badge.",
+    "demoUrl": "https://monsieurgregorio2001-coder.github.io/slop-editorial/",
     "demoLabel": "Live demo",
-    "repoUrl": null,
-    "status": "coming-soon"
+    "repoUrl": "https://github.com/monsieurgregorio2001-coder/slop-editorial",
+    "status": "live"
   }
 ]
