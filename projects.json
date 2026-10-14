@@ -1,52 +1,61 @@
 [
   {
     "title": "PaperLab",
-    "pitch": "Type a sentence and watch it travel through the Transformer from Attention Is All You Need.",
+    "pitch": "Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.",
     "proves": "AI theory and teaching",
-    "tags": [
-      "React",
-      "TypeScript",
-      "Attention",
-      "Visualization"
-    ],
+    "problem": "Papers explain attention in equations that few people can picture.",
+    "build": "A React and TypeScript app that runs real attention math on toy weights in the browser, with per-head heatmaps and step controls.",
+    "result": "19 unit tests on the math, about 54 KB gzipped, Lighthouse 100.",
+    "tags": ["React", "TypeScript", "Attention", "Visualization"],
+    "image": "assets/shots/paperlab",
+    "imageAlt": "PaperLab showing an attention heatmap for a typed sentence, with step controls beside it.",
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/paperlab/",
+    "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/paperlab",
-    "status": "coming-soon"
+    "status": "live"
   },
   {
     "title": "Online Paluwagan",
-    "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders.",
+    "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.",
     "proves": "Fintech and the Philippine market",
-    "tags": [
-      "React",
-      "TypeScript",
-      "Ledger",
-      "Claude"
-    ],
+    "problem": "Paluwagan groups run on chat threads and memory, so late payments and disputes are common.",
+    "build": "An append-only ledger in integer centavos, seeded fair rotation, rule-based risk flags, and human-approved reminder drafts in English and Filipino.",
+    "result": "44 tests, including 12,000 randomized ledger operations that always reconcile.",
+    "tags": ["React", "TypeScript", "Ledger", "Claude"],
+    "image": "assets/shots/paluwagan",
+    "imageAlt": "Online Paluwagan group dashboard showing the ledger, payout rotation, and payment status.",
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/paluwagan/",
+    "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/paluwagan",
-    "status": "coming-soon"
+    "status": "live"
   },
   {
     "title": "Living Mindmap (MCP)",
     "pitch": "A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.",
     "proves": "Agents and MCP",
-    "tags": [
-      "MCP",
-      "TypeScript",
-      "React",
-      "SQLite"
-    ],
-    "demoUrl": null,
+    "problem": "Ideas from long AI conversations vanish into chat history.",
+    "build": "One SQLite store shared by a React Flow UI, a REST API, and a stdio MCP server with near-duplicate detection.",
+    "result": "42 tests, 0 failures across 160 real MCP calls, 0.5 ms median per call.",
+    "tags": ["MCP", "TypeScript", "React", "SQLite"],
+    "image": "assets/shots/mindmap",
+    "imageAlt": "Living Mindmap canvas showing a sample graph of 16 connected nodes about Transformers, with a side panel of shortcuts.",
+    "demoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start",
+    "demoLabel": "Run locally",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp",
-    "status": "coming-soon"
+    "status": "live"
   },
   {
     "title": "Slop Editorial",
-    "pitch": "Editorial project. Details coming soon.",
+    "pitch": "An AI-native editorial studio toolkit with a multi-provider image pipeline, spend caps, approval gates, and provenance.",
     "proves": "Taste and editorial judgment",
+    "problem": "",
+    "build": "",
+    "result": "",
     "tags": [],
+    "image": null,
+    "imageAlt": "",
     "demoUrl": null,
+    "demoLabel": "Live demo",
     "repoUrl": null,
     "status": "coming-soon"
   }

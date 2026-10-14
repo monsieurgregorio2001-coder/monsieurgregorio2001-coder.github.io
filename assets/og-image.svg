@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0f1115"/><rect x="80" y="80" width="8" height="470" fill="#8ab4ff"/><text x="120" y="230" font-family="Helvetica,Arial,sans-serif" font-size="30" font-weight="700" fill="#aab1bd" letter-spacing="3">APPLIED AI ENGINEER</text><text x="120" y="330" font-family="Helvetica,Arial,sans-serif" font-size="80" font-weight="700" fill="#eceef2">Garfield Greg Lim III</text><text x="120" y="410" font-family="Helvetica,Arial,sans-serif" font-size="34" fill="#eceef2">I turn messy operational problems</text><text x="120" y="458" font-family="Helvetica,Arial,sans-serif" font-size="34" fill="#eceef2">into production agent systems.</text><text x="120" y="540" font-family="Helvetica,Arial,sans-serif" font-size="26" fill="#8ab4ff">Cebu, Philippines</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Garfield Lim. I turn messy operations into working AI systems.">
+  <rect width="1200" height="630" fill="#FAF8F4"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#E6E2DA" stroke-width="1"/>
+  <text x="96" y="124" font-family="Fraunces, Georgia, serif" font-size="30" font-weight="500" fill="#17171B">Garfield Lim</text>
+  <line x1="96" y1="168" x2="1104" y2="168" stroke="#E6E2DA"/>
+  <text x="96" y="228" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="500" letter-spacing="2" fill="#5F5F6B">APPLIED AI ENGINEER  ·  CEBU, PHILIPPINES  ·  OPEN TO REMOTE</text>
+  <text font-family="Fraunces, Georgia, serif" font-size="84" font-weight="500" letter-spacing="-1" fill="#17171B">
+    <tspan x="96" y="345">I turn messy operations</tspan>
+    <tspan x="96" y="441">into working AI systems.</tspan>
+  </text>
+  <rect x="96" y="492" width="64" height="4" fill="#2340B8"/>
+  <text x="96" y="548" font-family="JetBrains Mono, Menlo, monospace" font-size="20" fill="#5F5F6B">monsieurgregorio2001-coder.github.io</text>
+</svg>
