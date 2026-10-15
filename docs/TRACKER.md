@@ -10,8 +10,8 @@ Plan: [`plan/2026-10-15-polish.md`](plan/2026-10-15-polish.md)
 | --- | --- | --- |
 | `docs/` tree and ADRs 0001–0008 | review | this PR |
 | `CLAUDE.md` conventions | review | this PR |
-| CI: html-validate, axe, link check | todo | |
-| CI: build-output diff check | todo | after Phase 2 |
+| CI: html-validate, axe, link check | review | `.github/workflows/check.yml`; `scripts/check-axe.mjs` (light+dark, 390+1280: 0 violations), `scripts/check-links.mjs` (0 errors; `/work/*` warn until Phase 3; external links warn only), `.htmlvalidate.json` (0 errors). Landed with Phase 2 branch |
+| CI: build-output diff check | review | `node scripts/build.mjs` + diff step in `check.yml` |
 
 ## Phase 1 — Interactive hero
 
@@ -32,13 +32,13 @@ Plan: [`plan/2026-10-15-polish.md`](plan/2026-10-15-polish.md)
 
 | Item | Status | Notes |
 | --- | --- | --- |
-| `scripts/build.mjs` renders cards into `index.html` | todo | |
-| `projects.json`: `slug`, `featured`, `order`, `screens[]` | todo | |
-| Featured PaperLab block | todo | ADR 0004 |
-| Card hover / reveal craft | todo | |
-| `capture.mjs --crop` at 2× | todo | PNG ≤ 200 KB |
-| Re-shoot all four hero crops | todo | |
-| `main.js` reduced to reveal only | todo | |
+| `scripts/build.mjs` renders cards into `index.html` | review | idempotent (second run: "already up to date"); also renders noscript list linking `/work/<slug>/` + demo |
+| `projects.json`: `slug`, `featured`, `order`, `screens[]` | review | also `cardImage` (2x crop) and `figures` on PaperLab; existing fields and numbers unchanged |
+| Featured PaperLab block | review | ADR 0004; 12-col 7/5 at ≥ 900 px; figures 19 · 58 KB · 96 / 100 / 100 / 100, build asserts each number appears in `result` |
+| Card hover / reveal craft | review | lift via `translate` so the 60 ms stagger delay never applies to hover; off under reduced motion |
+| `capture.mjs --crop` at 2× | review | Playwright Chromium; PNG ≤ 200 KB by palette/dither stepping (slop 196 KB, others 88–120 KB) |
+| Re-shoot all four hero crops | review | all four built and captured live, no fallback: PaperLab (vite, attention step heatmap), Paluwagan (vite, dashboard tiles + schedule), Living Mindmap (vite build + tsx server, seeded sample map, canvas + side panel), Slop Editorial (astro build, cover). Owner legibility check pending; Mindmap node text is small at card size |
+| `main.js` reduced to reveal only | review | 1.0 KB. Page weight (Playwright resource timing, first load, DPR 1): before 271 KB @390 / 326 KB @1280; after 376 KB @390 / 431 KB @820 and 1280 (≤ 450 KB). Chromium's lazy-load margin fetches all four card images at ≥ 820 px |
 
 ## Phase 3 — Case-study pages
 

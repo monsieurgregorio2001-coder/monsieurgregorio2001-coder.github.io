@@ -7,6 +7,17 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 ### Added
 - `docs/` with audit, ADRs 0001–0008, the October 2026 polish plan, this changelog and a tracker.
 - `CLAUDE.md` with site conventions.
+- `scripts/build.mjs` renders the Work cards and the noscript list into `index.html` from `projects.json`; cards are now in the HTML with no loading state (ADR 0007).
+- Featured PaperLab block leads Work with large proof figures, "Open the demo" and "Read the case" (ADR 0004).
+- "Read the case" link and `id="work-<slug>"` on every card.
+- 2x hero crops (1600x1000) for all four projects via `capture.mjs --crop`.
+- CI: build-output check, html-validate, axe in light and dark, link check.
+
+### Changed
+- Card order follows ADR 0004: PaperLab, Living Mindmap, Slop Editorial, Online Paluwagan.
+- Cards lift 2 px with an accent-tinted border on hover, the screenshot scales to 1.02, and cards reveal with a 60 ms stagger; all off under reduced motion.
+- `main.js` only handles reveal-on-scroll.
+- Screenshot and review scripts use Playwright.
 
 ## 2026-10-14
 
