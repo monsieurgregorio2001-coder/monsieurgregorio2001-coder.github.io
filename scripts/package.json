@@ -2,6 +2,19 @@
   "name": "hub-tools",
   "private": true,
   "type": "module",
-  "description": "Screenshot and OG image tooling for the hub. Run npm install here once.",
-  "dependencies": { "puppeteer-core": "^23.0.0", "sharp": "^0.33.0" }
+  "description": "Tooling for the hub: card build, screenshots, OG image and CI checks. Run npm ci here once.",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node build.mjs && html-validate ../index.html ../404.html && node check-axe.mjs && node check-links.mjs",
+    "shoot": "node shoot.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.0.0",
+    "sharp": "^0.33.0"
+  },
+  "devDependencies": {
+    "axe-core": "4.14.0",
+    "html-validate": "11.16.2",
+    "playwright": "1.56.1"
+  }
 }
