@@ -1,7 +1,6 @@
 // Link check for every HTML file in the repo (outside node_modules, docs and .git).
 // Internal href/src/srcset values must resolve to a file in the repo: failure exits 1.
 // `#id` fragments on the same page must match an element id.
-// Paths under PENDING (case pages arriving in Phase 3) are reported as warnings until they exist.
 // External http(s) links get a HEAD request (GET on 405); failures are warnings only.
 // Usage: node scripts/check-links.mjs [--offline]
 import fs from "node:fs";
@@ -10,7 +9,6 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const offline = process.argv.includes("--offline");
-const PENDING = [/^\/work\//];
 const skipDirs = new Set(["node_modules", ".git", "docs", ".claude", ".github"]);
 
 function htmlFiles(dir) {
@@ -45,9 +43,7 @@ for (const file of htmlFiles(root)) {
     const target = clean.startsWith("/") ? path.join(root, clean) : path.join(path.dirname(file), clean);
     const ok = fs.existsSync(target) && (!fs.statSync(target).isDirectory() || fs.existsSync(path.join(target, "index.html")));
     if (ok) continue;
-    const abs = "/" + path.relative(root, target).split(path.sep).join("/") + (clean.endsWith("/") ? "/" : "");
-    if (PENDING.some((re) => re.test(abs))) warnings.push(`${rel}: ${ref} not built yet (Phase 3)`);
-    else errors.push(`${rel}: ${ref} does not resolve`);
+    errors.push(`${rel}: ${ref} does not resolve`);
   }
 }
 
