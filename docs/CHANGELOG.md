@@ -7,6 +7,7 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 ### Added
 - `docs/` with audit, ADRs 0001–0008, the October 2026 polish plan, this changelog and a tracker.
 - `CLAUDE.md` with site conventions.
+- Interactive hero: a glyph field behind the hero with click ripples and cursor glow, and a headline that decodes on load (`hero.js`, ADR 0005). Static under reduced motion.
 
 ## 2026-10-14
 
