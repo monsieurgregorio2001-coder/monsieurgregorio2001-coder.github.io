@@ -1,22 +1,95 @@
-// Usage: node shoot.mjs <outDir>   Screenshots the hub at 1280 and 375, light and dark.
-import puppeteer from "puppeteer-core";
-import http from "node:http"; import fs from "node:fs"; import path from "node:path";
+// Review screenshots of the hub. Usage: node shoot.mjs <outDir> [/work/<slug>/ ...]
+// With page paths, shoots each case page instead: <slug>-<width>-<scheme>.png, full page, at 390 and 1280 in both themes.
+// Writes hub-<width>-<scheme>.png (viewport-sized, top of page) at 390, 820 and 1280 in light and dark,
+// plus hub-1280-light-full.png (full page). Reduced motion is emulated so reveals are settled.
+// Also prints first-load transfer weight from Playwright resource timing at each width.
+import fs from "node:fs";
+import path from "node:path";
+import sharp from "sharp";
 import { fileURLToPath } from "node:url";
+import { serve, launch } from "./lib/serve.mjs";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const out = process.argv[2]; fs.mkdirSync(out, { recursive: true });
-const types = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp", ".woff2": "font/woff2", ".json": "application/json" };
-const srv = http.createServer((q, r) => { let f = path.join(root, q.url.split("?")[0]); if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, "index.html"); if (!fs.existsSync(f)) { r.statusCode = 404; return r.end(); } r.setHeader("content-type", types[path.extname(f)] || "application/octet-stream"); r.end(fs.readFileSync(f)); }).listen(0);
-const url = `http://localhost:${srv.address().port}/`;
-const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
-for (const [w, h] of [[1280, 800], [375, 812]]) for (const scheme of ["light", "dark"]) {
-  const p = await b.newPage(); await p.setViewport({ width: w, height: h, deviceScaleFactor: 1 });
-  await p.emulateMediaFeatures([{ name: "prefers-color-scheme", value: scheme }, { name: "prefers-reduced-motion", value: "reduce" }]);
-  await p.goto(url, { waitUntil: "networkidle0" });
-  await p.evaluate(() => document.querySelectorAll("img").forEach(i => i.loading = "eager"));
-  await new Promise(r => setTimeout(r, 800));
-  const sw = await p.evaluate(() => document.documentElement.scrollWidth);
-  console.log(w, scheme, "scrollWidth", sw);
-  await p.screenshot({ path: path.join(out, `hub-${w}-${scheme}.png`), fullPage: true });
-  await p.close();
+const out = path.resolve(process.argv[2] || path.join(root, "docs/audits/shots/latest"));
+fs.mkdirSync(out, { recursive: true });
+const MAX = 400 * 1024;
+const srv = await serve({ "/": root });
+const b = await launch();
+
+// Keep review PNGs under 400 KB: palette-quantise when the raw capture is larger.
+async function write(file, buf) {
+  if (buf.length > MAX) {
+    for (const colours of [256, 128, 64]) {
+      buf = await sharp(buf).png({ palette: true, colours, compressionLevel: 9, effort: 10 }).toBuffer();
+      if (buf.length <= MAX) break;
+    }
+  }
+  fs.writeFileSync(file, buf);
+  console.log(path.basename(file), Math.round(buf.length / 1024) + " KB");
 }
-await b.close(); srv.close();
+
+// Sums every resource fetched on first load (no scrolling), with the document itself.
+async function weight(page) {
+  return page.evaluate(() => {
+    const nav = performance.getEntriesByType("navigation")[0];
+    const res = performance.getEntriesByType("resource");
+    const size = (e) => e.transferSize || e.encodedBodySize || 0;
+    return { bytes: size(nav) + res.reduce((s, e) => s + size(e), 0), requests: res.length + 1, files: res.map((e) => [new URL(e.name).pathname, size(e)]) };
+  });
+}
+
+const cases = process.argv.slice(3);
+for (const u of cases) {
+  const slug = u.split("/").filter(Boolean).pop();
+  for (const [w, h] of [[390, 844], [1280, 800]]) {
+    for (const colorScheme of ["light", "dark"]) {
+      const p = await b.newPage({ viewport: { width: w, height: h }, colorScheme, reducedMotion: "reduce" });
+      await p.goto(srv.base + u, { waitUntil: "networkidle" });
+      await p.evaluate(() => document.querySelectorAll("img").forEach((i) => (i.loading = "eager")));
+      for (let y = 0; y < (await p.evaluate(() => document.body.scrollHeight)); y += 600) {
+        await p.evaluate((y) => window.scrollTo(0, y), y);
+        await p.waitForTimeout(60);
+      }
+      await p.evaluate(() => window.scrollTo(0, 0));
+      await p.evaluate(() => Promise.all([...document.images].map((i) => i.complete || new Promise((r) => (i.onload = i.onerror = r)))));
+      await p.evaluate(() => document.fonts.ready);
+      const sw = await p.evaluate(() => document.documentElement.scrollWidth);
+      if (sw > w) console.warn(`${slug} ${w} ${colorScheme}: horizontal overflow, scrollWidth ${sw}`);
+      if (w === 390 && colorScheme === "light") {
+        const wt = await weight(p);
+        console.log(`${slug} ${w}px load: ${(wt.bytes / 1024).toFixed(1)} KB in ${wt.requests} requests`);
+      }
+      await write(path.join(out, `${slug}-${w}-${colorScheme}.png`), await p.screenshot({ fullPage: true }));
+      await p.close();
+    }
+  }
+}
+for (const [w, h] of cases.length ? [] : [[390, 844], [820, 1180], [1280, 800]]) {
+  for (const colorScheme of ["light", "dark"]) {
+    const p = await b.newPage({ viewport: { width: w, height: h }, colorScheme, reducedMotion: "reduce" });
+    await p.goto(srv.base + "/", { waitUntil: "networkidle" });
+    await p.evaluate(() => document.fonts.ready);
+    if (colorScheme === "light") {
+      const wt = await weight(p);
+      console.log(`${w}px first load: ${(wt.bytes / 1024).toFixed(1)} KB in ${wt.requests} requests`);
+      for (const [f, s] of wt.files) console.log(`   ${f} ${(s / 1024).toFixed(1)} KB`);
+    }
+    const sw = await p.evaluate(() => document.documentElement.scrollWidth);
+    if (sw > w) console.warn(`${w} ${colorScheme}: horizontal overflow, scrollWidth ${sw}`);
+    await write(path.join(out, `hub-${w}-${colorScheme}.png`), await p.screenshot());
+    if (w === 1280 && colorScheme === "light") {
+      await p.evaluate(() => document.querySelectorAll("img").forEach((i) => (i.loading = "eager")));
+      for (let y = 0; y < (await p.evaluate(() => document.body.scrollHeight)); y += 600) {
+        await p.evaluate((y) => window.scrollTo(0, y), y);
+        await p.waitForTimeout(100);
+      }
+      await p.evaluate(() => window.scrollTo(0, 0));
+      await p.waitForLoadState("networkidle");
+      await p.waitForTimeout(500);
+      await write(path.join(out, `hub-1280-light-full.png`), await p.screenshot({ fullPage: true }));
+    }
+    await p.close();
+  }
+}
+await b.close();
+srv.close();

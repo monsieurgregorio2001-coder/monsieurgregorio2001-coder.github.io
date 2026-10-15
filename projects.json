@@ -1,5 +1,8 @@
 [
   {
+    "slug": "paperlab",
+    "order": 1,
+    "featured": true,
     "title": "PaperLab",
     "pitch": "Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.",
     "proves": "AI theory and teaching",
@@ -9,19 +12,53 @@
     "tags": [
       "React",
       "TypeScript",
-      "Attention",
-      "Visualization"
+      "Attention"
     ],
     "image": "assets/shots/paperlab",
     "imageAlt": "PaperLab showing an attention heatmap for a typed sentence, with step controls beside it.",
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/paperlab/",
     "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/paperlab",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/paperlab-hero",
+    "screens": [
+      {
+        "file": "assets/shots/paperlab/01-input",
+        "alt": "PaperLab input panel with a typed sentence, preset sentences, the token counter and the four-step stepper.",
+        "caption": "The input. A sentence goes in, the token counter shows the 16-token cap, and the stepper walks the four stages."
+      },
+      {
+        "file": "assets/shots/paperlab/02-embeddings",
+        "alt": "Two heatmaps: token embeddings and the sinusoidal positional encoding, one row per token and 16 columns.",
+        "caption": "Step 2. Embeddings plus the sinusoidal position wave from section 3.5 of the paper."
+      },
+      {
+        "file": "assets/shots/paperlab/03-feed-forward",
+        "alt": "The feed-forward step with its formulas and the first matrix after attention and layer norm.",
+        "caption": "Step 4. The feed-forward block, the residual and layer norm, with the formula above the numbers."
+      }
+    ],
+    "figures": [
+      {
+        "value": "19",
+        "label": "unit tests on the math"
+      },
+      {
+        "value": "58 KB",
+        "label": "gzipped"
+      },
+      {
+        "value": "96 / 100 / 100 / 100",
+        "label": "Lighthouse mobile"
+      }
+    ]
   },
   {
+    "slug": "paluwagan",
+    "order": 4,
+    "featured": false,
     "title": "Online Paluwagan",
-    "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.",
+    "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and payment reminder drafts a human approves before anything is sent.",
     "proves": "Fintech and the Philippine market",
     "problem": "Paluwagan groups run on chat threads and memory, so late payments and disputes are common.",
     "build": "An append-only ledger in integer centavos, seeded fair rotation, rule-based risk flags, and human-approved reminder drafts in English and Filipino.",
@@ -29,17 +66,37 @@
     "tags": [
       "React",
       "TypeScript",
-      "Ledger",
-      "Claude"
+      "Ledger"
     ],
     "image": "assets/shots/paluwagan",
     "imageAlt": "Online Paluwagan group dashboard showing the ledger, payout rotation, and payment status.",
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/paluwagan/",
     "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/paluwagan",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/paluwagan-hero",
+    "screens": [
+      {
+        "file": "assets/shots/paluwagan/01-contributions",
+        "alt": "Contributions by cycle for cycle 4: members paid on time, paid late, or not recorded, with Record buttons.",
+        "caption": "Contributions for one cycle. Late and missing payments are visible at a glance."
+      },
+      {
+        "file": "assets/shots/paluwagan/02-ledger-entries",
+        "alt": "The append-only ledger table with entry numbers, types, members, signed amounts and Reverse buttons.",
+        "caption": "The ledger. Entries are never edited. A mistake gets a reversing entry instead."
+      },
+      {
+        "file": "assets/shots/paluwagan/03-risk",
+        "alt": "Risk cards for two members marked High risk, with reasons and an arrears-owed panel.",
+        "caption": "Risk flags with their reasons, and the arrears a short payout created."
+      }
+    ]
   },
   {
+    "slug": "mindmap",
+    "order": 2,
+    "featured": false,
     "title": "Living Mindmap (MCP)",
     "pitch": "A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.",
     "proves": "Agents and MCP",
@@ -49,7 +106,6 @@
     "tags": [
       "MCP",
       "TypeScript",
-      "React",
       "SQLite"
     ],
     "image": "assets/shots/mindmap",
@@ -57,18 +113,38 @@
     "demoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start",
     "demoLabel": "Run locally",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/mindmap-hero",
+    "screens": [
+      {
+        "file": "assets/shots/mindmap/01-graph",
+        "alt": "The sample map on the canvas: Transformers at the root with branches for attention, position, architecture and training.",
+        "caption": "The bundled sample map laid out as a tree. Every node is a row in one SQLite file."
+      },
+      {
+        "file": "assets/shots/mindmap/02-inspector",
+        "alt": "The inspector open on the Self-Attention node with status, summary and notes fields.",
+        "caption": "The inspector. People edit here and agents edit the same record through MCP."
+      },
+      {
+        "file": "assets/shots/mindmap/03-search",
+        "alt": "The search box with results for attention, each showing a title and a summary snippet.",
+        "caption": "Search across maps. The MCP tool search_nodes runs the same query."
+      }
+    ]
   },
   {
+    "slug": "slop-editorial",
+    "order": 3,
+    "featured": false,
     "title": "Slop Editorial",
     "pitch": "A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.",
     "proves": "Taste and editorial judgment",
     "problem": "AI makes images nearly free, so publications drift into content that nobody decided to make.",
     "build": "A Python pipeline that estimates, caps, approves, and logs every paid generation, plus an Astro and Three.js site whose build gates enforce voice, honesty, links, and speed.",
-    "result": "49 pipeline tests, 147 real-browser checks, 0 accessibility violations, Lighthouse 100 on accessibility, best practices, and SEO.",
+    "result": "68 unit tests across the pipeline and the site, 143 real-browser checks, 146 build gates, and Lighthouse 100 on accessibility, best practices, and SEO.",
     "tags": [
       "Astro",
-      "Three.js",
       "Python",
       "Human-in-the-loop"
     ],
@@ -77,6 +153,24 @@
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/slop-editorial/",
     "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/slop-editorial",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/slop-hero",
+    "screens": [
+      {
+        "file": "assets/shots/slop-editorial/01-releases",
+        "alt": "The release tracker headed Your November is 17 % approved, with six sample releases and their states.",
+        "caption": "The release tracker. Each sample release carries an estimate, a cap and an approval reference."
+      },
+      {
+        "file": "assets/shots/slop-editorial/02-gift-shop",
+        "alt": "A printed gift-shop receipt itemizing appreciation, a prompt pack and an extra finger.",
+        "caption": "The gift shop receipt on the certificate page. The joke works because the arithmetic does."
+      },
+      {
+        "file": "assets/shots/slop-editorial/03-works",
+        "alt": "The Works exhibition page with the first three framed generated pictures and their plate numbers.",
+        "caption": "The exhibition. Nine works hung in order, each labelled like the platforms it mocks."
+      }
+    ]
   }
 ]
