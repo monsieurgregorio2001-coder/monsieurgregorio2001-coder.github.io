@@ -5,11 +5,10 @@
   "description": "Tooling for the hub: card build, screenshots, OG image and CI checks. Run npm ci here once.",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node build.mjs && html-validate ../index.html ../404.html && node check-axe.mjs && node check-links.mjs",
+    "check": "node build.mjs && html-validate ../index.html ../404.html ../work/*/index.html && node check-axe.mjs && node check-links.mjs",
     "shoot": "node shoot.mjs"
   },
   "dependencies": {
-    "puppeteer-core": "^23.0.0",
     "sharp": "^0.33.0"
   },
   "devDependencies": {

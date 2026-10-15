@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- head:start -->
+<title>PaperLab case study | Garfield Lim</title>
+<meta name="description" content="Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/work/paperlab/">
+<link rel="preload" href="../../assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="article">
+<meta property="og:title" content="PaperLab case study | Garfield Lim">
+<meta property="og:description" content="Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.">
+<meta property="og:url" content="https://monsieurgregorio2001-coder.github.io/work/paperlab/">
+<meta property="og:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/paperlab.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PaperLab. Proves AI theory and teaching.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PaperLab case study | Garfield Lim">
+<meta name="twitter:description" content="Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.">
+<meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/paperlab.png">
+<meta name="twitter:image:alt" content="PaperLab. Proves AI theory and teaching.">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../case.css">
+<!-- head:end -->
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!-- header:start -->
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="wordmark" href="/" aria-label="Garfield Lim, home">Garfield Lim</a>
+    <nav aria-label="Primary">
+      <ul class="nav" role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- header:end -->
+<main id="main">
+  <section class="case-hero wrap" aria-labelledby="case-h">
+    <!-- case-head:start -->
+<p class="eyebrow">Case study</p>
+<h1 id="case-h" class="display">PaperLab</h1>
+<p class="lead">Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.</p>
+<p class="proves"><b>Proves </b>AI theory and teaching</p>
+<p class="actions"><a class="btn primary" href="https://monsieurgregorio2001-coder.github.io/paperlab/" rel="noopener" aria-label="Live demo for PaperLab">Live demo</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/paperlab" rel="noopener" aria-label="Code for PaperLab">Code</a></p>
+<ul class="tags" role="list"><li>React</li><li>TypeScript</li><li>Attention</li><li>Visualization</li></ul>
+    <!-- case-head:end -->
+  </section>
+
+  <section class="cs wrap" aria-labelledby="problem-h">
+    <h2 id="problem-h" class="cs-h">Problem</h2>
+    <div class="prose">
+      <p>Attention Is All You Need is the paper most AI work now rests on. It explains attention in a few lines of matrix notation. Most people who read it cannot picture what those lines do to a sentence.</p>
+      <p>The usual fixes are static diagrams or videos. They show one example someone else picked. You cannot type your own sentence and watch the numbers move.</p>
+      <p>I wanted a page where a student, or an interviewer, could do exactly that in a browser tab with nothing to install.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="approach-h">
+    <h2 id="approach-h" class="cs-h">Approach</h2>
+    <div class="prose">
+      <p>PaperLab runs one real Transformer layer on small seeded weights. It is not a trained model, and the page says so on screen. The math is the paper's math. The weights are toys.</p>
+      <p>You type a sentence of up to <span class="num">16</span> tokens<!-- src: paperlab/README.md "Features" and src/lib/transformer.ts MAX_TOKENS = 16, 2026-10-15 -->. Then you step through four stages: tokens, embeddings with positional encoding, attention, and the feed-forward block. Each stage shows the formula, a short plain explanation, a link to the paper section, and the actual matrices.</p>
+      <p>The model is sized to fit on screen: <span class="num">d_model = 16</span>, <span class="num">4</span> heads with <span class="num">d_k = 4</span>, and <span class="num">d_ff = 32</span><!-- src: paperlab/README.md "Features", 2026-10-15 -->. Attention gets a heatmap per head, head toggles, a causal mask switch, and click-a-token to see what it attends to.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="arch-h">
+    <h2 id="arch-h" class="cs-h">Architecture</h2>
+    <figure class="diagram">
+      <svg viewBox="0 0 600 400" role="img" aria-labelledby="arch-t arch-d">
+        <title id="arch-t">PaperLab architecture</title>
+        <desc id="arch-d">App.tsx holds state and drives three views: MatrixView, Heatmap and steps.tsx. It calls lib/transformer.ts, a pure math module with tokenize, embed plus positional encoding, multi-head attention, and feed-forward with layer norm. transformer.test.ts tests the math module.</desc>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrow" d="M0 0 10 5 0 10z"/></marker></defs>
+        <rect class="box" x="1" y="1" width="268" height="76" rx="8"/>
+        <text class="lbl" x="20" y="34">App.tsx</text>
+        <text class="sub" x="20" y="60">state, stepper, keyboard</text>
+        <path class="edge" d="M24 77V330H44" marker-end="url(#ah)"/>
+        <path class="edge" d="M24 140H44" marker-end="url(#ah)"/>
+        <path class="edge" d="M24 235H44" marker-end="url(#ah)"/>
+        <rect class="box" x="46" y="110" width="222" height="60" rx="8"/>
+        <text class="lbl" x="62" y="147">MatrixView</text>
+        <rect class="box" x="46" y="205" width="222" height="60" rx="8"/>
+        <text class="lbl" x="62" y="242">Heatmap</text>
+        <rect class="box" x="46" y="300" width="222" height="60" rx="8"/>
+        <text class="lbl" x="62" y="326">steps.tsx</text>
+        <text class="sub" x="62" y="348">formulas, copy</text>
+        <path class="edge" d="M269 39H328" marker-end="url(#ah)"/>
+        <rect class="box hl" x="331" y="1" width="268" height="250" rx="8"/>
+        <text class="lbl" x="350" y="36">lib/transformer.ts</text>
+        <text class="tag" x="350" y="62">pure math, no DOM</text>
+        <text class="sub" x="350" y="108">tokenize</text>
+        <text class="sub" x="350" y="142">embed + positional enc.</text>
+        <text class="sub" x="350" y="176">multi-head attention</text>
+        <text class="sub" x="350" y="210">FFN + layer norm</text>
+        <path class="edge dash" d="M465 318V256" marker-end="url(#ah)"/>
+        <rect class="box" x="331" y="320" width="268" height="60" rx="8"/>
+        <text class="lbl" x="350" y="346">transformer.test.ts</text>
+        <text class="sub" x="350" y="369">Vitest</text>
+      </svg>
+      <figcaption>All math lives in one module with no DOM or React dependency, so the tests cover it directly. Redrawn from the diagram in the project README.</figcaption>
+    </figure>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="dec-h">
+    <h2 id="dec-h" class="cs-h">Decisions</h2>
+    <ul class="decisions" role="list">
+      <li><strong>Chose a pure math module over math inside components</strong><span>because a function with no DOM can be tested against the paper's formulas, and the UI cannot drift from the numbers it shows.</span></li>
+      <li><strong>Chose seeded toy weights over a trained model</strong><span>because the page needs no download, no backend and no API key. The same sentence always gives the same output, so a test can pin it.</span></li>
+      <li><strong>Chose HTML and Unicode formulas over KaTeX</strong><span>because a maths renderer would have been the largest thing in the bundle, for a handful of short formulas.</span></li>
+      <li><strong>Chose a word-level tokenizer over subword BPE</strong><span>because whole words read clearly in a heatmap row. The page states the simplification next to the tokens.</span></li>
+      <li><strong>Chose computed text colour over a fixed palette for heatmap cells</strong><span>because cell values sit on every shade of the ramp, and a fixed colour fails contrast somewhere. <code>ramp.ts</code> picks it per cell for both themes.</span></li>
+    </ul>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="res-h">
+    <h2 id="res-h" class="cs-h">Results</h2>
+    <div>
+      <ul class="results" role="list">
+        <li><span class="fig num">19 tests</span><span class="how"><code>npm test</code> runs <span class="num">19</span> Vitest tests on the math: softmax rows sum to <span class="num">1</span> within <span class="num">1e-6</span>, attention shapes, causal masking, positional encoding against the paper formula, layer norm, tokenizer edges and determinism.<!-- src: paperlab/README.md "Tests and measured results", 2026-10-14; 19 it( in src/lib/transformer.test.ts, counted 2026-10-15 --></span></li>
+        <li><span class="fig num">58 KB</span><span class="how">Initial JS and CSS, gzipped: <span class="num">53.5</span> KB JS plus <span class="num">4.4</span> KB CSS, from the production build. Self-hosted fonts add about <span class="num">159</span> KB.<!-- src: paperlab/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
+        <li><span class="fig num">96 / 100 / 100 / 100</span><span class="how">Lighthouse mobile preset on the build served by <code>vite preview</code>: performance, accessibility, best practices, SEO.<!-- src: paperlab/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
+        <li><span class="fig num">0 violations</span><span class="how">axe-core in light and dark, on all four steps, at <span class="num">360</span> and <span class="num">1280</span> px, colour contrast included. No horizontal scroll at <span class="num">360</span> px.<!-- src: paperlab/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
+      </ul>
+      <p class="fine">Measured on one machine against a local build, not the live site.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="screens-h">
+    <h2 id="screens-h" class="cs-h">Screens</h2>
+    <div class="screens">
+      <!-- screens:start -->
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/paperlab/01-input.webp"><img src="../../assets/shots/paperlab/01-input.png" width="1600" height="1000" loading="lazy" decoding="async" alt="PaperLab input panel with a typed sentence, preset sentences, the token counter and the four-step stepper."></picture><figcaption>The input. A sentence goes in, the token counter shows the 16-token cap, and the stepper walks the four stages.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/paperlab/02-embeddings.webp"><img src="../../assets/shots/paperlab/02-embeddings.png" width="1600" height="1000" loading="lazy" decoding="async" alt="Two heatmaps: token embeddings and the sinusoidal positional encoding, one row per token and 16 columns."></picture><figcaption>Step 2. Embeddings plus the sinusoidal position wave from section 3.5 of the paper.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/paperlab/03-feed-forward.webp"><img src="../../assets/shots/paperlab/03-feed-forward.png" width="1600" height="1000" loading="lazy" decoding="async" alt="The feed-forward step with its formulas and the first matrix after attention and layer norm."></picture><figcaption>Step 4. The feed-forward block, the residual and layer norm, with the formula above the numbers.</figcaption></figure>
+      <!-- screens:end -->
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="next-h">
+    <h2 id="next-h" class="cs-h">What I'd do next</h2>
+    <ul class="later">
+      <li>Re-run Lighthouse and axe against the live Pages URL, not only <code>vite preview</code>.</li>
+      <li>Add a second layer, so the residual stream can be followed from one block into the next.</li>
+      <li>Offer a small subword vocabulary beside the word tokenizer, to show why real models split words.</li>
+    </ul>
+  </section>
+</main>
+<!-- case-nav:start -->
+<nav class="case-nav wrap" aria-label="More case studies">
+  <a class="prev" href="/work/paluwagan/"><span class="eyebrow">Previous</span><span class="t">Online Paluwagan</span></a>
+  <a class="back" href="/#work-paperlab">Back to work</a>
+  <a class="next" href="/work/mindmap/"><span class="eyebrow">Next</span><span class="t">Living Mindmap (MCP)</span></a>
+</nav>
+<!-- case-nav:end -->
+<!-- footer:start -->
+<footer class="site-footer">
+  <div class="wrap foot">
+    <p>Built by Garfield Greg Lim III</p>
+    <ul role="list">
+      <li><a href="/">Portfolio</a></li>
+      <li><a href="https://github.com/monsieurgregorio2001-coder" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:lim.ggreg@outlook.com">lim.ggreg@outlook.com</a></li>
+    </ul>
+  </div>
+</footer>
+<!-- footer:end -->
+</body>
+</html>

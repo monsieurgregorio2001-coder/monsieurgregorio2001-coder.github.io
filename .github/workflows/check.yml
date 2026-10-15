@@ -26,10 +26,10 @@ jobs:
       - name: Build output matches committed HTML
         run: |
           node scripts/build.mjs
-          git diff --exit-code -- index.html
+          git diff --exit-code -- index.html 'work/**/index.html'
       - name: html-validate
-        run: scripts/node_modules/.bin/html-validate index.html 404.html
-      - name: axe (light and dark)
+        run: scripts/node_modules/.bin/html-validate index.html 404.html work/*/index.html
+      - name: axe (hub and case pages, light and dark)
         run: node scripts/check-axe.mjs
       - name: Link check
         run: node scripts/check-links.mjs

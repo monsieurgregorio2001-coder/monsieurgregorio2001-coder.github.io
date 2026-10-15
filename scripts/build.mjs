@@ -1,11 +1,13 @@
-// Renders the Work section of index.html from projects.json (ADR 0007).
+// Renders the Work section of index.html and the generated blocks of each case page from projects.json (ADR 0006, 0007).
 // Usage: node scripts/build.mjs   (no dependencies; works from any cwd)
-// Writes between <!-- cards:start -->/<!-- cards:end --> and <!-- noscript:start -->/<!-- noscript:end -->.
+// index.html: header, cards, noscript and footer markers.
+// work/<slug>/index.html: head, header, case-head, screens, case-nav and footer markers. Prose outside markers is hand-written.
 // Idempotent: the output depends only on projects.json, so a second run changes nothing.
 // CI runs it and fails if the committed index.html differs from the output.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { esc, header, footer, caseHead } from "./lib/chrome.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const indexPath = path.join(root, "index.html");
@@ -13,8 +15,6 @@ const projects = JSON.parse(fs.readFileSync(path.join(root, "projects.json"), "u
   .slice()
   .sort((a, b) => a.order - b.order);
 
-const esc = (s) =>
-  String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 // Port of the old main.js withNumbers: wrap measured numbers in .num, never a trailing , or .
 function withNumbers(text) {
@@ -145,17 +145,64 @@ const noscript =
     .join("\n") +
   `\n      </ul>`;
 
-function between(html, name, body) {
+function between(html, name, body, file = "index.html") {
   const re = new RegExp(`(<!-- ${name}:start -->)[\\s\\S]*?(\\n[ \\t]*<!-- ${name}:end -->)`);
-  if (!re.test(html)) throw new Error(`markers for ${name} not found in index.html`);
+  if (!re.test(html)) throw new Error(`markers for ${name} not found in ${file}`);
   return html.replace(re, (_, a, b) => a + "\n" + body + b);
 }
 
-const before = fs.readFileSync(indexPath, "utf8");
-const after = between(between(before, "cards", cards), "noscript", noscript);
-if (after !== before) {
-  fs.writeFileSync(indexPath, after);
-  console.log("index.html updated");
-} else {
-  console.log("index.html already up to date");
+function update(file, blocks) {
+  const rel = path.relative(root, file);
+  const before = fs.readFileSync(file, "utf8");
+  const after = blocks.reduce((h, [name, body]) => between(h, name, body, rel), before);
+  if (after !== before) fs.writeFileSync(file, after);
+  console.log(rel, after !== before ? "updated" : "already up to date");
+}
+
+update(indexPath, [["header", header("")], ["cards", cards], ["noscript", noscript], ["footer", footer()]]);
+
+// Case pages (ADR 0006). The header block, screens and prev/next nav come from projects.json so cards and pages agree.
+const up = "../../";
+function caseHeader(p) {
+  const links = [];
+  if (p.demoUrl) links.push(btn(p.demoLabel || "Live demo", p.demoUrl, true, p.title));
+  if (p.repoUrl) links.push(btn("Code", p.repoUrl, !p.demoUrl, p.title));
+  return lines([
+    `<p class="eyebrow">Case study</p>`,
+    `<h1 id="case-h" class="display">${esc(p.title)}</h1>`,
+    `<p class="lead">${esc(p.pitch)}</p>`,
+    `<p class="proves"><b>Proves </b>${esc(p.proves)}</p>`,
+    `<p class="actions">${links.join("")}</p>`,
+    tags(p),
+  ]);
+}
+function screens(p) {
+  if (!p.screens || !p.screens.length) throw new Error(`${p.title}: screens[] is empty`);
+  return p.screens
+    .map((s) => `<figure class="screen"><picture><source type="image/webp" srcset="${up}${esc(s.file)}.webp"><img src="${up}${esc(s.file)}.png" width="1600" height="1000" loading="lazy" decoding="async" alt="${esc(s.alt)}"></picture><figcaption>${esc(s.caption)}</figcaption></figure>`)
+    .join("\n");
+}
+function caseNav(p) {
+  const i = projects.indexOf(p);
+  const prev = projects[(i - 1 + projects.length) % projects.length];
+  const next = projects[(i + 1) % projects.length];
+  return lines([
+    `<nav class="case-nav wrap" aria-label="More case studies">`,
+    `  <a class="prev" href="/work/${esc(prev.slug)}/"><span class="eyebrow">Previous</span><span class="t">${esc(prev.title)}</span></a>`,
+    `  <a class="back" href="/#work-${esc(p.slug)}">Back to work</a>`,
+    `  <a class="next" href="/work/${esc(next.slug)}/"><span class="eyebrow">Next</span><span class="t">${esc(next.title)}</span></a>`,
+    `</nav>`,
+  ]);
+}
+for (const p of projects) {
+  const file = path.join(root, "work", p.slug, "index.html");
+  if (!fs.existsSync(file)) continue;
+  update(file, [
+    ["head", caseHead(p, up)],
+    ["header", header("/")],
+    ["case-head", caseHeader(p)],
+    ["screens", screens(p)],
+    ["case-nav", caseNav(p)],
+    ["footer", footer()],
+  ]);
 }

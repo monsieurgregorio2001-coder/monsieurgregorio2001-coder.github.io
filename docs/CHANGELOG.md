@@ -12,6 +12,10 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 - "Read the case" link and `id="work-<slug>"` on every card.
 - 2x hero crops (1600x1000) for all four projects via `capture.mjs --crop`.
 - CI: build-output check, html-validate, axe in light and dark, link check.
+- Case-study pages for PaperLab, Living Mindmap, Slop Editorial and Online Paluwagan at `/work/<slug>/`, each with an architecture diagram, decisions, sourced results, detail screenshots and prev/next navigation (ADR 0006).
+- `case.css`, shared header/footer partials (`scripts/lib/chrome.mjs`), and case-page header blocks, screens and navigation rendered from `projects.json`.
+- Detail crops per project via `capture.mjs --detail`; an Open Graph image per case page in `assets/og/`.
+- Sitemap lists the five URLs.
 - Interactive hero: a glyph field behind the hero with click ripples and cursor glow, and a headline that decodes on load (`hero.js`, ADR 0005). Static under reduced motion.
 
 ### Changed
@@ -19,6 +23,7 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 - Cards lift 2 px with an accent-tinted border on hover, the screenshot scales to 1.02, and cards reveal with a 60 ms stagger; all off under reduced motion.
 - `main.js` only handles reveal-on-scroll.
 - Screenshot and review scripts use Playwright.
+- `og.mjs` uses the shared Playwright launcher instead of puppeteer-core; `check-axe.mjs` covers every case page; the link check no longer treats `/work/` as pending.
 
 ## 2026-10-14
 
