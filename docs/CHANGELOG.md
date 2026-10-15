@@ -5,6 +5,15 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 ## Unreleased
 
 ### Added
+- A "Now" line under the hero lead, from `site.json`.
+- Hero proof points link to their cards; a PaperLab Lighthouse figure replaces the degree line.
+- Footer links to Work and the four case pages, and to ADR 0001 ("Built without a framework").
+- The 404 page shows a static frame of the hero glyph field.
+- Pressed state (`scale(.98)`) on buttons and cards, off under reduced motion.
+
+### Changed
+- Favicon is a "GL" monogram in JetBrains Mono on the accent colour, flipping with the theme.
+- Tags trimmed to three per project.
 - `docs/` with audit, ADRs 0001–0008, the October 2026 polish plan, this changelog and a tracker.
 - `CLAUDE.md` with site conventions.
 - `scripts/build.mjs` renders the Work cards and the noscript list into `index.html` from `projects.json`; cards are now in the HTML with no loading state (ADR 0007).

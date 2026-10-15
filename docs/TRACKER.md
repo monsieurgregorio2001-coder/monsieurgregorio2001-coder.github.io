@@ -78,13 +78,20 @@ Notes for the owner:
 
 | Item | Status | Notes |
 | --- | --- | --- |
-| "Now" line from `projects.json` | todo | |
-| Proof points link to cards | todo | |
-| Button / link states | todo | |
-| Tags: link or trim | todo | decide during pass |
-| Favicon monogram | todo | |
-| Footer links + ADR 0001 line | todo | |
-| 404 gets static hero field | todo | |
+| "Now" line from `site.json` | review | `projects.json` is an array, so the line lives in `site.json` (`now`); `build.mjs` fills `<!-- now:start/end -->` in the hero as `p.now` (`--muted`, .9375rem, between lead and actions). Draft copy: owner to edit |
+| Proof points link to cards | review | "12 MCP tools" → `#work-mindmap`; magna cum laude replaced by "96 / 100 / 100 / 100 Lighthouse on PaperLab" → `#work-paperlab` (ADR 0004); still three items. Plain text, underline on hover, focus ring kept. Magna cum laude stays in About |
+| Button / link states | review | `.btn:hover` border → `--muted` and primary `brightness(1.08)` kept; `:active { scale: .98 }` on `.btn` and `.case`, 180 ms ease-out. Under reduced motion transitions are off and `scale` is `none` (checked in Chromium: 0.98 vs none) |
+| Tags: link or trim | review | Decision: trim to three per card, non-interactive. Linking tags to case sections adds anchors for little value. Dropped: PaperLab "Visualization", Living Mindmap "React", Slop Editorial "Three.js", Online Paluwagan "Claude". No number or claim added; dropping "Claude" also stops the tag implying an AI integration the Paluwagan README describes as templates (see Phase 3 notes) |
+| Favicon monogram | review | "GL" in JetBrains Mono 500 converted to paths with `fontkit` (devDependency) by `scripts/favicon.mjs`; colours read from `--accent`/`--accent-ink` in `style.css`, dark swap via `prefers-color-scheme`. 764 bytes |
+| Footer links + ADR 0001 line | review | `scripts/lib/chrome.mjs`: "Pages" nav with Work and the four case pages, and "Built without a framework" → ADR 0001 on GitHub. That URL returns 404 until this branch reaches `main` (link check warns only) |
+| 404 gets static hero field | review | `<main class="hero wrap" data-static>` + canvas + `hero.js`; `hero.js` treats `data-static` as reduced motion (one frame, no loop, no ripple). 2-line change |
+| Checks | review | `npm run check`: build up to date, html-validate 0 errors, axe 0 violations on all pages × light/dark × 390/1280, links 0 errors (10 warnings: offline hosts + ADR URL above) |
+| Page weight | review | first load, Playwright resource timing: 439.6 KB @1280 (shoot.mjs, all four card images), 394.0 KB @390 and @820 without scrolling. ≤ 450 KB |
+| Screenshots | review | `docs/audits/shots/phase-4/hub-{390,820,1280}-{light,dark}.png`, `hub-1280-light-full.png`, `404-1280-light.png` |
+
+Notes for the owner:
+
+- The PaperLab proof figure is long, so at ≥ 900 px its label wraps under the number while the other two sit on one line. Shorter alternative: "19 unit tests on PaperLab's math".
 
 ## Phase 5 — Verification
 
