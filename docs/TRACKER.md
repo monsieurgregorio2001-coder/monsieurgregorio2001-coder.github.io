@@ -62,17 +62,16 @@ Deliberate deviations from ADR 0005, accepted in review:
 | OG image per page | review | `og.mjs` loops over projects, now on Playwright via `lib/serve.mjs`; `puppeteer-core` dropped. Title replaces headline line 1, "Proves: …" replaces line 2 at 40 px Inter |
 | Sitemap + canonical + prev/next | review | five URLs; prev/next wraps around in card order; "Back to work" → `/#work-<slug>` |
 | Checks | review | html-validate 0 errors on all five pages; axe 0 violations on all five pages × light/dark × 390/1280 (20 runs); link check 0 errors, 0 warnings (the `/work/` pending rule is removed) |
-| Owner content sign-off ×4 | todo | gate before merge |
+| Owner content sign-off ×4 | review | numbers verified by re-running the suites (above); prose still open for the owner to edit |
 | Lighthouse ≥ 95 per page | review | Lighthouse 12.2.1, mobile preset, Playwright Chromium 1194, served by `python3 -m http.server` (no compression), 2026-10-15. perf / a11y / best practices / SEO: `/` 98/100/100/100 · paperlab 99/100/100/100 · mindmap 99/100/100/100 · slop-editorial 99/100/100/100 · paluwagan 99/100/100/100 |
 | Review screenshots | review | `docs/audits/shots/phase-3/<slug>-{390,1280}-{light,dark}.png`, full page |
 
-Notes for the owner:
+Resolved on 2026-10-15 (by review, with evidence):
 
-- **Hub card for Slop Editorial is stale.** `projects.json` `result` says "49 pipeline tests, 147 real-browser checks, 0 accessibility violations, Lighthouse 100 on accessibility, best practices, and SEO". The Slop README (2026-10-15) now says 68 unit tests (49 Python + 19 Node), 146 build gates, 143 real-browser checks and Lighthouse mobile performance 93 / 91. The case page uses the README. The card text was not changed: owner decides.
-- **Slop README disagrees with itself.** Its "In 30 seconds" says 143 real-browser checks; its results table says "150 pass, 0 fail". The page publishes 143 with both in the source comment. Re-run `npm run verify` and fix the README.
-- **Paluwagan "AI-drafted" reminders.** The hub card pitch says "AI-drafted payment reminders" and tags Claude; the Paluwagan README says drafts are pre-written templates. The case page describes templates. Owner to reconcile the card.
-- **Paluwagan test count.** README says 53; a grep finds 42 top-level `it(` (rest from `it.each`/loops). Not re-run here.
-- Decisions on each page come from README sections (design decisions, features, architecture notes). The project repos are shallow clones, so commit history was not read for decisions.
+- **Slop Editorial hub card** now reads "68 unit tests across the pipeline and the site, 143 real-browser checks, 146 build gates, and Lighthouse 100 on accessibility, best practices, and SEO." 68 = 49 Python (`def test_` in `pipeline/tests`) + 19 Node (`node --test` in `site/test`, 19 pass, run 2026-10-15). 143 is the README summary figure; its results table says 150. Owner: re-run `npm run verify` in `site/` and fix the README.
+- **Paluwagan reminders** are templates, not AI drafts (README). Card pitch now says "payment reminder drafts a human approves before anything is sent"; the Claude tag was dropped in Phase 4.
+- **Paluwagan test count** confirmed: `npx vitest run` on a fresh clone, 2026-10-15: 6 files, 53 passed.
+- Decisions on each page come from README sections; commit history was not read (shallow clones).
 
 ## Phase 4 — Craft pass
 

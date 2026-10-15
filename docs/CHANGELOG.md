@@ -28,6 +28,7 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 - Interactive hero: a glyph field behind the hero with click ripples and cursor glow, and a headline that decodes on load (`hero.js`, ADR 0005). Static under reduced motion.
 
 ### Changed
+- Slop Editorial card result updated to the README's current figures; Paluwagan pitch says template drafts, not AI drafts; PaperLab proof point reads "19 tests on PaperLab's attention math".
 - Card order follows ADR 0004: PaperLab, Living Mindmap, Slop Editorial, Online Paluwagan.
 - Cards lift 2 px with an accent-tinted border on hover, the screenshot scales to 1.02, and cards reveal with a 60 ms stagger; all off under reduced motion.
 - `main.js` only handles reveal-on-scroll.

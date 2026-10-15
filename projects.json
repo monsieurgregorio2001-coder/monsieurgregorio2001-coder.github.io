@@ -58,7 +58,7 @@
     "order": 4,
     "featured": false,
     "title": "Online Paluwagan",
-    "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.",
+    "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and payment reminder drafts a human approves before anything is sent.",
     "proves": "Fintech and the Philippine market",
     "problem": "Paluwagan groups run on chat threads and memory, so late payments and disputes are common.",
     "build": "An append-only ledger in integer centavos, seeded fair rotation, rule-based risk flags, and human-approved reminder drafts in English and Filipino.",
@@ -142,7 +142,7 @@
     "proves": "Taste and editorial judgment",
     "problem": "AI makes images nearly free, so publications drift into content that nobody decided to make.",
     "build": "A Python pipeline that estimates, caps, approves, and logs every paid generation, plus an Astro and Three.js site whose build gates enforce voice, honesty, links, and speed.",
-    "result": "49 pipeline tests, 147 real-browser checks, 0 accessibility violations, Lighthouse 100 on accessibility, best practices, and SEO.",
+    "result": "68 unit tests across the pipeline and the site, 143 real-browser checks, 146 build gates, and Lighthouse 100 on accessibility, best practices, and SEO.",
     "tags": [
       "Astro",
       "Python",
