@@ -12,6 +12,7 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 - "Read the case" link and `id="work-<slug>"` on every card.
 - 2x hero crops (1600x1000) for all four projects via `capture.mjs --crop`.
 - CI: build-output check, html-validate, axe in light and dark, link check.
+- Interactive hero: a glyph field behind the hero with click ripples and cursor glow, and a headline that decodes on load (`hero.js`, ADR 0005). Static under reduced motion.
 
 ### Changed
 - Card order follows ADR 0004: PaperLab, Living Mindmap, Slop Editorial, Online Paluwagan.

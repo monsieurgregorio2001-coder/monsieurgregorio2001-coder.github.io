@@ -157,9 +157,9 @@ const crops = {
       return box;
     },
   },
-  // A busy photographic image: lower WebP quality keeps the page under its 450 KB budget.
+  // A busy photographic image: WebP quality 50 keeps the page (with the Phase 1 hero) under 450 KB.
   slop: {
-    webpQuality: 60,
+    webpQuality: 50,
     page: (s) => `${s}/slop-editorial/`,
     build: () => astroBuild(),
     async setup(page) {
@@ -189,7 +189,7 @@ try {
       const clip = await c.setup(page);
       if (clip.width * scale < 1600) throw new Error(`${n}: clip of ${clip.width} CSS px at ${scale}x would be upscaled`);
       const shot = await page.screenshot({ clip });
-      await save(`${n}-hero`, shot, 1600, 1000, { fit: "fill" }, c.webpQuality || 82);
+      await save(`${n}-hero`, shot, 1600, 1000, { fit: "fill" }, c.webpQuality || 74);
       await page.close();
     }
   } else {
