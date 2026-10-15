@@ -1,5 +1,8 @@
 [
   {
+    "slug": "paperlab",
+    "order": 1,
+    "featured": true,
     "title": "PaperLab",
     "pitch": "Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.",
     "proves": "AI theory and teaching",
@@ -17,9 +20,28 @@
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/paperlab/",
     "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/paperlab",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/paperlab-hero",
+    "screens": [],
+    "figures": [
+      {
+        "value": "19",
+        "label": "unit tests on the math"
+      },
+      {
+        "value": "58 KB",
+        "label": "gzipped"
+      },
+      {
+        "value": "96 / 100 / 100 / 100",
+        "label": "Lighthouse mobile"
+      }
+    ]
   },
   {
+    "slug": "paluwagan",
+    "order": 4,
+    "featured": false,
     "title": "Online Paluwagan",
     "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.",
     "proves": "Fintech and the Philippine market",
@@ -37,9 +59,14 @@
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/paluwagan/",
     "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/paluwagan",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/paluwagan-hero",
+    "screens": []
   },
   {
+    "slug": "mindmap",
+    "order": 2,
+    "featured": false,
     "title": "Living Mindmap (MCP)",
     "pitch": "A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.",
     "proves": "Agents and MCP",
@@ -57,9 +84,14 @@
     "demoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start",
     "demoLabel": "Run locally",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/mindmap-hero",
+    "screens": []
   },
   {
+    "slug": "slop-editorial",
+    "order": 3,
+    "featured": false,
     "title": "Slop Editorial",
     "pitch": "A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.",
     "proves": "Taste and editorial judgment",
@@ -77,6 +109,8 @@
     "demoUrl": "https://monsieurgregorio2001-coder.github.io/slop-editorial/",
     "demoLabel": "Live demo",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/slop-editorial",
-    "status": "live"
+    "status": "live",
+    "cardImage": "assets/shots/slop-hero",
+    "screens": []
   }
 ]
