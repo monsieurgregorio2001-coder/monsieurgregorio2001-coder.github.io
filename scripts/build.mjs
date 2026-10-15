@@ -1,6 +1,6 @@
 // Renders the Work section of index.html and the generated blocks of each case page from projects.json (ADR 0006, 0007).
 // Usage: node scripts/build.mjs   (no dependencies; works from any cwd)
-// index.html: header, cards, noscript and footer markers.
+// index.html: header, now (from site.json), cards, noscript and footer markers.
 // work/<slug>/index.html: head, header, case-head, screens, case-nav and footer markers. Prose outside markers is hand-written.
 // Idempotent: the output depends only on projects.json, so a second run changes nothing.
 // CI runs it and fails if the committed index.html differs from the output.
@@ -159,7 +159,11 @@ function update(file, blocks) {
   console.log(rel, after !== before ? "updated" : "already up to date");
 }
 
-update(indexPath, [["header", header("")], ["cards", cards], ["noscript", noscript], ["footer", footer()]]);
+// Hero "Now" line from site.json, so it can be updated without touching the HTML.
+const site = JSON.parse(fs.readFileSync(path.join(root, "site.json"), "utf8"));
+const now = `    <p class="now">${esc(site.now)}</p>`;
+
+update(indexPath, [["header", header("")], ["now", now], ["cards", cards], ["noscript", noscript], ["footer", footer()]]);
 
 // Case pages (ADR 0006). The header block, screens and prev/next nav come from projects.json so cards and pages agree.
 const up = "../../";

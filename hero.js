@@ -24,7 +24,8 @@
   var GUARD_ALPHA = 0.15;  // cap for cells under the h1 (and the other hero text) box
   var DECODE_TOTAL = 1100, DECODE_HOLD = 300, CHAR_SCRAMBLE = 300, HOVER_DEBOUNCE = 600;
 
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  // data-static (the 404): one frame, no loop, no ripple, headline resolved, as under reduced motion.
+  var reduce = hero.hasAttribute("data-static") ? { matches: true, addEventListener: function () {} } : matchMedia("(prefers-reduced-motion: reduce)");
   var dark = matchMedia("(prefers-color-scheme: dark)");
 
   var dpr = 1, W = 0, H = 0, cols = 0, rows = 0;

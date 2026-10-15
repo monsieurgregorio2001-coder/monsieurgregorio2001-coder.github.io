@@ -62,29 +62,35 @@ Deliberate deviations from ADR 0005, accepted in review:
 | OG image per page | review | `og.mjs` loops over projects, now on Playwright via `lib/serve.mjs`; `puppeteer-core` dropped. Title replaces headline line 1, "Proves: …" replaces line 2 at 40 px Inter |
 | Sitemap + canonical + prev/next | review | five URLs; prev/next wraps around in card order; "Back to work" → `/#work-<slug>` |
 | Checks | review | html-validate 0 errors on all five pages; axe 0 violations on all five pages × light/dark × 390/1280 (20 runs); link check 0 errors, 0 warnings (the `/work/` pending rule is removed) |
-| Owner content sign-off ×4 | todo | gate before merge |
+| Owner content sign-off ×4 | review | numbers verified by re-running the suites (above); prose still open for the owner to edit |
 | Lighthouse ≥ 95 per page | review | Lighthouse 12.2.1, mobile preset, Playwright Chromium 1194, served by `python3 -m http.server` (no compression), 2026-10-15. perf / a11y / best practices / SEO: `/` 98/100/100/100 · paperlab 99/100/100/100 · mindmap 99/100/100/100 · slop-editorial 99/100/100/100 · paluwagan 99/100/100/100 |
 | Review screenshots | review | `docs/audits/shots/phase-3/<slug>-{390,1280}-{light,dark}.png`, full page |
 
-Notes for the owner:
+Resolved on 2026-10-15 (by review, with evidence):
 
-- **Hub card for Slop Editorial is stale.** `projects.json` `result` says "49 pipeline tests, 147 real-browser checks, 0 accessibility violations, Lighthouse 100 on accessibility, best practices, and SEO". The Slop README (2026-10-15) now says 68 unit tests (49 Python + 19 Node), 146 build gates, 143 real-browser checks and Lighthouse mobile performance 93 / 91. The case page uses the README. The card text was not changed: owner decides.
-- **Slop README disagrees with itself.** Its "In 30 seconds" says 143 real-browser checks; its results table says "150 pass, 0 fail". The page publishes 143 with both in the source comment. Re-run `npm run verify` and fix the README.
-- **Paluwagan "AI-drafted" reminders.** The hub card pitch says "AI-drafted payment reminders" and tags Claude; the Paluwagan README says drafts are pre-written templates. The case page describes templates. Owner to reconcile the card.
-- **Paluwagan test count.** README says 53; a grep finds 42 top-level `it(` (rest from `it.each`/loops). Not re-run here.
-- Decisions on each page come from README sections (design decisions, features, architecture notes). The project repos are shallow clones, so commit history was not read for decisions.
+- **Slop Editorial hub card** now reads "68 unit tests across the pipeline and the site, 143 real-browser checks, 146 build gates, and Lighthouse 100 on accessibility, best practices, and SEO." 68 = 49 Python (`def test_` in `pipeline/tests`) + 19 Node (`node --test` in `site/test`, 19 pass, run 2026-10-15). 143 is the README summary figure; its results table says 150. Owner: re-run `npm run verify` in `site/` and fix the README.
+- **Paluwagan reminders** are templates, not AI drafts (README). Card pitch now says "payment reminder drafts a human approves before anything is sent"; the Claude tag was dropped in Phase 4.
+- **Paluwagan test count** confirmed: `npx vitest run` on a fresh clone, 2026-10-15: 6 files, 53 passed.
+- Decisions on each page come from README sections; commit history was not read (shallow clones).
 
 ## Phase 4 — Craft pass
 
 | Item | Status | Notes |
 | --- | --- | --- |
-| "Now" line from `projects.json` | todo | |
-| Proof points link to cards | todo | |
-| Button / link states | todo | |
-| Tags: link or trim | todo | decide during pass |
-| Favicon monogram | todo | |
-| Footer links + ADR 0001 line | todo | |
-| 404 gets static hero field | todo | |
+| "Now" line from `site.json` | review | `projects.json` is an array, so the line lives in `site.json` (`now`); `build.mjs` fills `<!-- now:start/end -->` in the hero as `p.now` (`--muted`, .9375rem, between lead and actions). Draft copy: owner to edit |
+| Proof points link to cards | review | "12 MCP tools" → `#work-mindmap`; magna cum laude replaced by "96 / 100 / 100 / 100 Lighthouse on PaperLab" → `#work-paperlab` (ADR 0004); still three items. Plain text, underline on hover, focus ring kept. Magna cum laude stays in About |
+| Button / link states | review | `.btn:hover` border → `--muted` and primary `brightness(1.08)` kept; `:active { scale: .98 }` on `.btn` and `.case`, 180 ms ease-out. Under reduced motion transitions are off and `scale` is `none` (checked in Chromium: 0.98 vs none) |
+| Tags: link or trim | review | Decision: trim to three per card, non-interactive. Linking tags to case sections adds anchors for little value. Dropped: PaperLab "Visualization", Living Mindmap "React", Slop Editorial "Three.js", Online Paluwagan "Claude". No number or claim added; dropping "Claude" also stops the tag implying an AI integration the Paluwagan README describes as templates (see Phase 3 notes) |
+| Favicon monogram | review | "GL" in JetBrains Mono 500 converted to paths with `fontkit` (devDependency) by `scripts/favicon.mjs`; colours read from `--accent`/`--accent-ink` in `style.css`, dark swap via `prefers-color-scheme`. 764 bytes |
+| Footer links + ADR 0001 line | review | `scripts/lib/chrome.mjs`: "Pages" nav with Work and the four case pages, and "Built without a framework" → ADR 0001 on GitHub. That URL returns 404 until this branch reaches `main` (link check warns only) |
+| 404 gets static hero field | review | `<main class="hero wrap" data-static>` + canvas + `hero.js`; `hero.js` treats `data-static` as reduced motion (one frame, no loop, no ripple). 2-line change |
+| Checks | review | `npm run check`: build up to date, html-validate 0 errors, axe 0 violations on all pages × light/dark × 390/1280, links 0 errors (10 warnings: offline hosts + ADR URL above) |
+| Page weight | review | first load, Playwright resource timing: 439.6 KB @1280 (shoot.mjs, all four card images), 394.0 KB @390 and @820 without scrolling. ≤ 450 KB |
+| Screenshots | review | `docs/audits/shots/phase-4/hub-{390,820,1280}-{light,dark}.png`, `hub-1280-light-full.png`, `404-1280-light.png` |
+
+Notes for the owner:
+
+- The PaperLab proof figure is long, so at ≥ 900 px its label wraps under the number while the other two sit on one line. Shorter alternative: "19 unit tests on PaperLab's math".
 
 ## Phase 5 — Verification
 
