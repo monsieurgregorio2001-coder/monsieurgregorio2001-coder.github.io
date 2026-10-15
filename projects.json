@@ -12,8 +12,7 @@
     "tags": [
       "React",
       "TypeScript",
-      "Attention",
-      "Visualization"
+      "Attention"
     ],
     "image": "assets/shots/paperlab",
     "imageAlt": "PaperLab showing an attention heatmap for a typed sentence, with step controls beside it.",
@@ -67,8 +66,7 @@
     "tags": [
       "React",
       "TypeScript",
-      "Ledger",
-      "Claude"
+      "Ledger"
     ],
     "image": "assets/shots/paluwagan",
     "imageAlt": "Online Paluwagan group dashboard showing the ledger, payout rotation, and payment status.",
@@ -108,7 +106,6 @@
     "tags": [
       "MCP",
       "TypeScript",
-      "React",
       "SQLite"
     ],
     "image": "assets/shots/mindmap",
@@ -148,7 +145,6 @@
     "result": "49 pipeline tests, 147 real-browser checks, 0 accessibility violations, Lighthouse 100 on accessibility, best practices, and SEO.",
     "tags": [
       "Astro",
-      "Three.js",
       "Python",
       "Human-in-the-loop"
     ],

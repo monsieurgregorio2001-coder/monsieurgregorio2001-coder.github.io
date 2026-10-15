@@ -23,7 +23,16 @@ export function header(home = "") {
 export function footer() {
   return `<footer class="site-footer">
   <div class="wrap foot">
-    <p>Built by Garfield Greg Lim III</p>
+    <p>Built by Garfield Greg Lim III. <a href="https://github.com/monsieurgregorio2001-coder/monsieurgregorio2001-coder.github.io/blob/main/docs/decisions/0001-no-framework-no-build.md" rel="noopener">Built without a framework</a>.</p>
+    <nav aria-label="Pages">
+      <ul role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/work/paperlab/">PaperLab</a></li>
+        <li><a href="/work/mindmap/">Living Mindmap</a></li>
+        <li><a href="/work/slop-editorial/">Slop Editorial</a></li>
+        <li><a href="/work/paluwagan/">Online Paluwagan</a></li>
+      </ul>
+    </nav>
     <ul role="list">
       <li><a href="/">Portfolio</a></li>
       <li><a href="https://github.com/monsieurgregorio2001-coder" rel="noopener">GitHub</a></li>
