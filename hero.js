@@ -99,10 +99,10 @@
       accent = new Uint8Array(n); density = new Float32Array(n); guard = new Uint8Array(n);
       for (i = 0; i < n; i++) { glyph[i] = randChar(); present[i] = Math.random(); jitter[i] = Math.random(); }
     }
-    // Contrast guard: flag every cell overlapping the h1 box. The eyebrow and lead get
+    // Contrast guard: flag every cell overlapping the h1 box. The eyebrow, lead and proof points get
     // the same cap, since ripples otherwise run dark glyphs through their smaller text.
     guard.fill(0);
-    hero.querySelectorAll("h1, .eyebrow, .lead").forEach(function (el) {
+    hero.querySelectorAll("h1, .eyebrow, .lead, .proof").forEach(function (el) {
       var b = el.getBoundingClientRect();
       var c0 = Math.max(0, Math.floor(b.left / CW)), c1 = Math.min(cols - 1, Math.floor(b.right / CW));
       var r0 = Math.max(0, Math.floor((b.top - hr.top) / CH)), r1 = Math.min(rows - 1, Math.floor((b.bottom - hr.top) / CH));
@@ -255,12 +255,27 @@
 
   /* ---------- events ---------- */
   function local(e) { var r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
-  hero.addEventListener("pointerdown", function (e) {
-    if (reduce.matches || e.target.closest("a, button")) return;
+  function ripple(e) {
     var p = local(e);
     ripples.push({ x: p.x, y: p.y, t: performance.now() / 1000 });
     if (ripples.length > MAX_RIPPLES) ripples.shift();
+  }
+  // Mouse ripples on press. Touch and pen ripple only on a tap (moved < 10 px,
+  // under 400 ms), so a scroll that starts on the hero does not spawn one.
+  var down = null;
+  hero.addEventListener("pointerdown", function (e) {
+    down = null;
+    if (reduce.matches || e.target.closest("a, button")) return;
+    if (e.pointerType === "mouse") return ripple(e);
+    down = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() };
   });
+  hero.addEventListener("pointerup", function (e) {
+    var d = down; down = null;
+    if (!d || d.id !== e.pointerId) return;
+    var dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (dx * dx + dy * dy < 100 && performance.now() - d.t < 400) ripple(e);
+  });
+  hero.addEventListener("pointercancel", function () { down = null; });
   hero.addEventListener("pointermove", function (e) {
     if (e.pointerType !== "mouse") return; // no glow on touch or pen
     var p = local(e); pointer.x = p.x; pointer.y = p.y;
@@ -303,6 +318,6 @@
     document.fonts.ready.then(function () { layout(); redraw(); });
   }
   if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
-    window.__hero = { draw: function () { draw(performance.now() / 1000); }, cells: function () { return cols * rows; } };
+    window.__hero = { draw: function () { draw(performance.now() / 1000); }, cells: function () { return cols * rows; }, ripples: function () { return ripples.length; } };
   }
 })();

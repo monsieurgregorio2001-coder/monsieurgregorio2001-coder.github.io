@@ -72,6 +72,27 @@ for (const w of [390, 820, 1280]) for (const scheme of ["light", "dark"]) {
   await ctx.close();
 }
 
+{ // touch: an 80 px drag starting in the hero must not ripple; a tap must
+  const ctx = await b.newContext({ viewport: { width: 390, height: heroH }, hasTouch: true, isMobile: true, colorScheme: "light" });
+  const p = await ctx.newPage();
+  await p.goto(url, { waitUntil: "networkidle" });
+  await wait(1300);
+  const cdp = await ctx.newCDPSession(p);
+  const touch = (type, x, y) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x, y }] });
+  await touch("touchStart", 200, 560);
+  for (let i = 1; i <= 8; i++) { await touch("touchMove", 200, 560 - i * 10); await wait(16); }
+  await touch("touchEnd");
+  await wait(50);
+  const afterDrag = await p.evaluate(() => window.__hero.ripples());
+  await p.evaluate(() => window.scrollTo(0, 0)); await wait(100);
+  await touch("touchStart", 200, 560); await wait(60); await touch("touchEnd");
+  await wait(50);
+  const afterTap = await p.evaluate(() => window.__hero.ripples());
+  console.log(`touch: ripples after 80 px drag=${afterDrag}, after tap=${afterTap}`);
+  if (afterDrag !== 0 || afterTap !== 1) failed = true;
+  await ctx.close();
+}
+
 { // timing at 1440x900
   const { ctx, p } = await open(1440, 900, "light");
   await wait(1400);
