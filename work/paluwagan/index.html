@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- head:start -->
+<title>Online Paluwagan case study | Garfield Lim</title>
+<meta name="description" content="A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/work/paluwagan/">
+<link rel="preload" href="../../assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Online Paluwagan case study | Garfield Lim">
+<meta property="og:description" content="A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.">
+<meta property="og:url" content="https://monsieurgregorio2001-coder.github.io/work/paluwagan/">
+<meta property="og:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/paluwagan.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Online Paluwagan. Proves Fintech and the Philippine market.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Online Paluwagan case study | Garfield Lim">
+<meta name="twitter:description" content="A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.">
+<meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/paluwagan.png">
+<meta name="twitter:image:alt" content="Online Paluwagan. Proves Fintech and the Philippine market.">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../case.css">
+<!-- head:end -->
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!-- header:start -->
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="wordmark" href="/" aria-label="Garfield Lim, home">Garfield Lim</a>
+    <nav aria-label="Primary">
+      <ul class="nav" role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- header:end -->
+<main id="main">
+  <section class="case-hero wrap" aria-labelledby="case-h">
+    <!-- case-head:start -->
+<p class="eyebrow">Case study</p>
+<h1 id="case-h" class="display">Online Paluwagan</h1>
+<p class="lead">A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.</p>
+<p class="proves"><b>Proves </b>Fintech and the Philippine market</p>
+<p class="actions"><a class="btn primary" href="https://monsieurgregorio2001-coder.github.io/paluwagan/" rel="noopener" aria-label="Live demo for Online Paluwagan">Live demo</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/paluwagan" rel="noopener" aria-label="Code for Online Paluwagan">Code</a></p>
+<ul class="tags" role="list"><li>React</li><li>TypeScript</li><li>Ledger</li><li>Claude</li></ul>
+    <!-- case-head:end -->
+  </section>
+
+  <section class="cs wrap" aria-labelledby="problem-h">
+    <h2 id="problem-h" class="cs-h">Problem</h2>
+    <div class="prose">
+      <p>A paluwagan is a Filipino savings circle. Members pay a fixed amount each cycle, and one member takes the whole pot, until everyone has been paid once.</p>
+      <p>Most groups run on a chat thread and the organiser's memory. When someone pays late or misses a cycle, nobody is sure who is owed what. Disputes follow, and they are about friends and money at once.</p>
+      <p>Software for this has to be right about money first. A friendly reminder tool on top of wrong numbers makes the dispute worse.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="approach-h">
+    <h2 id="approach-h" class="cs-h">Approach</h2>
+    <div class="prose">
+      <p>I built the money rules as pure functions first and the screens second. The UI never does money math. It calls domain functions that the tests cover, and the store saves the result.</p>
+      <p>The ledger is append-only. A mistake is fixed with a reversing entry and a reason. When a member misses or underpays, the shortfall is recorded on the entry, the recipient's payout is short by the same amount, and the member owes it as arrears.</p>
+      <p>On top of that sit rule-based risk flags with their reasons shown, and reminder drafts in English and Filipino. A person edits and approves each draft before it can be sent, and sending is simulated. Everything stays in the browser. It is a portfolio demo, not a financial service.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="arch-h">
+    <h2 id="arch-h" class="cs-h">Architecture</h2>
+    <figure class="diagram">
+      <svg viewBox="0 0 600 470" role="img" aria-labelledby="arch-t arch-d">
+        <title id="arch-t">Online Paluwagan architecture</title>
+        <desc id="arch-d">The React UI calls an external store. Seed data feeds the store. The store reads and writes localStorage, with an in-memory fallback. The store calls the pure domain modules: ledger, rotation, risk, reminders, and money and dates.</desc>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrow" d="M0 0 10 5 0 10z"/></marker></defs>
+        <rect class="box" x="1" y="1" width="268" height="70" rx="8"/>
+        <text class="lbl" x="20" y="31">React UI</text>
+        <text class="sub" x="20" y="56">no money math</text>
+        <path class="edge" d="M135 71V128" marker-end="url(#ah)"/>
+        <rect class="box" x="331" y="1" width="268" height="70" rx="8"/>
+        <text class="lbl" x="350" y="31">seed.ts</text>
+        <text class="sub" x="350" y="56">two demo groups</text>
+        <path class="edge" d="M465 71V100H200V128" marker-end="url(#ah)"/>
+        <rect class="box" x="1" y="130" width="268" height="70" rx="8"/>
+        <text class="lbl" x="20" y="160">Store</text>
+        <text class="sub" x="20" y="185">src/data/store.ts</text>
+        <path class="edge" d="M271 165H328" marker-start="url(#ah)" marker-end="url(#ah)"/>
+        <rect class="box" x="331" y="130" width="268" height="70" rx="8"/>
+        <text class="lbl" x="350" y="160">localStorage</text>
+        <text class="sub" x="350" y="185">or in-memory</text>
+        <path class="edge" d="M135 200V248" marker-end="url(#ah)"/>
+        <rect class="box hl" x="1" y="250" width="598" height="216" rx="8"/>
+        <text class="lbl" x="20" y="284">Pure domain modules</text>
+        <text class="tag" x="20" y="310">covered by the tests</text>
+        <text class="sub" x="20" y="352">ledger.ts</text>
+        <text class="sub" x="20" y="386">rotation.ts</text>
+        <text class="sub" x="20" y="420">risk.ts</text>
+        <text class="sub" x="310" y="352">reminders.ts</text>
+        <text class="sub" x="310" y="386">money.ts</text>
+        <text class="sub" x="310" y="420">dates.ts</text>
+      </svg>
+      <figcaption>No backend and no network call. Redrawn from the diagram in the project README.</figcaption>
+    </figure>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="dec-h">
+    <h2 id="dec-h" class="cs-h">Decisions</h2>
+    <ul class="decisions" role="list">
+      <li><strong>Chose integer centavos over decimal pesos</strong><span>because floats round. Text like <code>1,000.50</code> is parsed with string and integer math, and no float enters the domain.</span></li>
+      <li><strong>Chose an append-only ledger with reversals over editable entries</strong><span>because an edit erases what happened. A reversal keeps it, needs a reason, and cannot itself be reversed or applied twice.</span></li>
+      <li><strong>Chose short payouts and arrears over covering the gap</strong><span>because the pot can only pay what it holds. The shortfall lands on the member who caused it, and arrears can never go negative.</span></li>
+      <li><strong>Chose one invariant checked everywhere over many special cases</strong><span>because net contributions must equal net payouts plus the pot, and the pot never goes negative. The property test checks that after every step.</span></li>
+      <li><strong>Chose human approval over automatic reminders</strong><span>because a reminder about money between friends needs judgment. A draft cannot be sent until a person approves it, and cannot be edited after.</span></li>
+    </ul>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="res-h">
+    <h2 id="res-h" class="cs-h">Results</h2>
+    <div>
+      <ul class="results" role="list">
+        <li><span class="fig num">53 tests</span><span class="how">Vitest, <span class="num">6</span> files, all passing: ledger, rotation fairness, risk levels, reminder templates, seed data and currency formatting.<!-- src: paluwagan/README.md "Tests and measured results", 2026-10-14. A grep found 42 top-level it( calls; the rest come from it.each and loops, not re-run here. --></span></li>
+        <li><span class="fig num">12,000 operations</span><span class="how">The ledger property test runs <span class="num">40</span> seeds of <span class="num">300</span> random operations across contributions, payouts, arrears payments and reversals. After every step it checks reconciliation, a non-negative pot, non-negative arrears and append-only behaviour.<!-- src: paluwagan/README.md "Tests and measured results", 2026-10-14 --></span></li>
+        <li><span class="fig num">95 / 100 / 100 / 100</span><span class="how">Lighthouse mobile preset on <code>vite preview</code>: performance, accessibility, best practices, SEO.<!-- src: paluwagan/README.md "Tests and measured results", 2026-10-14 --></span></li>
+        <li><span class="fig num">65.9 kB</span><span class="how">Gzipped initial load: <span class="num">61.2</span> kB JS, <span class="num">4.1</span> kB CSS, <span class="num">0.6</span> kB HTML. axe finds no WCAG 2.1 AA violations on any route in either theme.<!-- src: paluwagan/README.md "Tests and measured results", 2026-10-14 --></span></li>
+      </ul>
+      <p class="fine">Measured on one machine against a local build.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="screens-h">
+    <h2 id="screens-h" class="cs-h">Screens</h2>
+    <div class="screens">
+      <!-- screens:start -->
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/paluwagan/01-contributions.webp"><img src="../../assets/shots/paluwagan/01-contributions.png" width="1600" height="1000" loading="lazy" decoding="async" alt="Contributions by cycle for cycle 4: members paid on time, paid late, or not recorded, with Record buttons."></picture><figcaption>Contributions for one cycle. Late and missing payments are visible at a glance.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/paluwagan/02-ledger-entries.webp"><img src="../../assets/shots/paluwagan/02-ledger-entries.png" width="1600" height="1000" loading="lazy" decoding="async" alt="The append-only ledger table with entry numbers, types, members, signed amounts and Reverse buttons."></picture><figcaption>The ledger. Entries are never edited. A mistake gets a reversing entry instead.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/paluwagan/03-risk.webp"><img src="../../assets/shots/paluwagan/03-risk.png" width="1600" height="1000" loading="lazy" decoding="async" alt="Risk cards for two members marked High risk, with reasons and an arrears-owed panel."></picture><figcaption>Risk flags with their reasons, and the arrears a short payout created.</figcaption></figure>
+      <!-- screens:end -->
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="next-h">
+    <h2 id="next-h" class="cs-h">What I'd do next</h2>
+    <ul class="later">
+      <li>Export a group's ledger as a CSV the organiser can share, so the record outlives the browser.</li>
+      <li>Try model-written reminder drafts beside the pre-written templates, behind the same approval step, and compare them.</li>
+      <li>Test the money rules with a few real organisers before adding any feature that touches real money.</li>
+    </ul>
+  </section>
+</main>
+<!-- case-nav:start -->
+<nav class="case-nav wrap" aria-label="More case studies">
+  <a class="prev" href="/work/slop-editorial/"><span class="eyebrow">Previous</span><span class="t">Slop Editorial</span></a>
+  <a class="back" href="/#work-paluwagan">Back to work</a>
+  <a class="next" href="/work/paperlab/"><span class="eyebrow">Next</span><span class="t">PaperLab</span></a>
+</nav>
+<!-- case-nav:end -->
+<!-- footer:start -->
+<footer class="site-footer">
+  <div class="wrap foot">
+    <p>Built by Garfield Greg Lim III</p>
+    <ul role="list">
+      <li><a href="/">Portfolio</a></li>
+      <li><a href="https://github.com/monsieurgregorio2001-coder" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:lim.ggreg@outlook.com">lim.ggreg@outlook.com</a></li>
+    </ul>
+  </div>
+</footer>
+<!-- footer:end -->
+</body>
+</html>
