@@ -14,8 +14,7 @@
 // use another binary; the macOS Chrome path is used automatically when it exists. See lib/serve.mjs.
 //
 // Crops: each entry in `crops` names a page, a setup step, and a CSS-pixel clip with a 16:10 ratio
-// that is at least 800 px wide, captured at deviceScaleFactor 2 and downsized to 1600x1000 (never
-// upscaled). The PNG fallback steps palette size and compression until it is <= 200 KB.
+// captured at deviceScaleFactor 2 (or the crop's own `scale`) and at least 1600 device px wide, downsized to 1600x1000 (never upscaled). The PNG fallback steps palette size and compression until it is <= 200 KB.
 import sharp from "sharp";
 import fs from "node:fs";
 import os from "node:os";
@@ -103,20 +102,24 @@ async function rectOf(page, sel) {
 }
 
 const crops = {
-  // Attention step: head toggles above the first per-head heatmap.
+  // Attention step: the Head 1 matrix with its token labels fills the frame. The table is only
+  // ~380 CSS px wide, so this crop is shot at deviceScaleFactor 4 to stay above 1600 device px.
   paperlab: {
+    scale: 4,
     page: (s) => `${s}/paperlab/`,
     build: () => viteBuild("paperlab"),
     async setup(page) {
       await page.getByRole("button", { name: /Step 3: Attention/ }).first().click();
-      await page.locator("figure.matrix.heat").first().scrollIntoViewIfNeeded();
       await page.evaluate(() => {
         const r = document.querySelector("figure.matrix.heat").getBoundingClientRect();
-        window.scrollBy(0, r.top - 190);
+        window.scrollBy(0, r.top - 300);
       });
       await sleep(400);
-      const r = await rectOf(page, "figure.matrix.heat");
-      return box16x10(Math.round(r.x - 30), Math.round(r.y - 140), 880);
+      const t = await rectOf(page, "figure.matrix.heat table");
+      const w = Math.round(t.width / 0.8);
+      const box = box16x10(Math.round(t.x - (w - t.width) / 2), 0, w);
+      box.y = Math.round(t.y + t.height / 2 - box.height / 2);
+      return box;
     },
   },
   // Group dashboard: summary tiles and the cycle schedule.
@@ -134,16 +137,26 @@ const crops = {
       return box16x10(Math.round(r.x - 72), Math.round(r.y - 24), 1040);
     },
   },
-  // Canvas with the sample graph and the side panel.
+  // Canvas zoomed in on Self-Attention and its children, with the left edge of the inspector.
+  // Shot at deviceScaleFactor 3 so the narrower region still yields more than 1600 device px.
   mindmap: {
+    scale: 3,
     page: () => mindmapBase(),
     build: () => {},
     async setup(page) {
       await sleep(1500);
-      return box16x10(0, 0, 1440);
+      const zoomIn = page.locator(".react-flow__controls-zoomin");
+      if (await zoomIn.count()) { await zoomIn.click(); await sleep(600); }
+      const node = await rectOf(page, ".react-flow__node:has-text('Self-Attention')");
+      const panel = await page.getByText(/Select a node to read/).first().boundingBox();
+      const x = Math.round(node.x - 24);
+      const w = Math.round(panel.x + 120 - x);
+      const box = box16x10(x, 0, w);
+      box.y = Math.max(0, Math.round(node.y + node.height / 2 - box.height / 2));
+      console.log("mindmap node", node, "panel x", panel.x, "clip", box);
+      return box;
     },
   },
-  // Cover: masthead, the hero still and its sticker.
   // A busy photographic image: lower WebP quality keeps the page under its 450 KB budget.
   slop: {
     webpQuality: 60,
@@ -170,10 +183,11 @@ try {
     srv = await serve(mounts, { spa: true });
     for (const n of names) {
       const c = crops[n];
-      const page = await newPage(2);
+      const scale = c.scale || 2;
+      const page = await newPage(scale);
       await page.goto(await c.page(srv.base), { waitUntil: "networkidle" });
       const clip = await c.setup(page);
-      if (clip.width < 800) throw new Error(`${n}: clip narrower than 800 CSS px would be upscaled`);
+      if (clip.width * scale < 1600) throw new Error(`${n}: clip of ${clip.width} CSS px at ${scale}x would be upscaled`);
       const shot = await page.screenshot({ clip });
       await save(`${n}-hero`, shot, 1600, 1000, { fit: "fill" }, c.webpQuality || 82);
       await page.close();
