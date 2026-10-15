@@ -1,4 +1,5 @@
-// Review screenshots of the hub. Usage: node shoot.mjs <outDir>
+// Review screenshots of the hub. Usage: node shoot.mjs <outDir> [/work/<slug>/ ...]
+// With page paths, shoots each case page instead: <slug>-<width>-<scheme>.png, full page, at 390 and 1280 in both themes.
 // Writes hub-<width>-<scheme>.png (viewport-sized, top of page) at 390, 820 and 1280 in light and dark,
 // plus hub-1280-light-full.png (full page). Reduced motion is emulated so reveals are settled.
 // Also prints first-load transfer weight from Playwright resource timing at each width.
@@ -37,7 +38,33 @@ async function weight(page) {
   });
 }
 
-for (const [w, h] of [[390, 844], [820, 1180], [1280, 800]]) {
+const cases = process.argv.slice(3);
+for (const u of cases) {
+  const slug = u.split("/").filter(Boolean).pop();
+  for (const [w, h] of [[390, 844], [1280, 800]]) {
+    for (const colorScheme of ["light", "dark"]) {
+      const p = await b.newPage({ viewport: { width: w, height: h }, colorScheme, reducedMotion: "reduce" });
+      await p.goto(srv.base + u, { waitUntil: "networkidle" });
+      await p.evaluate(() => document.querySelectorAll("img").forEach((i) => (i.loading = "eager")));
+      for (let y = 0; y < (await p.evaluate(() => document.body.scrollHeight)); y += 600) {
+        await p.evaluate((y) => window.scrollTo(0, y), y);
+        await p.waitForTimeout(60);
+      }
+      await p.evaluate(() => window.scrollTo(0, 0));
+      await p.evaluate(() => Promise.all([...document.images].map((i) => i.complete || new Promise((r) => (i.onload = i.onerror = r)))));
+      await p.evaluate(() => document.fonts.ready);
+      const sw = await p.evaluate(() => document.documentElement.scrollWidth);
+      if (sw > w) console.warn(`${slug} ${w} ${colorScheme}: horizontal overflow, scrollWidth ${sw}`);
+      if (w === 390 && colorScheme === "light") {
+        const wt = await weight(p);
+        console.log(`${slug} ${w}px load: ${(wt.bytes / 1024).toFixed(1)} KB in ${wt.requests} requests`);
+      }
+      await write(path.join(out, `${slug}-${w}-${colorScheme}.png`), await p.screenshot({ fullPage: true }));
+      await p.close();
+    }
+  }
+}
+for (const [w, h] of cases.length ? [] : [[390, 844], [820, 1180], [1280, 800]]) {
   for (const colorScheme of ["light", "dark"]) {
     const p = await b.newPage({ viewport: { width: w, height: h }, colorScheme, reducedMotion: "reduce" });
     await p.goto(srv.base + "/", { waitUntil: "networkidle" });

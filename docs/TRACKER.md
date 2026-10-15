@@ -10,7 +10,7 @@ Plan: [`plan/2026-10-15-polish.md`](plan/2026-10-15-polish.md)
 | --- | --- | --- |
 | `docs/` tree and ADRs 0001–0008 | review | this PR |
 | `CLAUDE.md` conventions | review | this PR |
-| CI: html-validate, axe, link check | review | `.github/workflows/check.yml`; `scripts/check-axe.mjs` (light+dark, 390+1280: 0 violations), `scripts/check-links.mjs` (0 errors; `/work/*` warn until Phase 3; external links warn only), `.htmlvalidate.json` (0 errors). Landed with Phase 2 branch |
+| CI: html-validate, axe, link check | review | `.github/workflows/check.yml`; `scripts/check-axe.mjs` (light+dark, 390+1280: 0 violations), `scripts/check-links.mjs` (0 errors; external links warn only), `.htmlvalidate.json` (0 errors). Landed with Phase 2 branch |
 | CI: build-output diff check | review | `node scripts/build.mjs` + diff step in `check.yml` |
 
 ## Phase 1 — Interactive hero
@@ -44,17 +44,27 @@ Plan: [`plan/2026-10-15-polish.md`](plan/2026-10-15-polish.md)
 
 | Item | Status | Notes |
 | --- | --- | --- |
-| `work/paperlab/` (template) | todo | |
-| `work/mindmap/` | todo | |
-| `work/slop-editorial/` | todo | |
-| `work/paluwagan/` | todo | |
-| Shared chrome partials in `build.mjs` | todo | |
-| Architecture SVG ×4 | todo | |
-| Detail screenshots ×4 | todo | |
-| OG image per page | todo | |
-| Sitemap + canonical + prev/next | todo | |
+| `work/paperlab/` (template) | review | ADR 0006 section order; every figure has a `<!-- src: -->` comment beside it |
+| `work/mindmap/` | review | |
+| `work/slop-editorial/` | review | uses the Slop README's current figures (68 unit tests, 146 gates, 143 browser checks, Lighthouse 93/91 perf). See notes below |
+| `work/paluwagan/` | review | |
+| Shared chrome partials in `build.mjs` | review | `scripts/lib/chrome.mjs` (header, footer, case `<head>`); `build.mjs` fills `head`, `header`, `case-head`, `screens`, `case-nav`, `footer` markers in each page and `header`/`footer` in `index.html`. Idempotent; CI diffs `index.html` and `work/**/index.html` |
+| Architecture SVG ×4 | review | hand-drawn inline SVG, 5–8 boxes, redrawn from each README's mermaid diagram. Box strokes `--rule`, highlights `--accent`, text `currentColor`; edges use `--muted` so arrows stay visible on `--surface`. Subtitles render at about 10–11 px at 390 px: owner legibility check |
+| Detail screenshots ×4 | review | `capture.mjs --detail`, 3 per project, all built and captured live (no fallback): PaperLab and Paluwagan (vite), Living Mindmap (build + tsx server, seeded sample), Slop Editorial (astro). PNG 56–168 KB, all ≤ 200 KB. Paluwagan ledger table wraps entry numbers at 1440 px viewport |
+| OG image per page | review | `og.mjs` loops over projects, now on Playwright via `lib/serve.mjs`; `puppeteer-core` dropped. Title replaces headline line 1, "Proves: …" replaces line 2 at 40 px Inter |
+| Sitemap + canonical + prev/next | review | five URLs; prev/next wraps around in card order; "Back to work" → `/#work-<slug>` |
+| Checks | review | html-validate 0 errors on all five pages; axe 0 violations on all five pages × light/dark × 390/1280 (20 runs); link check 0 errors, 0 warnings (the `/work/` pending rule is removed) |
 | Owner content sign-off ×4 | todo | gate before merge |
-| Lighthouse ≥ 95 per page | todo | paste scores here |
+| Lighthouse ≥ 95 per page | review | Lighthouse 12.2.1, mobile preset, Playwright Chromium 1194, served by `python3 -m http.server` (no compression), 2026-10-15. perf / a11y / best practices / SEO: `/` 98/100/100/100 · paperlab 99/100/100/100 · mindmap 99/100/100/100 · slop-editorial 99/100/100/100 · paluwagan 99/100/100/100 |
+| Review screenshots | review | `docs/audits/shots/phase-3/<slug>-{390,1280}-{light,dark}.png`, full page |
+
+Notes for the owner:
+
+- **Hub card for Slop Editorial is stale.** `projects.json` `result` says "49 pipeline tests, 147 real-browser checks, 0 accessibility violations, Lighthouse 100 on accessibility, best practices, and SEO". The Slop README (2026-10-15) now says 68 unit tests (49 Python + 19 Node), 146 build gates, 143 real-browser checks and Lighthouse mobile performance 93 / 91. The case page uses the README. The card text was not changed: owner decides.
+- **Slop README disagrees with itself.** Its "In 30 seconds" says 143 real-browser checks; its results table says "150 pass, 0 fail". The page publishes 143 with both in the source comment. Re-run `npm run verify` and fix the README.
+- **Paluwagan "AI-drafted" reminders.** The hub card pitch says "AI-drafted payment reminders" and tags Claude; the Paluwagan README says drafts are pre-written templates. The case page describes templates. Owner to reconcile the card.
+- **Paluwagan test count.** README says 53; a grep finds 42 top-level `it(` (rest from `it.each`/loops). Not re-run here.
+- Decisions on each page come from README sections (design decisions, features, architecture notes). The project repos are shallow clones, so commit history was not read for decisions.
 
 ## Phase 4 — Craft pass
 
