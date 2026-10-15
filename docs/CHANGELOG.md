@@ -16,6 +16,7 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 - `case.css`, shared header/footer partials (`scripts/lib/chrome.mjs`), and case-page header blocks, screens and navigation rendered from `projects.json`.
 - Detail crops per project via `capture.mjs --detail`; an Open Graph image per case page in `assets/og/`.
 - Sitemap lists the five URLs.
+- Interactive hero: a glyph field behind the hero with click ripples and cursor glow, and a headline that decodes on load (`hero.js`, ADR 0005). Static under reduced motion.
 
 ### Changed
 - Card order follows ADR 0004: PaperLab, Living Mindmap, Slop Editorial, Online Paluwagan.
