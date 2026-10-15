@@ -64,16 +64,70 @@
       <p class="eyebrow">Selected work</p>
       <h2 id="work-h" class="title">Four projects, each proving one thing.</h2>
     </div>
+    <!-- cards:start -->
+    <article class="case featured reveal" id="work-paperlab" style="--i:0">
+      <figure class="shot"><picture><source type="image/webp" srcset="assets/shots/paperlab-hero.webp"><img src="assets/shots/paperlab-hero.png" width="1600" height="1000" loading="lazy" decoding="async" alt="PaperLab showing an attention heatmap for a typed sentence, with step controls beside it."></picture></figure>
+      <div class="body">
+        <div class="meta"><span class="badge live">Live</span><p class="proves"><b>Proves </b>AI theory and teaching</p></div>
+        <h3 class="display">PaperLab</h3>
+        <p class="pitch">Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.</p>
+        <ul class="figures" role="list" aria-label="PaperLab in numbers"><li><span class="fig num">19</span><span class="fig-label">unit tests on the math</span></li><li><span class="fig num">58 KB</span><span class="fig-label">gzipped</span></li><li><span class="fig num">96 / 100 / 100 / 100</span><span class="fig-label">Lighthouse mobile</span></li></ul>
+        <dl class="pcr"><div><dt>Problem</dt><dd>Papers explain attention in equations that few people can picture.</dd></div><div><dt>Build</dt><dd>A React and TypeScript app that runs real attention math on toy weights in the browser, with per-head heatmaps and step controls.</dd></div><div><dt>Result</dt><dd><span class="num">19</span> unit tests on the math, about <span class="num">58</span> KB gzipped, and Lighthouse mobile scores of <span class="num">96</span> for performance and <span class="num">100</span> in the other three.</dd></div></dl>
+        <ul class="tags" role="list"><li>React</li><li>TypeScript</li><li>Attention</li><li>Visualization</li></ul>
+        <p class="actions"><a class="btn primary" href="https://monsieurgregorio2001-coder.github.io/paperlab/" rel="noopener" aria-label="Open the demo for PaperLab">Open the demo</a><a class="btn" href="/work/paperlab/" aria-label="Read the case for PaperLab">Read the case</a><a class="case-link" href="https://github.com/monsieurgregorio2001-coder/paperlab" rel="noopener" aria-label="Code for PaperLab">Code</a></p>
+      </div>
+    </article>
     <ul id="cards" class="cards" role="list">
-      <li class="loading">Loading projects.</li>
+      <li>
+        <article class="case reveal" id="work-mindmap" style="--i:1">
+          <figure class="shot"><picture><source type="image/webp" srcset="assets/shots/mindmap-hero.webp"><img src="assets/shots/mindmap-hero.png" width="1600" height="1000" loading="lazy" decoding="async" alt="Living Mindmap canvas showing a sample graph of 16 connected nodes about Transformers, with a side panel of shortcuts."></picture></figure>
+          <div class="body">
+            <div class="meta"><span class="badge live">Live</span><p class="proves"><b>Proves </b>Agents and MCP</p></div>
+            <h3>Living Mindmap (MCP)</h3>
+            <p class="pitch">A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.</p>
+            <dl class="pcr"><div><dt>Problem</dt><dd>Ideas from long AI conversations vanish into chat history.</dd></div><div><dt>Build</dt><dd>One SQLite store shared by a React Flow UI, a REST API, and a stdio MCP server with near-duplicate detection.</dd></div><div><dt>Result</dt><dd><span class="num">42</span> tests, <span class="num">0</span> failures across <span class="num">160</span> real MCP calls, <span class="num">0.5</span> ms median per call.</dd></div></dl>
+            <ul class="tags" role="list"><li>MCP</li><li>TypeScript</li><li>React</li><li>SQLite</li></ul>
+            <p class="actions"><a class="btn primary" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start" rel="noopener" aria-label="Run locally for Living Mindmap (MCP)">Run locally</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp" rel="noopener" aria-label="Code for Living Mindmap (MCP)">Code</a><a class="case-link" href="/work/mindmap/" aria-label="Read the case for Living Mindmap (MCP)">Read the case</a></p>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="case reveal" id="work-slop-editorial" style="--i:2">
+          <figure class="shot"><picture><source type="image/webp" srcset="assets/shots/slop-hero.webp"><img src="assets/shots/slop-hero.png" width="1600" height="1000" loading="lazy" decoding="async" alt="Slop Editorial home page: a too-perfect synthetic sunset titled The Still with a Free, limited availability sticker and a rank badge."></picture></figure>
+          <div class="body">
+            <div class="meta"><span class="badge live">Live</span><p class="proves"><b>Proves </b>Taste and editorial judgment</p></div>
+            <h3>Slop Editorial</h3>
+            <p class="pitch">A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.</p>
+            <dl class="pcr"><div><dt>Problem</dt><dd>AI makes images nearly free, so publications drift into content that nobody decided to make.</dd></div><div><dt>Build</dt><dd>A Python pipeline that estimates, caps, approves, and logs every paid generation, plus an Astro and Three.js site whose build gates enforce voice, honesty, links, and speed.</dd></div><div><dt>Result</dt><dd><span class="num">49</span> pipeline tests, <span class="num">147</span> real-browser checks, <span class="num">0</span> accessibility violations, Lighthouse <span class="num">100</span> on accessibility, best practices, and SEO.</dd></div></dl>
+            <ul class="tags" role="list"><li>Astro</li><li>Three.js</li><li>Python</li><li>Human-in-the-loop</li></ul>
+            <p class="actions"><a class="btn primary" href="https://monsieurgregorio2001-coder.github.io/slop-editorial/" rel="noopener" aria-label="Live demo for Slop Editorial">Live demo</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/slop-editorial" rel="noopener" aria-label="Code for Slop Editorial">Code</a><a class="case-link" href="/work/slop-editorial/" aria-label="Read the case for Slop Editorial">Read the case</a></p>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="case reveal" id="work-paluwagan" style="--i:3">
+          <figure class="shot"><picture><source type="image/webp" srcset="assets/shots/paluwagan-hero.webp"><img src="assets/shots/paluwagan-hero.png" width="1600" height="1000" loading="lazy" decoding="async" alt="Online Paluwagan group dashboard showing the ledger, payout rotation, and payment status."></picture></figure>
+          <div class="body">
+            <div class="meta"><span class="badge live">Live</span><p class="proves"><b>Proves </b>Fintech and the Philippine market</p></div>
+            <h3>Online Paluwagan</h3>
+            <p class="pitch">A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves.</p>
+            <dl class="pcr"><div><dt>Problem</dt><dd>Paluwagan groups run on chat threads and memory, so late payments and disputes are common.</dd></div><div><dt>Build</dt><dd>An append-only ledger in integer centavos, seeded fair rotation, rule-based risk flags, and human-approved reminder drafts in English and Filipino.</dd></div><div><dt>Result</dt><dd><span class="num">53</span> tests, including <span class="num">12,000</span> randomized ledger operations, arrears included, that always reconcile.</dd></div></dl>
+            <ul class="tags" role="list"><li>React</li><li>TypeScript</li><li>Ledger</li><li>Claude</li></ul>
+            <p class="actions"><a class="btn primary" href="https://monsieurgregorio2001-coder.github.io/paluwagan/" rel="noopener" aria-label="Live demo for Online Paluwagan">Live demo</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/paluwagan" rel="noopener" aria-label="Code for Online Paluwagan">Code</a><a class="case-link" href="/work/paluwagan/" aria-label="Read the case for Online Paluwagan">Read the case</a></p>
+          </div>
+        </article>
+      </li>
     </ul>
+    <!-- cards:end -->
     <noscript>
+      <!-- noscript:start -->
       <ul class="plain">
-        <li><strong>PaperLab</strong>. Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need. <a href="https://monsieurgregorio2001-coder.github.io/paperlab/">Live demo</a>.</li>
-        <li><strong>Online Paluwagan</strong>. A demo rotating-savings group with a reconciling ledger and a fair payout rotation. <a href="https://monsieurgregorio2001-coder.github.io/paluwagan/">Live demo</a>.</li>
-        <li><strong>Living Mindmap (MCP)</strong>. A local-first knowledge graph that AI agents extend through 12 MCP tools. <a href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start">Run locally</a>.</li>
-        <li><strong>Slop Editorial</strong>. A satirical AI publication built like software, backed by a spend-capped generation pipeline.</li>
+        <li><strong>PaperLab</strong>. Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need. <a href="/work/paperlab/">Read the case</a> &middot; <a href="https://monsieurgregorio2001-coder.github.io/paperlab/">Live demo</a>.</li>
+        <li><strong>Living Mindmap (MCP)</strong>. A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node. <a href="/work/mindmap/">Read the case</a> &middot; <a href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start">Run locally</a>.</li>
+        <li><strong>Slop Editorial</strong>. A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline. <a href="/work/slop-editorial/">Read the case</a> &middot; <a href="https://monsieurgregorio2001-coder.github.io/slop-editorial/">Live demo</a>.</li>
+        <li><strong>Online Paluwagan</strong>. A demo rotating-savings group with a reconciling ledger, fair payout rotation, and AI-drafted payment reminders a human approves. <a href="/work/paluwagan/">Read the case</a> &middot; <a href="https://monsieurgregorio2001-coder.github.io/paluwagan/">Live demo</a>.</li>
       </ul>
+      <!-- noscript:end -->
     </noscript>
   </section>
 

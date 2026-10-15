@@ -1,0 +1,161 @@
+// Renders the Work section of index.html from projects.json (ADR 0007).
+// Usage: node scripts/build.mjs   (no dependencies; works from any cwd)
+// Writes between <!-- cards:start -->/<!-- cards:end --> and <!-- noscript:start -->/<!-- noscript:end -->.
+// Idempotent: the output depends only on projects.json, so a second run changes nothing.
+// CI runs it and fails if the committed index.html differs from the output.
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const indexPath = path.join(root, "index.html");
+const projects = JSON.parse(fs.readFileSync(path.join(root, "projects.json"), "utf8"))
+  .slice()
+  .sort((a, b) => a.order - b.order);
+
+const esc = (s) =>
+  String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+// Port of the old main.js withNumbers: wrap measured numbers in .num, never a trailing , or .
+function withNumbers(text) {
+  const re = /\d[\d,.]*/g;
+  let out = "", last = 0, m;
+  while ((m = re.exec(text))) {
+    let end = re.lastIndex;
+    if (/[.,]$/.test(m[0])) { end -= 1; re.lastIndex = end; }
+    out += esc(text.slice(last, m.index)) + `<span class="num">${esc(text.slice(m.index, end))}</span>`;
+    last = end;
+  }
+  return out + esc(text.slice(last));
+}
+
+const caseUrl = (p) => `/work/${p.slug}/`;
+const btn = (label, href, primary, name) =>
+  `<a class="${primary ? "btn primary" : "btn"}" href="${esc(href)}" rel="noopener" aria-label="${esc(label + " for " + name)}">${esc(label)}</a>`;
+const caseLink = (p) =>
+  `<a class="case-link" href="${esc(caseUrl(p))}" aria-label="${esc("Read the case for " + p.title)}">Read the case</a>`;
+
+// cardImage is the 1600x1000 2x crop; fall back to the old 1200x750 shot.
+function picture(p) {
+  const img = p.cardImage || p.image;
+  const [w, h] = p.cardImage ? [1600, 1000] : [1200, 750];
+  return `<figure class="shot"><picture><source type="image/webp" srcset="${esc(img)}.webp"><img src="${esc(img)}.png" width="${w}" height="${h}" loading="lazy" decoding="async" alt="${esc(p.imageAlt || "")}"></picture></figure>`;
+}
+
+const meta = (p, live) =>
+  `<div class="meta"><span class="${live ? "badge live" : "badge"}">${live ? "Live" : "Coming soon"}</span><p class="proves"><b>Proves </b>${esc(p.proves)}</p></div>`;
+
+function pcr(p) {
+  const rows = [["Problem", p.problem], ["Build", p.build], ["Result", p.result]]
+    .filter((r) => r[1])
+    .map(([k, v]) => `<div><dt>${k}</dt><dd>${k === "Result" ? withNumbers(v) : esc(v)}</dd></div>`);
+  return rows.length ? `<dl class="pcr">${rows.join("")}</dl>` : "";
+}
+
+const tags = (p) =>
+  p.tags && p.tags.length ? `<ul class="tags" role="list">${p.tags.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "";
+
+// Proof figures must come from the Result text: every number in a figure has to appear there.
+const numbersIn = (s) => s.match(/\d(?:[\d,.]*\d)?/g) || [];
+function figures(p) {
+  if (!p.figures || !p.figures.length) return "";
+  const nums = new Set(numbersIn(p.result));
+  for (const f of p.figures) {
+    for (const n of numbersIn(f.value)) {
+      if (!nums.has(n)) throw new Error(`${p.title}: figure number ${n} does not appear in result`);
+    }
+  }
+  const items = p.figures.map((f) => `<li><span class="fig num">${esc(f.value)}</span><span class="fig-label">${esc(f.label)}</span></li>`);
+  return `<ul class="figures" role="list" aria-label="${esc(p.title + " in numbers")}">${items.join("")}</ul>`;
+}
+
+const lines = (arr) => arr.filter((l) => l.trim()).join("\n");
+
+function featured(p, i) {
+  const actions = [];
+  if (p.demoUrl) actions.push(btn("Open the demo", p.demoUrl, true, p.title));
+  actions.push(`<a class="btn" href="${esc(caseUrl(p))}" aria-label="${esc("Read the case for " + p.title)}">Read the case</a>`);
+  if (p.repoUrl) actions.push(`<a class="case-link" href="${esc(p.repoUrl)}" rel="noopener" aria-label="${esc("Code for " + p.title)}">Code</a>`);
+  return lines([
+    `<article class="case featured reveal" id="work-${esc(p.slug)}" style="--i:${i}">`,
+    `  ${picture(p)}`,
+    `  <div class="body">`,
+    `    ${meta(p, true)}`,
+    `    <h3 class="display">${esc(p.title)}</h3>`,
+    `    <p class="pitch">${esc(p.pitch)}</p>`,
+    `    ${figures(p)}`,
+    `    ${pcr(p)}`,
+    `    ${tags(p)}`,
+    `    <p class="actions">${actions.join("")}</p>`,
+    `  </div>`,
+    `</article>`,
+  ]);
+}
+
+function card(p, i) {
+  if (p.status !== "live") {
+    return lines([
+      `<article class="case soon reveal" id="work-${esc(p.slug)}" style="--i:${i}">`,
+      `  ${meta(p, false)}`,
+      `  <h3>${esc(p.title)}</h3>`,
+      `  <p class="pitch">${esc(p.pitch)}</p>`,
+      `  <p class="note">Case study and links to follow.</p>`,
+      `</article>`,
+    ]);
+  }
+  const actions = [];
+  if (p.demoUrl) actions.push(btn(p.demoLabel || "Live demo", p.demoUrl, true, p.title));
+  if (p.repoUrl) actions.push(btn("Code", p.repoUrl, !p.demoUrl, p.title));
+  actions.push(caseLink(p));
+  return lines([
+    `<article class="case reveal" id="work-${esc(p.slug)}" style="--i:${i}">`,
+    p.image ? `  ${picture(p)}` : "",
+    `  <div class="body">`,
+    `    ${meta(p, true)}`,
+    `    <h3>${esc(p.title)}</h3>`,
+    `    <p class="pitch">${esc(p.pitch)}</p>`,
+    `    ${pcr(p)}`,
+    `    ${tags(p)}`,
+    `    <p class="actions">${actions.join("")}</p>`,
+    `  </div>`,
+    `</article>`,
+  ]);
+}
+
+const indent = (s, n) => s.split("\n").map((l) => " ".repeat(n) + l).join("\n");
+
+const lead = projects.find((p) => p.featured);
+const rest = projects.filter((p) => p !== lead);
+let cards = "";
+if (lead) cards += indent(featured(lead, 0), 4) + "\n";
+cards += `    <ul id="cards" class="cards" role="list">\n`;
+rest.forEach((p, i) => {
+  cards += `      <li>\n${indent(card(p, i + (lead ? 1 : 0)), 8)}\n      </li>\n`;
+});
+cards += `    </ul>`;
+
+const noscript =
+  `      <ul class="plain">\n` +
+  projects
+    .map((p) => {
+      const links = [`<a href="${esc(caseUrl(p))}">Read the case</a>`];
+      if (p.demoUrl) links.push(`<a href="${esc(p.demoUrl)}">${esc(p.demoLabel || "Live demo")}</a>`);
+      return `        <li><strong>${esc(p.title)}</strong>. ${esc(p.pitch)} ${links.join(" &middot; ")}.</li>`;
+    })
+    .join("\n") +
+  `\n      </ul>`;
+
+function between(html, name, body) {
+  const re = new RegExp(`(<!-- ${name}:start -->)[\\s\\S]*?(\\n[ \\t]*<!-- ${name}:end -->)`);
+  if (!re.test(html)) throw new Error(`markers for ${name} not found in index.html`);
+  return html.replace(re, (_, a, b) => a + "\n" + body + b);
+}
+
+const before = fs.readFileSync(indexPath, "utf8");
+const after = between(between(before, "cards", cards), "noscript", noscript);
+if (after !== before) {
+  fs.writeFileSync(indexPath, after);
+  console.log("index.html updated");
+} else {
+  console.log("index.html already up to date");
+}

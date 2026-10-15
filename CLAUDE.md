@@ -34,8 +34,8 @@ This is the personal portfolio of Garfield Greg Lim III at https://monsieurgrego
 ## Checks
 
 ```
-cd scripts && npm install
-node build.mjs                 # regenerate cards (Phase 2+)
+cd scripts && npm ci
+npm run check                  # build diff, html-validate, axe, links (same as CI)
 node shoot.mjs ../docs/audits/shots/<phase>   # review screenshots
 ```
 
