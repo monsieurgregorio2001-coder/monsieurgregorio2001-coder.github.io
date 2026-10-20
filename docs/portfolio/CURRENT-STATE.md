@@ -4,24 +4,37 @@ Updated: 2026-10-20 (Asia/Manila)
 
 ## Now
 
-The project now has an explicit hiring outcome: polish the portfolio, find suitable jobs, customize documents, submit within the actual execution delegation, and track results through interviews and offers. [The roadmap](roadmap/README.md) defines stable milestones and an adjustable schedule. [The hiring playbooks](hiring/README.md) define how to execute. [The latest handover](handovers/LATEST.md) identifies exact resume steps.
+Garfield asked to finish the portfolio before the job search, with "the polish of Apple" and a willingness to "go a bit crazy", and delegated the whole portfolio to the agent ("do everything for the portfolio"). Job applications are parked. Their strategy and playbooks moved to the private workspace `_career/strategy/`.
 
-The planning package and private local workspace _career/ are initialized. The canonical application tracker contains zero records, and the event log is empty. No actual resume export, qualified shortlist, submission, or interview progress was produced by this checkpoint. Garfield has now confirmed broad AI engineering, product-building/vibe-coding, AI solutions architecture, GTM engineering, and adjacent role interests. His [positioning direction](roadmap/positioning.md) emphasizes taste, judgment, people skills, conceptualization, and systematic thinking shown through the work. Seniority and practical constraints remain unknown; current experience/results still require evidence. The illustrative 15 hours/week and throughput/rubric remain proposed defaults.
+The portfolio-finish initiative is in planning. Inputs gathered on 2026-10-20: hands-on audits of every project and the Five Rooms prototype, a live-route check of the public site, and web research on Apple's design language, standout portfolios, the web platform, tasteful experimental work, hiring signals, explainers and domain exemplars. A three-direction design panel is choosing the direction. The resulting direction and plan will be linked from [design/](design/README.md) and [plans/](plans/).
 
-## Next useful outcome
+## What is live
 
-Establish candidate facts/filters, pass the [minimum portfolio hiring gate](roadmap/portfolio-readiness.md), and prepare the first well-matched application packet. Source roles alongside essential polish. Do not wait for optional image replacement or a complete Five Rooms migration.
+| Surface | State |
+| --- | --- |
+| Hub | October 15 polish release (hub ADRs 0001 to 0008): glyph-field hero, featured PaperLab, four case pages at `/work/<slug>/`, CI with html-validate, axe and link checks |
+| PaperLab | v1 live at `/paperlab/`. v2 "ladder" plan and tested maths kernels are open as PaperLab PRs #1 and #2 |
+| Online Paluwagan | live at `/paluwagan/` |
+| Living Mindmap | public repository, no hosted demo |
+| Slop Editorial | live at `/slop-editorial/` |
+| Five Rooms | local prototype only, not versioned |
 
-Private live task priorities belong in _career/NOW.md. Application statuses and next actions belong once in _career/tracker/applications.json. This page holds the cross-project picture; the roadmap holds intended strategy, not a competing task board.
+## Known issues to fix in the initiative
 
-## Known readiness issues
+- Hub: Living Mindmap card says Live without a hosted demo. Slop figure on the card (147 checks) matches neither its README (143 and 150) nor today's run (143).
+- PaperLab: the attention view sits below the fold, and the coreference preset implies a pattern random weights cannot show. README still says the deploy workflow has not run.
+- Paluwagan: desktop ledger table breaks words, phone schedule row is clipped, reminders quote the full contribution rather than the outstanding amount, and the AI boundary is hidden.
+- Living Mindmap: phone map view is unusable, plain Tab is trapped, AI provenance and duplicate refusal are nearly invisible, and there is no hosted demo. Tests need Node 20 or newer.
+- Slop Editorial: README check counts disagree, reduced-motion certificate page overflows, the 3D certificate reads weakly, and `npm run art` would overwrite the photographic set.
 
-Local source inspection found inconsistent Slop test counts, delivery descriptions needing current public verification, Paluwagan reminder copy needing the pre-generated/no-runtime qualifier, missing public resume access or a deliberate private request route, and career facts needing current evidence. Slop's public claim of image checks/repository QA provenance also needs substantiation against the currently available trail. The readiness plan supplies POL IDs, checks, and effort assumptions. No app suite or live product walkthrough was rerun during planning.
+## Open owner decisions
 
-The full V3 image brief and previous image QA are missing. The nine existing incoming images remain intact and unreviewed here. The legacy-versus-Five Rooms design direction and exact inspiration URLs remain unresolved. These are scoped follow-ups rather than blockers to all hiring work.
+Defaults are taken so work can continue. Each is reversible and logged in the direction's decisions log.
 
-## Structure and local-only state
+- Rename Living Mindmap to Kuru: not approved. Default: keep Living Mindmap.
+- Public resume: deferred by the owner (hub ADR 0008). Default: keep deferred.
+- About photo and career arc: deferred (hub ADR 0008).
 
-The shared documentation lives in the hub repository. [Conventions](../../CONTRIBUTING.md), [workflow](WORKFLOW.md), six local agent/context entry points, project registry, and doc validation are in place. The private _career/ workspace is outside that public repository and must be transferred explicitly; it is not a remote backup.
+## Structure
 
-Prior documentation/config changes remain uncommitted and unpushed. The workspace parent and Five Rooms have no Git repository. Slop Editorial incoming/ was already untracked. Documentation CI is configured locally but has not run on GitHub. No deployment, profile edit, external tracker, scheduled automation, employer outreach, or application was performed by this planning checkpoint.
+Shared documentation lives in this hub repository. Each project keeps local facts in `docs/CONTEXT.md` and agent rules in `AGENTS.md`. The private `_career/` workspace is outside every repository and is not backed up remotely. Five Rooms has no Git repository.
