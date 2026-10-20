@@ -2,6 +2,12 @@
 
 Source for the personal portfolio site of Garfield Greg Lim III, an Applied AI Engineer in Cebu, Philippines.
 
+## Start here
+
+- [Docs map](docs/README.md): where plans, decisions, audits, the tracker and the shared portfolio memory live.
+- [Contribution conventions](CONTRIBUTING.md) and [agent conventions](CLAUDE.md): copy, design, process and checks.
+- [Agent context](docs/CONTEXT.md): local implementation facts.
+
 ## Stack
 
 Plain HTML, CSS, and a small amount of vanilla JavaScript. There is no build step needed to view or deploy, no framework, no tracking, and no cookies. Fonts are self-hosted in `assets/fonts/` under the SIL Open Font License.
@@ -16,7 +22,9 @@ Plain HTML, CSS, and a small amount of vanilla JavaScript. There is no build ste
 - `scripts/lib/chrome.mjs` holds the shared header, footer and case-page `<head>`.
 - `assets/shots/<slug>/` holds the case-page detail crops; `assets/og/<slug>.png` the case-page Open Graph images.
 - `assets/shots/` holds the card crops (`<name>-hero`, 1600 by 1000, shot at 2x) and the older 1200 by 750 full shots, as WebP and PNG.
-- `scripts/` holds the screenshot, Open Graph, and review tooling.
+- `scripts/` holds the build, screenshot, Open Graph, review and documentation-check tooling.
+- `docs/` holds the hub's plans, decisions, audits, tracker and changelog; `docs/portfolio/` holds the shared memory for all portfolio projects.
+- `.github/` holds the site and documentation CI and the pull request template.
 
 ## Preview locally
 
