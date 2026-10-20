@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "home_project_id": "portfolio-hub",
+  "projects": [
+    {
+      "id": "portfolio-hub",
+      "name": "Portfolio hub",
+      "path": "monsieurgregorio2001-coder.github.io",
+      "kind": "site",
+      "role": "Public portfolio and shared project documentation",
+      "checks": [
+        {
+          "directory": ".",
+          "command": "python3 scripts/check-docs.py"
+        },
+        {
+          "directory": ".",
+          "command": "python3 -m http.server 8000"
+        }
+      ],
+      "repository": "https://github.com/monsieurgregorio2001-coder/monsieurgregorio2001-coder.github.io"
+    },
+    {
+      "id": "five-rooms",
+      "name": "Five Rooms prototype",
+      "path": "five-rooms-poc",
+      "kind": "prototype",
+      "role": "Experimental room designs, not production project code",
+      "checks": [
+        {
+          "directory": ".",
+          "command": "python3 serve.py"
+        }
+      ]
+    },
+    {
+      "id": "paperlab",
+      "name": "PaperLab",
+      "path": "paperlab",
+      "kind": "app",
+      "role": "Transformer and attention visualizer",
+      "checks": [
+        {
+          "directory": ".",
+          "command": "npm test"
+        },
+        {
+          "directory": ".",
+          "command": "npm run build"
+        }
+      ],
+      "repository": "https://github.com/monsieurgregorio2001-coder/paperlab"
+    },
+    {
+      "id": "paluwagan",
+      "name": "Online Paluwagan",
+      "path": "paluwagan",
+      "kind": "app",
+      "role": "Savings group portfolio demo",
+      "checks": [
+        {
+          "directory": ".",
+          "command": "npm test"
+        },
+        {
+          "directory": ".",
+          "command": "npm run typecheck"
+        },
+        {
+          "directory": ".",
+          "command": "npm run build"
+        }
+      ],
+      "repository": "https://github.com/monsieurgregorio2001-coder/paluwagan"
+    },
+    {
+      "id": "kuru",
+      "name": "Kuru / Living Mindmap",
+      "path": "mindmap-mcp",
+      "kind": "app",
+      "role": "Local graph UI, API, and MCP server",
+      "checks": [
+        {
+          "directory": ".",
+          "command": "npm test"
+        },
+        {
+          "directory": ".",
+          "command": "npm run typecheck"
+        },
+        {
+          "directory": ".",
+          "command": "npm run lint"
+        },
+        {
+          "directory": ".",
+          "command": "npm run build"
+        },
+        {
+          "directory": ".",
+          "command": "npm run verify:mcp"
+        }
+      ],
+      "repository": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp"
+    },
+    {
+      "id": "slop-editorial",
+      "name": "Slop Editorial",
+      "path": "slop-editorial",
+      "kind": "app",
+      "role": "Editorial site and image generation pipeline",
+      "checks": [
+        {
+          "directory": "site",
+          "command": "npm test"
+        },
+        {
+          "directory": "site",
+          "command": "npm run build"
+        },
+        {
+          "directory": "site",
+          "command": "npm run check"
+        },
+        {
+          "directory": "site",
+          "command": "npm run verify"
+        },
+        {
+          "directory": "pipeline",
+          "command": "python3 -m unittest discover -s tests -t ."
+        }
+      ],
+      "repository": "https://github.com/monsieurgregorio2001-coder/slop-editorial"
+    }
+  ]
+}

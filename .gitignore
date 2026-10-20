@@ -1,2 +1,13 @@
 scripts/node_modules/
 .DS_Store
+
+# Local machine and generated files
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+test-output/
+
+# Private hiring operations never belong in this public repository
+_career/

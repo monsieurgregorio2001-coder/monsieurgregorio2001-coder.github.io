@@ -2,6 +2,15 @@
 
 Source for the personal portfolio site of Garfield Greg Lim III, an Applied AI Engineer in Cebu, Philippines.
 
+## Start here
+
+- [Hiring roadmap](docs/portfolio/roadmap/README.md): portfolio readiness, suitable jobs, tailored applications, and follow-through.
+- [Living documentation](docs/portfolio/README.md): current priorities, specs, decisions, and handover.
+- [Contribution conventions](CONTRIBUTING.md): structure, naming, focused changes, and verification.
+- [Agent context](docs/CONTEXT.md): local implementation facts.
+
+Check documentation with `python3 scripts/check-docs.py`. It needs only Python's standard library.
+
 ## Stack
 
 Plain HTML, CSS, and a small amount of vanilla JavaScript. There is no build step, no framework, no tracking, and no cookies. Fonts are self-hosted in `assets/fonts/` under the SIL Open Font License.
@@ -12,7 +21,9 @@ Plain HTML, CSS, and a small amount of vanilla JavaScript. There is no build ste
 - `projects.json` holds the case card data, which `main.js` renders.
 - `style.css` holds the design tokens and styles, with a dark theme through `prefers-color-scheme`.
 - `assets/shots/` holds the card screenshots as 1200 by 750 WebP and PNG.
-- `scripts/` holds the screenshot, Open Graph, and review tooling.
+- `scripts/` holds documentation checks, screenshot, Open Graph, and review tooling.
+- `docs/portfolio/` holds the shared portfolio memory and conventions.
+- `.github/` holds documentation CI and the pull request template.
 
 ## Preview locally
 
