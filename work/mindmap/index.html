@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- head:start -->
+<title>Living Mindmap (MCP) case study | Garfield Lim</title>
+<meta name="description" content="A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/work/mindmap/">
+<link rel="preload" href="../../assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Living Mindmap (MCP) case study | Garfield Lim">
+<meta property="og:description" content="A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.">
+<meta property="og:url" content="https://monsieurgregorio2001-coder.github.io/work/mindmap/">
+<meta property="og:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/mindmap.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Living Mindmap (MCP). Proves Agents and MCP.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Living Mindmap (MCP) case study | Garfield Lim">
+<meta name="twitter:description" content="A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.">
+<meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/mindmap.png">
+<meta name="twitter:image:alt" content="Living Mindmap (MCP). Proves Agents and MCP.">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../case.css">
+<!-- head:end -->
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!-- header:start -->
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="wordmark" href="/" aria-label="Garfield Lim, home">Garfield Lim</a>
+    <nav aria-label="Primary">
+      <ul class="nav" role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- header:end -->
+<main id="main">
+  <section class="case-hero wrap" aria-labelledby="case-h">
+    <!-- case-head:start -->
+<p class="eyebrow">Case study</p>
+<h1 id="case-h" class="display">Living Mindmap (MCP)</h1>
+<p class="lead">A local-first visual knowledge graph that people edit by hand and AI agents extend through 12 MCP tools, with duplicate protection and provenance on every AI-added node.</p>
+<p class="proves"><b>Proves </b>Agents and MCP</p>
+<p class="actions"><a class="btn primary" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start" rel="noopener" aria-label="Run locally for Living Mindmap (MCP)">Run locally</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp" rel="noopener" aria-label="Code for Living Mindmap (MCP)">Code</a></p>
+<ul class="tags" role="list"><li>MCP</li><li>TypeScript</li><li>SQLite</li></ul>
+    <!-- case-head:end -->
+  </section>
+
+  <section class="cs wrap" aria-labelledby="problem-h">
+    <h2 id="problem-h" class="cs-h">Problem</h2>
+    <div class="prose">
+      <p>A long conversation with an AI model produces good ideas. Then the chat scrolls away and the ideas go with it. Copying them into notes by hand is slow, so most people do not.</p>
+      <p>Letting an agent write straight into a notes tool has its own problems. It adds the same concept twice under slightly different names. Later nobody can tell which notes a person wrote and which an agent wrote.</p>
+      <p>I wanted one map that I can edit by hand and an agent can extend, without either one making a mess of the other.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="approach-h">
+    <h2 id="approach-h" class="cs-h">Approach</h2>
+    <div class="prose">
+      <p>Living Mindmap is a local app. A React Flow canvas shows the graph. An Express API serves it on loopback only. A separate stdio MCP server gives agents <span class="num">12</span> tools<!-- src: mindmap-mcp/README.md "MCP tools" table, 12 rows, 2026-10-15 --> over the same data: list and read maps, search, create and update nodes, connect them, attach sources, and export a branch as context.</p>
+      <p>Both processes open the same SQLite file. The UI polls, so a node an agent adds shows up in an open browser tab a few seconds later.</p>
+      <p>Two rules keep agent writes honest. <code>create_node</code> rejects near-duplicate titles and returns the candidates, unless the agent passes <code>allow_duplicate: true</code>. Every node written through MCP carries <code>provenance: ai</code>, and the canvas marks it.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="arch-h">
+    <h2 id="arch-h" class="cs-h">Architecture</h2>
+    <figure class="diagram">
+      <svg viewBox="0 0 600 540" role="img" aria-labelledby="arch-t arch-d">
+        <title id="arch-t">Living Mindmap architecture</title>
+        <desc id="arch-d">A person uses the React Flow UI, which calls the Express API over REST on loopback. An AI client calls the MCP server over stdio. The API and the MCP server both go through one Store, which writes one SQLite file in WAL mode.</desc>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrow" d="M0 0 10 5 0 10z"/></marker></defs>
+        <rect class="box" x="1" y="1" width="268" height="56" rx="28"/>
+        <text class="lbl" x="135" y="36" text-anchor="middle">Person</text>
+        <path class="edge" d="M135 57V108" marker-end="url(#ah)"/>
+        <rect class="box" x="1" y="110" width="268" height="70" rx="8"/>
+        <text class="lbl" x="20" y="140">Web UI</text>
+        <text class="sub" x="20" y="165">React + React Flow</text>
+        <path class="edge" d="M135 180V238" marker-end="url(#ah)"/>
+        <text class="sub" x="145" y="214">REST, loopback</text>
+        <rect class="box" x="1" y="240" width="268" height="70" rx="8"/>
+        <text class="lbl" x="20" y="282">Express API</text>
+        <rect class="box" x="331" y="1" width="268" height="56" rx="28"/>
+        <text class="lbl" x="465" y="36" text-anchor="middle">AI client</text>
+        <path class="edge" d="M465 57V238" marker-end="url(#ah)"/>
+        <text class="tag" x="475" y="150">MCP over</text>
+        <text class="tag" x="475" y="172">stdio</text>
+        <rect class="box" x="331" y="240" width="268" height="70" rx="8"/>
+        <text class="lbl" x="350" y="270">MCP server</text>
+        <text class="sub" x="350" y="295">12 tools</text>
+        <path class="edge" d="M135 310V328H250V348" marker-end="url(#ah)"/>
+        <path class="edge" d="M465 310V328H350V348" marker-end="url(#ah)"/>
+        <rect class="box hl" x="150" y="350" width="300" height="72" rx="8"/>
+        <text class="lbl" x="170" y="381">Store</text>
+        <text class="sub" x="170" y="406">reads, writes, duplicate check</text>
+        <path class="edge" d="M300 422V466" marker-end="url(#ah)"/>
+        <rect class="box" x="150" y="468" width="300" height="70" rx="8"/>
+        <text class="lbl" x="170" y="498">SQLite file</text>
+        <text class="sub" x="170" y="523">WAL mode</text>
+      </svg>
+      <figcaption>Two processes, one store, one file. Redrawn from the diagram in the project README.</figcaption>
+    </figure>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="dec-h">
+    <h2 id="dec-h" class="cs-h">Decisions</h2>
+    <ul class="decisions" role="list">
+      <li><strong>Chose one shared SQLite store over separate data for the UI and the agent</strong><span>because two copies drift. With one Store class, the duplicate check and provenance apply to every write, whichever door it came through.</span></li>
+      <li><strong>Chose rejecting near-duplicates over merging them silently</strong><span>because the agent gets the candidates back and can decide. An explicit <code>allow_duplicate</code> flag covers the cases where two nodes really should share a name.</span></li>
+      <li><strong>Chose provenance on every MCP write over trusting the agent to label itself</strong><span>because the server sets <code>provenance: ai</code>, not the client. A person can always see what they did not write.</span></li>
+      <li><strong>Chose structured errors over exceptions</strong><span>because an agent can read <code>{ error, code, details }</code> and retry sensibly. A crashed stdio server just ends the session.</span></li>
+      <li><strong>Chose local-first with no accounts over a hosted demo</strong><span>because the data is personal notes. The cost is that reviewers have to run it, so the README starts with a four-line quick start.</span></li>
+    </ul>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="res-h">
+    <h2 id="res-h" class="cs-h">Results</h2>
+    <div>
+      <ul class="results" role="list">
+        <li><span class="fig num">42 tests</span><span class="how"><code>npm test</code> runs <span class="num">42</span> Vitest tests across <span class="num">6</span> files: store, graph layout, context export, REST API, seed data, and the MCP tool handlers through an in-memory MCP client.<!-- src: mindmap-mcp/README.md "Tests", 2026-10-14; tests/*.test.ts, 6 files, 2026-10-15 --></span></li>
+        <li><span class="fig num">160 calls, 0 failures</span><span class="how"><code>scripts/bench.ts</code> starts the real stdio server and runs a scripted <span class="num">16</span>-call task ten times: list, create ten nodes, read the map back five ways.<!-- src: mindmap-mcp/README.md "Measured results", scripts/bench.ts, 2026-10-14 --></span></li>
+        <li><span class="fig num">0.5 ms</span><span class="how">Median round trip per call in that benchmark, about <span class="num">1.2</span> ms at the 95th percentile, on Node <span class="num">26</span> on one machine.<!-- src: mindmap-mcp/README.md "Measured results", 2026-10-14 --></span></li>
+        <li><span class="fig num">12 tools</span><span class="how"><code>npm run verify:mcp</code> starts the server with a real MCP client and lists the tools. CI runs it on Node <span class="num">20</span> and <span class="num">22</span>.<!-- src: mindmap-mcp/README.md "Quick start" and "Tests", 2026-10-14 --></span></li>
+      </ul>
+      <p class="fine">Benchmark numbers vary by machine. <code>npm run bench</code> reproduces them.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="screens-h">
+    <h2 id="screens-h" class="cs-h">Screens</h2>
+    <div class="screens">
+      <!-- screens:start -->
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/mindmap/01-graph.webp"><img src="../../assets/shots/mindmap/01-graph.png" width="1600" height="1000" loading="lazy" decoding="async" alt="The sample map on the canvas: Transformers at the root with branches for attention, position, architecture and training."></picture><figcaption>The bundled sample map laid out as a tree. Every node is a row in one SQLite file.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/mindmap/02-inspector.webp"><img src="../../assets/shots/mindmap/02-inspector.png" width="1600" height="1000" loading="lazy" decoding="async" alt="The inspector open on the Self-Attention node with status, summary and notes fields."></picture><figcaption>The inspector. People edit here and agents edit the same record through MCP.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/mindmap/03-search.webp"><img src="../../assets/shots/mindmap/03-search.png" width="1600" height="1000" loading="lazy" decoding="async" alt="The search box with results for attention, each showing a title and a summary snippet."></picture><figcaption>Search across maps. The MCP tool search_nodes runs the same query.</figcaption></figure>
+      <!-- screens:end -->
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="next-h">
+    <h2 id="next-h" class="cs-h">What I'd do next</h2>
+    <ul class="later">
+      <li>Push changes to the UI instead of polling, so agent edits appear at once.</li>
+      <li>Add an undo for a whole agent session, built on the provenance marks that already exist.</li>
+      <li>Record a short screen capture of an agent extending a map, since there is no hosted demo.</li>
+    </ul>
+  </section>
+</main>
+<!-- case-nav:start -->
+<nav class="case-nav wrap" aria-label="More case studies">
+  <a class="prev" href="/work/paperlab/"><span class="eyebrow">Previous</span><span class="t">PaperLab</span></a>
+  <a class="back" href="/#work-mindmap">Back to work</a>
+  <a class="next" href="/work/slop-editorial/"><span class="eyebrow">Next</span><span class="t">Slop Editorial</span></a>
+</nav>
+<!-- case-nav:end -->
+<!-- footer:start -->
+<footer class="site-footer">
+  <div class="wrap foot">
+    <p>Built by Garfield Greg Lim III. <a href="https://github.com/monsieurgregorio2001-coder/monsieurgregorio2001-coder.github.io/blob/main/docs/decisions/0001-no-framework-no-build.md" rel="noopener">Built without a framework</a>.</p>
+    <nav aria-label="Pages">
+      <ul role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/work/paperlab/">PaperLab</a></li>
+        <li><a href="/work/mindmap/">Living Mindmap</a></li>
+        <li><a href="/work/slop-editorial/">Slop Editorial</a></li>
+        <li><a href="/work/paluwagan/">Online Paluwagan</a></li>
+      </ul>
+    </nav>
+    <ul role="list">
+      <li><a href="/">Portfolio</a></li>
+      <li><a href="https://github.com/monsieurgregorio2001-coder" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:lim.ggreg@outlook.com">lim.ggreg@outlook.com</a></li>
+    </ul>
+  </div>
+</footer>
+<!-- footer:end -->
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- head:start -->
+<title>Slop Editorial case study | Garfield Lim</title>
+<meta name="description" content="A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/work/slop-editorial/">
+<link rel="preload" href="../../assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Slop Editorial case study | Garfield Lim">
+<meta property="og:description" content="A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.">
+<meta property="og:url" content="https://monsieurgregorio2001-coder.github.io/work/slop-editorial/">
+<meta property="og:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/slop-editorial.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Slop Editorial. Proves Taste and editorial judgment.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Slop Editorial case study | Garfield Lim">
+<meta name="twitter:description" content="A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.">
+<meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/slop-editorial.png">
+<meta name="twitter:image:alt" content="Slop Editorial. Proves Taste and editorial judgment.">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../case.css">
+<!-- head:end -->
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!-- header:start -->
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="wordmark" href="/" aria-label="Garfield Lim, home">Garfield Lim</a>
+    <nav aria-label="Primary">
+      <ul class="nav" role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- header:end -->
+<main id="main">
+  <section class="case-hero wrap" aria-labelledby="case-h">
+    <!-- case-head:start -->
+<p class="eyebrow">Case study</p>
+<h1 id="case-h" class="display">Slop Editorial</h1>
+<p class="lead">A satirical AI publication built like software: staged metrics, a taste update with no visible difference, and a gift shop for authenticity, backed by a spend-capped generation pipeline.</p>
+<p class="proves"><b>Proves </b>Taste and editorial judgment</p>
+<p class="actions"><a class="btn primary" href="https://monsieurgregorio2001-coder.github.io/slop-editorial/" rel="noopener" aria-label="Live demo for Slop Editorial">Live demo</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/slop-editorial" rel="noopener" aria-label="Code for Slop Editorial">Code</a></p>
+<ul class="tags" role="list"><li>Astro</li><li>Python</li><li>Human-in-the-loop</li></ul>
+    <!-- case-head:end -->
+  </section>
+
+  <section class="cs wrap" aria-labelledby="problem-h">
+    <h2 id="problem-h" class="cs-h">Problem</h2>
+    <div class="prose">
+      <p>Image models made pictures nearly free. Feeds fill with work nobody decided to make. Hands get six fingers, signs say Sunseet, and every comment says Amazing.</p>
+      <p>The hard part is not generating images. It is deciding which ones deserve to exist, and keeping a paid pipeline from spending money nobody approved.</p>
+      <p>I wanted to make that point with a publication that is funny on the surface and strict underneath. The thesis fits in one line: generation is cheap, taste is not.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="approach-h">
+    <h2 id="approach-h" class="cs-h">Approach</h2>
+    <div class="prose">
+      <p>The project has two halves. The site is an Astro build that hangs <span class="num">9</span> generated works<!-- src: slop-editorial/README.md "In 30 seconds", 2026-10-15 --> like a gallery and labels them like the platforms it mocks: a cookie sheet with two Accept buttons, ratings that always read <span class="num">4.2</span>, a taste update that installs with no visible difference, a gift shop in front of a Three.js certificate.</p>
+      <p>The pipeline is a Python tool called <code>slopgen</code>. It plans jobs from Markdown prompts and a YAML plan, prints a cost estimate, refuses paid runs without an approval, and logs every request. It runs offline by default against a free mock provider.</p>
+      <p>The same rule runs through both halves. Automation proposes, a named person decides, and the decision is written down. The site's approval queue makes the joke out loud: its Approve button refuses, because approval happens with a human, not a button.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="arch-h">
+    <h2 id="arch-h" class="cs-h">Architecture</h2>
+    <figure class="diagram">
+      <svg viewBox="0 0 600 470" role="img" aria-labelledby="arch-t arch-d">
+        <title id="arch-t">Slop Editorial architecture</title>
+        <desc id="arch-d">Pipeline: prompt pack and run plan feed a job planner with fingerprints and cache state, then an approval gate with an estimate, a spend cap and an approval reference, then a provider and the run store with its ledger, then human review. Changing a selection sends stale jobs back to the planner. Site: works and releases in MDX go through the Astro build, then build gates, then GitHub Pages.</desc>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrow" d="M0 0 10 5 0 10z"/></marker></defs>
+        <text class="tag" x="34" y="20">PIPELINE</text>
+        <text class="tag" x="334" y="20">SITE</text>
+        <rect class="box" x="30" y="34" width="266" height="64" rx="8"/>
+        <text class="lbl" x="46" y="61">Prompts + plan</text>
+        <text class="sub" x="46" y="85">Markdown, YAML</text>
+        <path class="edge" d="M163 98V120" marker-end="url(#ah)"/>
+        <rect class="box" x="30" y="122" width="266" height="64" rx="8"/>
+        <text class="lbl" x="46" y="149">Job planner</text>
+        <text class="sub" x="46" y="173">fingerprint, cache</text>
+        <path class="edge" d="M163 186V208" marker-end="url(#ah)"/>
+        <rect class="box hl" x="30" y="210" width="266" height="64" rx="8"/>
+        <text class="lbl" x="46" y="237">Approval gate</text>
+        <text class="sub" x="46" y="261">estimate, cap, ref</text>
+        <path class="edge" d="M163 274V296" marker-end="url(#ah)"/>
+        <rect class="box" x="30" y="298" width="266" height="64" rx="8"/>
+        <text class="lbl" x="46" y="325">Provider → run store</text>
+        <text class="sub" x="46" y="349">mock or paid; ledger</text>
+        <path class="edge" d="M163 362V384" marker-end="url(#ah)"/>
+        <rect class="box" x="30" y="386" width="266" height="64" rx="8"/>
+        <text class="lbl" x="46" y="413">Human review</text>
+        <text class="sub" x="46" y="437">sheet, pick, deck</text>
+        <path class="edge dash" d="M30 418H12V154H28" marker-end="url(#ah)"/>
+        <rect class="box" x="332" y="34" width="266" height="64" rx="8"/>
+        <text class="lbl" x="348" y="61">Astro build</text>
+        <text class="sub" x="348" y="85">works, releases MDX</text>
+        <path class="edge" d="M465 98V120" marker-end="url(#ah)"/>
+        <rect class="box hl" x="332" y="122" width="266" height="64" rx="8"/>
+        <text class="lbl" x="348" y="149">Build gates</text>
+        <text class="sub" x="348" y="173">voice, links, budgets</text>
+        <path class="edge" d="M465 186V208" marker-end="url(#ah)"/>
+        <rect class="box" x="332" y="210" width="266" height="64" rx="8"/>
+        <text class="lbl" x="348" y="249">GitHub Pages</text>
+      </svg>
+      <figcaption>The two gates are the point: one stops unapproved spend, one stops a build that breaks the house voice or budget. The dashed line is a changed selection marking downstream jobs stale. Redrawn from the diagram in the project README.</figcaption>
+    </figure>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="dec-h">
+    <h2 id="dec-h" class="cs-h">Decisions</h2>
+    <ul class="decisions" role="list">
+      <li><strong>Chose content-addressed fingerprints over job names</strong><span>because a hash of provider, model, final prompt, seed, size and reference-image bytes means an unchanged job is never paid for twice.</span></li>
+      <li><strong>Chose three required flags over a confirm prompt</strong><span>because a paid run needs <code>--yes</code>, an <code>--approval-ref</code> and an estimate under <code>--max-usd</code>. The ledger keeps the reference, so anyone can later answer who allowed the spend.</span></li>
+      <li><strong>Chose never retrying a POST over retrying on timeout</strong><span>because a retry can pay twice. The request id is saved the moment it exists, and an unclear outcome stays <code>uncertain</code> until a person confirms.</span></li>
+      <li><strong>Chose build gates over a style guide</strong><span>because a guide gets ignored. The build fails on external requests, em dashes, contractions, long sentences, broken links, leaks and blown budgets.</span></li>
+      <li><strong>Chose three 3D tiers over one renderer</strong><span>because phones and data saver should not load a WebGL scene. WebGPU falls back to WebGL, then to an <span class="num">18</span>-frame poster.<!-- src: slop-editorial/README.md "Site features", 2026-10-15 --></span></li>
+    </ul>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="res-h">
+    <h2 id="res-h" class="cs-h">Results</h2>
+    <div>
+      <ul class="results" role="list">
+        <li><span class="fig num">68 unit tests</span><span class="how"><span class="num">49</span> Python tests for the pipeline and <span class="num">19</span> Node tests for the gate logic and helpers, all passing. One pipeline test asserts that no key or personal path reaches a run directory.<!-- src: slop-editorial/README.md "Tests and measured results" table and "In 30 seconds", measured 2026-10-14; 49 def test_ in pipeline/tests, counted 2026-10-15 --></span></li>
+        <li><span class="fig num">146 build gates</span><span class="how"><code>npm run check</code> over the built site: brand, voice, links, leaks and budgets.<!-- src: slop-editorial/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
+        <li><span class="fig num">143 browser checks</span><span class="how"><code>npm run verify</code> drives headless Chrome through Playwright, with axe in light and dark: <span class="num">20</span> runs over <span class="num">10</span> page types, <span class="num">0</span> violations.<!-- src: slop-editorial/README.md "In 30 seconds" (143) and "Tests and measured results" (20 axe runs, 0 violations), 2026-10-14. The results table in the same README says 150 pass; see TRACKER. --></span></li>
+        <li><span class="fig num">93 and 91</span><span class="how">Lighthouse mobile performance on the home page and the 3D page, with <span class="num">100</span> for accessibility, best practices and SEO on both. Layout shift <span class="num">0.002</span>, blocking time <span class="num">0</span> ms.<!-- src: slop-editorial/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
+        <li><span class="fig num">81 KB</span><span class="how">Shared JavaScript, gzipped. The <span class="num">379</span> KB 3D chunk loads only on the certificate page.<!-- src: slop-editorial/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
+      </ul>
+      <p class="fine">A snapshot from one laptop with headless Chrome. The fal and Replicate adapters are tested against scripted fakes only, not the live services.</p>
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="screens-h">
+    <h2 id="screens-h" class="cs-h">Screens</h2>
+    <div class="screens">
+      <!-- screens:start -->
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/slop-editorial/01-releases.webp"><img src="../../assets/shots/slop-editorial/01-releases.png" width="1600" height="1000" loading="lazy" decoding="async" alt="The release tracker headed Your November is 17 % approved, with six sample releases and their states."></picture><figcaption>The release tracker. Each sample release carries an estimate, a cap and an approval reference.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/slop-editorial/02-gift-shop.webp"><img src="../../assets/shots/slop-editorial/02-gift-shop.png" width="1600" height="1000" loading="lazy" decoding="async" alt="A printed gift-shop receipt itemizing appreciation, a prompt pack and an extra finger."></picture><figcaption>The gift shop receipt on the certificate page. The joke works because the arithmetic does.</figcaption></figure>
+<figure class="screen"><picture><source type="image/webp" srcset="../../assets/shots/slop-editorial/03-works.webp"><img src="../../assets/shots/slop-editorial/03-works.png" width="1600" height="1000" loading="lazy" decoding="async" alt="The Works exhibition page with the first three framed generated pictures and their plate numbers."></picture><figcaption>The exhibition. Nine works hung in order, each labelled like the platforms it mocks.</figcaption></figure>
+      <!-- screens:end -->
+    </div>
+  </section>
+
+  <section class="cs wrap" aria-labelledby="next-h">
+    <h2 id="next-h" class="cs-h">What I'd do next</h2>
+    <ul class="later">
+      <li>Run one small, approved job against a live provider, so the adapters are tested beyond fakes.</li>
+      <li>Bring mobile performance on the 3D page above <span class="num">95</span>, starting with the lazy chunk.</li>
+      <li>Run the WebGPU tier on real hardware. Today only WebGL, the poster tier and the fallbacks are verified.</li>
+    </ul>
+  </section>
+</main>
+<!-- case-nav:start -->
+<nav class="case-nav wrap" aria-label="More case studies">
+  <a class="prev" href="/work/mindmap/"><span class="eyebrow">Previous</span><span class="t">Living Mindmap (MCP)</span></a>
+  <a class="back" href="/#work-slop-editorial">Back to work</a>
+  <a class="next" href="/work/paluwagan/"><span class="eyebrow">Next</span><span class="t">Online Paluwagan</span></a>
+</nav>
+<!-- case-nav:end -->
+<!-- footer:start -->
+<footer class="site-footer">
+  <div class="wrap foot">
+    <p>Built by Garfield Greg Lim III. <a href="https://github.com/monsieurgregorio2001-coder/monsieurgregorio2001-coder.github.io/blob/main/docs/decisions/0001-no-framework-no-build.md" rel="noopener">Built without a framework</a>.</p>
+    <nav aria-label="Pages">
+      <ul role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/work/paperlab/">PaperLab</a></li>
+        <li><a href="/work/mindmap/">Living Mindmap</a></li>
+        <li><a href="/work/slop-editorial/">Slop Editorial</a></li>
+        <li><a href="/work/paluwagan/">Online Paluwagan</a></li>
+      </ul>
+    </nav>
+    <ul role="list">
+      <li><a href="/">Portfolio</a></li>
+      <li><a href="https://github.com/monsieurgregorio2001-coder" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:lim.ggreg@outlook.com">lim.ggreg@outlook.com</a></li>
+    </ul>
+  </div>
+</footer>
+<!-- footer:end -->
+</body>
+</html>
