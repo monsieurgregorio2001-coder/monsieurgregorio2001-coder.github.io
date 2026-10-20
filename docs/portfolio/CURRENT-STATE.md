@@ -6,7 +6,9 @@ Updated: 2026-10-20 (Asia/Manila)
 
 Garfield asked to finish the portfolio before the job search, with "the polish of Apple" and a willingness to "go a bit crazy", and delegated the whole portfolio to the agent ("do everything for the portfolio"). Job applications are parked. Their strategy and playbooks moved to the private workspace `_career/strategy/`.
 
-The portfolio-finish initiative is in planning. Inputs gathered on 2026-10-20: hands-on audits of every project and the Five Rooms prototype, a live-route check of the public site, and web research on Apple's design language, standout portfolios, the web platform, tasteful experimental work, hiring signals, explainers and domain exemplars. A three-direction design panel is choosing the direction. The resulting direction and plan will be linked from [design/](design/README.md) and [plans/](plans/).
+The portfolio-finish initiative has a direction: [Show Your Work](design/DIRECTION.md). One calm house, four lit rooms, and in each room one proof toy that lets a visitor check the project's claim. It was chosen by a three-direction design panel after hands-on audits of every project, a live-route check, and web research on 2026-10-20. Per-repository implementation plans are being written next and will be listed in [plans/](plans/README.md).
+
+Build order (DIRECTION section 10): 0 honesty sweep, 0b doorway bench, 1 house 2.0.0, 1b evidence.json in every room, 2 hub foyer, 3a to 3d the four rooms in parallel, 4 doorways across sites, 5 launch.
 
 ## What is live
 
