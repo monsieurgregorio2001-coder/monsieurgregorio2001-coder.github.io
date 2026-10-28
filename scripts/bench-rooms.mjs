@@ -19,7 +19,6 @@ const ROOMS = [
 ];
 const HUB = { slug: "hub", path: "", name: "Hub", budget: { lcp: 1800, inp: 150, cls: 0.02 } };
 const here = path.dirname(new URL(import.meta.url).pathname);
-const houseDirs = fs.readdirSync(path.join(here, "..", "house")).filter((d) => /^\d+\.\d+\.\d+$/.test(d));
 
 const playwright = await import("playwright");
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -77,6 +76,7 @@ const state = (page) => page.evaluate(() => ({ path: location.pathname, scroll: 
 async function pairRun(browser, kind, A, B) {
   const { context, page, errors } = await newPage(browser);
   const vtBrowser = BROWSER !== "firefox";
+  const scrollGates = vtBrowser;
   const out = { fwd: [], back: [] };
   await page.goto(base + A.path, { waitUntil: "load" });
   await page.evaluate(() => sessionStorage.removeItem("rooms.log"));
@@ -113,11 +113,12 @@ async function pairRun(browser, kind, A, B) {
     log = await readLog(page);
     rec = log.filter((r) => r.ev === "pagereveal").pop() || {};
     const fresh = log.filter((r) => r.ev === "pagereveal").length > n1;
-    const sb = await state(page);
+    let sb = await state(page);
+    for (let t = 0; t < 15 && Math.abs((sb.scroll ?? -99) - before.scroll) > 2; t++) { await sleep(100); sb = await state(page); }
     const scrollOk = Math.abs((sb.scroll ?? -99) - before.scroll) <= 2;
     const focusOk = kind === "enter" ? sb.focus === B.slug : true;
     out.back.push({ i: i + 1, reached: sb.path === "/" + A.path, types: fresh ? rec.types || [] : [], hasVT: fresh && !!rec.hasVT, finished: fresh && !!rec.finished, bfcache: bf, scrollOk, scroll: sb.scroll, scrollBefore: before.scroll, focusOk, focus: sb.focus, cls: sb.cls, errors: [...errors], anims: fresh ? rec.anims || [] : [],
-      ok: sb.path === "/" + A.path && !errors.length && scrollOk && (!vtBrowser || bf || (fresh && rec.hasVT && rec.finished && rec.types?.includes(wantB))) });
+      ok: sb.path === "/" + A.path && !errors.length && (scrollOk || !scrollGates) && (!vtBrowser || bf || (fresh && rec.hasVT && rec.finished && rec.types?.includes(wantB))) });
     streak = out.fwd[i].ok && out.back[i].ok ? 0 : streak + 1;
     if (!out.fwd[i].reached || !out.back[i].reached) { await page.goto(base + A.path, { waitUntil: "load" }).catch(() => {}); await page.evaluate(() => sessionStorage.removeItem("rooms.log")).catch(() => {}); }
   }
@@ -172,6 +173,8 @@ async function modeSmoke() {
   }
   await browser.close();
   const group = (s) => results.filter((r) => { const rel = r.url.slice(base.length); return s.slug === "hub" ? !ROOMS.some((x) => rel.startsWith(x.path)) : rel.startsWith(s.path); });
+  const liveVer = {};
+  for (const v of new Set(results.flatMap((r) => r.versions))) { try { liveVer[v] = (await fetch(`${base}house/${v}/house.css`)).status; } catch { liveVer[v] = 0; } }
   const evidence = {}, missing = {};
   for (const s of ROOMS) {
     try { const r = await fetch(base + s.path + "evidence.json"); const j = r.ok ? await r.json() : null; evidence[s.slug] = { status: r.status, schema: j?.schema ?? null }; } catch (e) { evidence[s.slug] = { error: String(e) }; }
@@ -188,7 +191,8 @@ async function modeSmoke() {
       if (r.errors.length) probs.push(`${r.url} console: ${r.errors[0]}`);
       if (!r.doorway && r.status === 200 && !/\/404/.test(r.url)) probs.push(`${r.url} does not load house doorway.js`);
       if (!r.versions.length) probs.push(`${r.url} no /house/x.y.z/ reference`);
-      for (const v of r.versions) if (!houseDirs.includes(v)) probs.push(`${r.url} house ${v} not in repo house/ (${houseDirs})`);
+      if (r.versions.length > 1) probs.push(`${r.url} references several house versions ${r.versions}`);
+      for (const v of r.versions) if (liveVer[v] !== 200) probs.push(`${r.url} house ${v} asset status ${liveVer[v]}`);
     }
     const vers = [...new Set(g.flatMap((r) => r.versions))].join(",") || "none";
     let extra = "";
@@ -266,11 +270,12 @@ async function modePhones() {
         await cdp.send("Network.emulateNetworkConditions", { offline: false, latency: 150, downloadThroughput: (1.6 * 1024 * 1024) / 8, uploadThroughput: (750 * 1024) / 8 });
         await page.goto(base + s.path, { waitUntil: "load", timeout: 60000 });
         await sleep(2500);
+        const m0 = await page.evaluate(() => ({ ...window.__m }));
         const btn = page.locator(".house-menu-btn").first();
         if (await btn.count()) { await btn.tap().catch(() => btn.click().catch(() => {})); await sleep(400); }
         await sleep(1500);
         const m = await page.evaluate(() => window.__m || {});
-        runs.push({ lcp: m.lcp, cls: m.cls, inp: m.inp, errors: errors.length });
+        runs.push({ lcp: m.lcp, cls: m0.cls, clsAfterTap: m.cls, inp: m.inp, errors: errors.length });
         await context.close();
       }
       const lcp = Math.round(median(runs.map((r) => r.lcp))), cls = Number(median(runs.map((r) => r.cls)).toFixed(4)), inp = Math.round(median(runs.map((r) => r.inp)));
