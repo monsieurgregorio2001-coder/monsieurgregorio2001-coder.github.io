@@ -24,15 +24,16 @@ A satire of AI content sites, with fake metrics and fake upsells. Behind it is a
 
 - **What I built**: A Python pipeline that estimates, caps, approves and logs every paid generation, plus the Astro satire site.
 
-- **Result**: 143 of 143 Real-browser checks (Chromium)
+- **Result**: 243 of 243 Real-browser checks (Chromium)
 
 - **Try this**: Walk the gallery, then read how the pipeline asks before it spends.
 
 - **How it is checked**:
-- 21 of 21 Site unit tests`npm test`
-- 49 of 49 Pipeline Python tests`python -m unittest discover -s tests -t .`
-- 146 of 146 Build gates`npm run check`
-- 143 of 143 Real-browser checks (Chromium)`npm run verify`
+- 40 of 40 Site unit tests`npm test`
+- 56 of 56 Pipeline Python tests`python -m unittest discover -s tests -t .`
+- 144 of 144 Build gates`npm run check`
+- 243 of 243 Real-browser checks (Chromium)`npm run verify`
+- 1536 of 1536 Spend cap parity fixtures, Python and TypeScript`npm test`
 
 No evals. Nothing here is model output to score.
 
@@ -40,6 +41,7 @@ No evals. Nothing here is model output to score.
 
 - Paid providers were tested against fakes only.
 - The current nine plates have no generation record.
+- The spend estimate is a planning figure. The provider invoice governs.
 
 ## Problem
 

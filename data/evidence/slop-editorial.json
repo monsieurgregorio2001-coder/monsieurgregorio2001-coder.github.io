@@ -1,66 +1,73 @@
 {
   "schema": 1,
   "room": "slop-editorial",
-  "commit": "7b626de",
-  "ran_at": "2026-10-28T12:03:28Z",
-  "runner": "local run, Node 22",
+  "commit": "4bc99c5",
+  "ran_at": "2026-10-28T13:03:18Z",
+  "runner": "GitHub Actions ubuntu24, Node 22",
   "tests": [
     {
       "id": "unit",
       "label": "Site unit tests",
-      "passed": 21,
-      "total": 21,
+      "passed": 40,
+      "total": 40,
       "command": "npm test"
     },
     {
       "id": "pipeline",
       "label": "Pipeline Python tests",
-      "passed": 49,
-      "total": 49,
+      "passed": 56,
+      "total": 56,
       "command": "python -m unittest discover -s tests -t ."
     },
     {
       "id": "gates",
       "label": "Build gates",
-      "passed": 146,
-      "total": 146,
+      "passed": 144,
+      "total": 144,
       "command": "npm run check"
     },
     {
       "id": "browser",
       "label": "Real-browser checks (Chromium)",
-      "passed": 143,
-      "total": 143,
+      "passed": 243,
+      "total": 243,
       "command": "npm run verify"
+    },
+    {
+      "id": "parity",
+      "label": "Spend cap parity fixtures, Python and TypeScript",
+      "passed": 1536,
+      "total": 1536,
+      "command": "npm test"
     }
   ],
   "evals": [],
   "figures": [
     {
-      "id": "js-shared-gz",
-      "value": 82141,
+      "id": "js-home-gz",
+      "value": 10862,
       "unit": "bytes",
-      "label": "shared JavaScript, gzipped",
-      "source": "site/scripts/check.mjs"
+      "label": "JavaScript on the home page, gzipped",
+      "source": "site/scripts/lib-budget.mjs"
     },
     {
-      "id": "js-3d-gz",
-      "value": 388147,
+      "id": "js-certificate-gz",
+      "value": 11568,
       "unit": "bytes",
-      "label": "lazy 3D chunk, gzipped",
-      "source": "site/scripts/check.mjs"
+      "label": "JavaScript on the certificate page, gzipped",
+      "source": "site/scripts/lib-budget.mjs"
     }
   ],
   "budgets": [
     {
-      "id": "js-shared-gz",
-      "limit": 112640,
-      "actual": 82141
+      "id": "js-home-gz",
+      "limit": 15360,
+      "actual": 10862
     },
     {
-      "id": "js-3d-gz",
-      "limit": 430080,
-      "actual": 388147
+      "id": "js-certificate-gz",
+      "limit": 20480,
+      "actual": 11568
     },
     {
       "id": "image-max",
@@ -70,6 +77,7 @@
   ],
   "limits": [
     "Paid providers were tested against fakes only.",
-    "The current nine plates have no generation record."
+    "The current nine plates have no generation record.",
+    "The spend estimate is a planning figure. The provider invoice governs."
   ]
 }
