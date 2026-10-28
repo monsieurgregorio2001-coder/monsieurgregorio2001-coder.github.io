@@ -4,6 +4,8 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+- Hub door rows no longer wrap the name and label line, which removed a phone layout shift when web fonts swapped in. Live gate bench now reads house versions from link/script attributes and logs layout-shift sources.
+
 ## House 2.0.1 / Release V1, 2026-10-28
 
 ### Fixed (live gate, phase 5)

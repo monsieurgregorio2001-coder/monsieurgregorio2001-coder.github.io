@@ -34,9 +34,16 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
 const INIT = `(() => {
   const LOG = "rooms.log";
   const log = (o) => { try { const l = JSON.parse(sessionStorage.getItem(LOG) || "[]"); l.push(o); sessionStorage.setItem(LOG, JSON.stringify(l)); } catch (e) {} };
-  const m = window.__m = { cls: 0, lcp: 0, inp: 0 };
+  const m = window.__m = { cls: 0, lcp: 0, inp: 0, shifts: [] };
   const obs = (type, fn, extra) => { try { new PerformanceObserver((l) => l.getEntries().forEach(fn)).observe(Object.assign({ type, buffered: true }, extra)); } catch (e) {} };
-  obs("layout-shift", (e) => { if (!e.hadRecentInput) m.cls += e.value; });
+  obs("layout-shift", (e) => {
+    if (e.hadRecentInput) return;
+    m.cls += e.value;
+    const r = (x) => x ? [Math.round(x.x), Math.round(x.y), Math.round(x.width), Math.round(x.height)].join(",") : "-";
+    const sel = (n) => { if (!n || !n.nodeType) return "?"; if (n.nodeType !== 1) n = n.parentElement; if (!n) return "?"; let t = n.tagName.toLowerCase(); if (n.id) t += "#" + n.id; else if (typeof n.className === "string" && n.className.trim()) t += "." + n.className.trim().split(/\\s+/).slice(0, 2).join("."); return t; };
+    (e.sources || []).forEach((x) => m.shifts.push({ v: Number(e.value.toFixed(4)), t: Math.round(e.startTime), n: sel(x.node), from: r(x.previousRect), to: r(x.currentRect) }));
+    if (!(e.sources || []).length) m.shifts.push({ v: Number(e.value.toFixed(4)), t: Math.round(e.startTime), n: "none", from: "-", to: "-" });
+  });
   obs("largest-contentful-paint", (e) => { m.lcp = e.startTime; });
   obs("event", (e) => { if (e.interactionId) m.inp = Math.max(m.inp, e.duration); }, { durationThreshold: 16 });
   addEventListener("pagereveal", (e) => {
@@ -168,7 +175,9 @@ async function modeSmoke() {
     try { status = (await page.goto(u, { waitUntil: "load", timeout: 30000 })).status(); } catch (e) { errors.push(String(e).slice(0, 160)); }
     await sleep(500);
     const html = await page.content().catch(() => "");
-    const ver = [...new Set([...html.matchAll(/\/house\/(\d+\.\d+\.\d+)\//g)].map((m) => m[1]))];
+    // House version: only href/src attributes of link and script tags (preloads are link tags), never page text.
+    const refs = await page.evaluate(() => [...document.querySelectorAll("link[href], script[src]")].map((n) => n.getAttribute("href") || n.getAttribute("src"))).catch(() => []);
+    const ver = [...new Set(refs.flatMap((h) => { const m = /\/house\/(\d+\.\d+\.\d+)\//.exec(h || ""); return m ? [m[1]] : []; }))];
     results.push({ url: u, status, errors: [...errors], versions: ver, doorway: /\/house\/\d+\.\d+\.\d+\/doorway\.js/.test(html) });
   }
   await browser.close();
@@ -275,7 +284,7 @@ async function modePhones() {
         if (await btn.count()) { await btn.tap().catch(() => btn.click().catch(() => {})); await sleep(400); }
         await sleep(1500);
         const m = await page.evaluate(() => window.__m || {});
-        runs.push({ lcp: m.lcp, cls: m0.cls, clsAfterTap: m.cls, inp: m.inp, errors: errors.length });
+        runs.push({ lcp: m.lcp, cls: m0.cls, clsAfterTap: m.cls, inp: m.inp, errors: errors.length, shifts: (m.shifts || []).filter((x) => x.t <= 99999) });
         await context.close();
       }
       const lcp = Math.round(median(runs.map((r) => r.lcp))), cls = Number(median(runs.map((r) => r.cls)).toFixed(4)), inp = Math.round(median(runs.map((r) => r.inp)));
@@ -283,6 +292,10 @@ async function modePhones() {
       result.push({ profile: label, surface: s.name, lcp, cls, inp, budget: b, runs });
       const msg = `LCP ${lcp} ms (budget ${b.lcp}), CLS ${cls} (${b.cls}), INP-ish ${inp} ms (${b.inp}), median of 3, 4x CPU, 1.6 Mbps, 150 ms RTT, console errors ${runs.reduce((a, r) => a + r.errors, 0)}`;
       notice(`phone ${label} ${s.name}`, msg);
+      if (s === HUB) {
+        const all = runs.flatMap((r, i) => r.shifts.map((x) => ({ ...x, run: i })));
+        all.sort((a, b) => b.v - a.v).slice(0, 8).forEach((x, i) => notice(`shift ${label} #${i + 1}`, `${x.v} at ${x.t} ms run ${x.run} ${x.n} ${x.from} -> ${x.to} (x,y,w,h)`));
+      }
       if (!lcp) fail(`phone ${label} ${s.name}`, "no LCP entry recorded");
       if (lcp > b.lcp) fail(`phone ${label} ${s.name}`, `LCP ${lcp} ms over budget ${b.lcp} ms`);
       if (cls > b.cls) fail(`phone ${label} ${s.name}`, `CLS ${cls} over budget ${b.cls}`);

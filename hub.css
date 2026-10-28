@@ -83,8 +83,9 @@ section.wrap { padding-block: var(--h-sp-5); }
 .door-row { align-items: center; gap: var(--h-sp-3); min-height: 64px; padding: var(--h-sp-2) var(--h-sp-3); }
 .door-thumb, .door-thumb img { width: 44px; height: 44px; flex: none; border-radius: 10px; object-fit: cover; object-position: left top; }
 .door-row .door-body { display: grid; flex: 1; min-width: 0; gap: 0; }
-.door-line { display: flex; flex-wrap: wrap; align-items: center; gap: var(--h-sp-1) var(--h-sp-2); }
-.door-line .house-label { min-height: 22px; padding-inline: var(--h-sp-2); }
+.door-line { display: flex; flex-wrap: nowrap; min-width: 0; align-items: center; gap: var(--h-sp-1) var(--h-sp-2); }
+.door-line .door-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.door-line .house-label { flex: none; white-space: nowrap; min-height: 22px; padding-inline: var(--h-sp-2); }
 .door-row .door-proof { font-size: 14px; line-height: 18px; }
 .door-row .door-name { font-size: 17px; line-height: 22px; }
 .door-chev { flex: none; width: 8px; height: 8px; margin-right: var(--h-sp-1); border: solid var(--h-ink-3); border-width: 2px 2px 0 0; rotate: 45deg; }
