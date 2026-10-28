@@ -15,7 +15,7 @@
 ## Rooms
 
 - [PaperLab](https://monsieurgregorio2001-coder.github.io/paperlab/): Break the attention math.
-- [Living Mindmap](https://monsieurgregorio2001-coder.github.io/work/mindmap/): Agents edit through MCP. You review.
+- [Living Mindmap](https://monsieurgregorio2001-coder.github.io/mindmap-mcp/): Agents edit through MCP. You review.
 - [Slop Editorial](https://monsieurgregorio2001-coder.github.io/slop-editorial/): Generation is cheap. Spend is capped.
 - [Online Paluwagan](https://monsieurgregorio2001-coder.github.io/paluwagan/): Try to cheat the ledger.
 

@@ -20,13 +20,13 @@ A demo rotating-savings group with a reconciling ledger, a seeded payout draw, a
 
 - **Proves**: Money logic you can check
 
-- **Problem**: Paluwagan groups run on chat threads and memory, so late payments and disputes are common.
+- **Problem**: Paluwagan groups run on chat and memory, so disputes are common.
 
-- **What I built**: An append-only ledger in integer centavos, a seeded payout draw, and reminder templates a person approves.
+- **What I built**: An append-only ledger in integer centavos and a seeded payout draw.
 
 - **Result**: 12,000 random ledger operations, 0 mismatches
 
-- **Try this**: Record a payment, then reverse it and watch the ledger keep both lines.
+- **Try this**: Check the books, then forge a line and check again.
 
 - **How it is checked**:
 - 71 of 71 Unit and property tests`npx vitest run`

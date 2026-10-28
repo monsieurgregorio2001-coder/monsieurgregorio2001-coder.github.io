@@ -27,7 +27,8 @@ a { color: var(--h-accent); text-underline-offset: 0.2em; text-decoration-thickn
 .muted { color: var(--h-ink-2); }
 .num-cell { font: var(--h-t-figure); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .section-head { display: grid; gap: var(--h-sp-2); margin-bottom: var(--h-sp-5); }
-section.wrap { padding-block: var(--h-sp-7); }
+section.wrap { padding-block: var(--h-sp-5); }
+@media (min-width: 700px) { section.wrap { padding-block: var(--h-sp-7); } }
 @media (min-width: 1024px) { section.wrap { padding-block: var(--h-sp-8); } }
 
 /* Hero */
@@ -113,7 +114,7 @@ section.wrap { padding-block: var(--h-sp-7); }
 .door-feature:focus-visible { outline-color: var(--h-accent); }
 
 /* Work */
-.work-list { display: grid; gap: var(--h-sp-6); }
+.work-list { display: grid; gap: var(--h-sp-5); }
 .work-item { display: grid; gap: var(--h-sp-4); align-content: start; scroll-margin-top: calc(var(--h-crumb-h) + var(--h-sp-4)); }
 .work-main { display: grid; gap: var(--h-sp-3); align-content: start; }
 .work-poster { border-radius: var(--h-r-lg); overflow: hidden; background: var(--hub-door-bg); }
@@ -130,7 +131,14 @@ section.wrap { padding-block: var(--h-sp-7); }
   .work-item.is-featured { grid-column: 1 / -1; grid-template-columns: 7fr 5fr; gap: var(--h-sp-5); align-items: start; }
   .work-item.is-featured .work-poster { position: sticky; top: calc(var(--h-crumb-h) + var(--h-sp-4)); }
 }
-.work-item:not(.is-featured) .house-receipt-rows { gap: var(--h-sp-2); }
+.work-item .house-receipt { padding: var(--h-sp-4); }
+.work-item .house-receipt-head { margin-bottom: var(--h-sp-2); }
+.work-item .house-receipt-rows { gap: var(--h-sp-2); }
+.work-item .house-receipt-rows > div { grid-template-columns: 92px 1fr; gap: var(--h-sp-3); padding-top: var(--h-sp-2); }
+.work-item .work-main, .work-item { gap: var(--h-sp-3); }
+.work-actions { gap: var(--h-sp-1) var(--h-sp-2); }
+.checks-drawer > summary { display: flex; align-items: center; min-height: var(--h-target); color: var(--h-accent); cursor: pointer; }
+@media (min-width: 700px) { .checks-drawer[open] > summary { display: none; } }
 
 /* How, about, contact */
 .rules { display: grid; gap: var(--h-sp-3); counter-reset: r; max-width: 40rem; }
@@ -222,3 +230,16 @@ tbody th { font-weight: 500; }
   .door-chev { display: none; }
   .doors { gap: var(--h-sp-2); }
 }
+
+/* Receipts as compact slot rows (DIRECTION 5.6, phone first) */
+.work-item .house-receipt-rows dt { font-size: 12px; line-height: 16px; padding-top: 2px; }
+.work-item .house-receipt-rows dd { font-size: 15px; line-height: 20px; }
+.work-item .house-receipt-rows > div { grid-template-columns: 76px 1fr; gap: var(--h-sp-2); padding-top: 6px; }
+.work-item .house-receipt-rows { gap: 6px; }
+.work-item .checks-drawer > summary { min-height: var(--h-target); margin-block: -8px; }
+@media (max-width: 699px) {
+  .work-item .house-receipt { padding: var(--h-sp-3) var(--h-sp-4); }
+  .work-actions { display: grid; grid-template-columns: auto auto 1fr; justify-content: start; }
+  .work-actions .house-capsule { padding-inline: var(--h-sp-3); }
+}
+@media (max-width: 699px) { .work-poster { display: none; } } /* the hero door above is the same poster */

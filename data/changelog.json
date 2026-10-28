@@ -8,6 +8,22 @@
           "title": "Unreleased",
           "groups": [
             {
+              "title": "Added (foyer polish, phase 4)",
+              "items": [
+                "Living Mindmap door, receipt and case CTA now open `/mindmap-mcp/` (\"Open the room\") with a \"Recorded demo\" chip. `build.mjs` knows a `demo` status.",
+                "Order from noise (ADR 0012): on fine-pointer hover or keyboard focus of a door, the glyph cells nearest the door snap into that room's ASCII vocabulary from `house.json` in its hue over 320 ms, then relax after 1.2 s. Off in Calm. About 1.2 KB gz added to `field.js`.",
+                "`scripts/check-keyboard.mjs`: skip link first, visible focus on every stop, no trap, Esc closes the menu and returns focus. In `npm run check` and `check.yml`.",
+                "Screenshots in `docs/audits/shots/wave-3/`."
+              ]
+            },
+            {
+              "title": "Changed (foyer polish, phase 4)",
+              "items": [
+                "Receipts are compact slot rows. Problem and What I built are 120 characters or less. \"How it is checked\" sits in a drawer below 700 px and opens from 700 px up. The featured poster is hidden on phones because the hero door above shows it. Phone page length 6,471 px to 4,207 px.",
+                "Try this lines match today's rooms. Slop door poster re-shot from the current Slop build."
+              ]
+            },
+            {
               "title": "Added (house 2.0.1)",
               "items": [
                 "House 2.0.1, released as `/house/2.0.1/` from `house/src/`. 2.0.0 is untouched. The hub pages now run on 2.0.1 (`house.lock.json`).",

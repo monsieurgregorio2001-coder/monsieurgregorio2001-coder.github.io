@@ -12,7 +12,7 @@ for (const [w, h] of [[390, 664], [360, 640]]) {
   await page.goto(srv.base + "/", { waitUntil: "load" });
   const checks = [
     ["wordmark", ".house-wordmark"], ["role", ".hero .eyebrow"], ["H1", "h1"],
-    ["door PaperLab", ".door-feature .door-name"], ["door Living Mindmap", "a[href='/work/mindmap/'] .door-name"],
+    ["door PaperLab", ".door-feature .door-name"], ["door Living Mindmap", "a[href='/mindmap-mcp/'] .door-name"],
     ["door Slop Editorial", "a[href='/slop-editorial/'] .door-name"], ["door Online Paluwagan", "a[href='/paluwagan/'] .door-name"],
     ["Email", ".house-crumb a[href^='mailto:']"],
   ];

@@ -20,13 +20,13 @@ A satire of AI content sites, with fake metrics and fake upsells. Behind it is a
 
 - **Proves**: A paid pipeline that asks before it spends
 
-- **Problem**: AI makes images nearly free, so publications drift into content nobody decided to make.
+- **Problem**: AI makes images nearly free, so sites fill with content nobody chose.
 
-- **What I built**: A Python pipeline that estimates, caps, approves and logs every paid generation, plus the Astro satire site.
+- **What I built**: A Python pipeline that estimates, caps, approves and logs paid generation.
 
 - **Result**: 243 of 243 Real-browser checks (Chromium)
 
-- **Try this**: Walk the gallery, then read how the pipeline asks before it spends.
+- **Try this**: Set a run and a cap, then read what the cost check says.
 
 - **How it is checked**:
 - 40 of 40 Site unit tests`npm test`

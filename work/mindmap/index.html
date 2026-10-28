@@ -83,7 +83,7 @@
 <h1 id="case-h" class="display">Living Mindmap</h1>
 <p class="lede">A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.</p>
 <p class="proves-line"><b>Proves </b>Agents and MCP</p>
-<p class="work-actions"><a class="house-capsule is-filled" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start">Run it locally<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-ghost" href="/work/mindmap/">Read the case<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-text" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp">Code<span class="vh"> for Living Mindmap</span></a></p>
+<p class="work-actions"><a class="house-capsule is-filled" href="/mindmap-mcp/">Open the room<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-ghost" href="/work/mindmap/">Read the case<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-text" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp">Code<span class="vh"> for Living Mindmap</span></a></p>
 <ul class="tags" role="list"><li>MCP</li><li>TypeScript</li><li>SQLite</li></ul>
     <!-- case-head:end -->
   </section>
@@ -94,14 +94,14 @@
 <article class="house-receipt" data-room="mindmap-mcp">
   <div class="house-receipt-head">
     <h3 class="house-receipt-name">Living Mindmap</h3>
-    <span class="house-label">Runs locally</span>
+    <span class="house-label">Recorded demo</span>
   </div>
   <dl class="house-receipt-rows">
     <div><dt>Proves</dt><dd>Agents and MCP</dd></div>
-    <div><dt>Problem</dt><dd>Ideas from long AI conversations vanish into chat history.</dd></div>
-    <div><dt>What I built</dt><dd>One SQLite store shared by a web app, a REST API, and a stdio MCP server that refuses near-duplicates.</dd></div>
+    <div><dt>Problem</dt><dd>Ideas from long AI conversations vanish into chat.</dd></div>
+    <div><dt>What I built</dt><dd>One SQLite store behind a web app, a REST API, and an MCP server.</dd></div>
     <div><dt>Result</dt><dd><span class="house-fig">12</span> MCP tools registered by the stdio server<!-- src: data/evidence/mindmap.json, commit 832ed45, 2026-10-28T13:46:08Z --></dd></div>
-    <div><dt>Try this</dt><dd>Clone it, run it locally, and point an agent at the MCP server.</dd></div>
+    <div><dt>Try this</dt><dd>Replay the agent, then ask the guard about a near-duplicate.</dd></div>
     <div><dt>How it is checked</dt><dd><ul class="checks"><li><span class="house-fig">42 of 42</span> Unit tests<span class="cmd"><code>npm test</code></span></li><li><span class="house-fig">7 of 7</span> Demo guard scores equal the server findSimilar on every fixture and labelled pair<span class="cmd"><code>npx vitest run tests/demo-parity.test.ts</code></span></li><li><span class="house-fig">12 of 12</span> MCP server lists all 12 tools<span class="cmd"><code>npm run verify:mcp</code></span></li><li><span class="house-fig">46 of 60</span> Labels drafted by Claude Code. Garfield has not reviewed them yet.<span class="cmd"><code>npm run eval:guard</code></span></li></ul><!-- src: data/evidence/mindmap.json, commit 832ed45, 2026-10-28T13:46:08Z --></dd></div>
   </dl>
   </article>
