@@ -175,4 +175,5 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | Changelog "House 2.0.1 / Release V1" | review | `docs/CHANGELOG.md` and `/changelog/` |
 | CURRENT-STATE and handover | review | `docs/portfolio/handovers/2026-10-28-release-v1.md` |
 | Launch screenshots | review | `docs/audits/shots/launch/` at 360, 390, 1440, light and dark |
+| Live gate fixes: hub CLS and Back focus | review | fixed two-line H1 (CLS 0.003/0.0045 throttled), door focus restored after Back (Chromium 20 of 20). Re-run the live gate after deploy |
 | Live gate, Firefox and WebKit, real devices | todo | lead and owner, see the handover |

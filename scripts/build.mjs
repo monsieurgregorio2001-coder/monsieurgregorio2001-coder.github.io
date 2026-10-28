@@ -141,6 +141,14 @@ const workItem = (p) => lines([
 /* ---------- index ---------- */
 const eyebrow = `Applied AI engineer &middot; Cebu, Philippines<span class="eb-sep" aria-hidden="true"> &middot; </span><span class="eb-line">Open to remote</span>`;
 const quiet = `Every number here comes from a test run or from your own browser. <a href="#work">See the receipts</a>.`;
+// Fixed line breaks so a font swap never changes the line count (CLS). Each .ln is nowrap.
+function h1Lines() {
+  const words = site.headline.split(" "), at = words.indexOf(site.headlineBreakAfter);
+  if (at < 0) return esc(site.headline);
+  const ln = (a) => `<span class="ln">${esc(a.join(" "))}</span>`;
+  return ln(words.slice(0, at + 1)) + ln(words.slice(at + 1));
+}
+
 function indexMain() {
   return `<main id="main">
   <section class="hero" aria-labelledby="hero-h">
@@ -148,7 +156,7 @@ function indexMain() {
       <div class="hero-text" data-field-host>
         <canvas class="field" aria-hidden="true"></canvas>
         <p class="eyebrow">${eyebrow}</p>
-        <h1 id="hero-h" class="display">${esc(site.headline)}</h1>
+        <h1 id="hero-h" class="display">${h1Lines()}</h1>
         <p class="lede">${esc(site.lede)}</p>
       </div>
       <div class="doors" id="doors">

@@ -1,5 +1,6 @@
 {
   "headline": "I build AI tools you can check.",
+  "headlineBreakAfter": "tools",
   "fallback": "I turn messy operations into working AI systems.",
   "lede": "Four projects. Each one lets you check its claim.",
   "interim": false

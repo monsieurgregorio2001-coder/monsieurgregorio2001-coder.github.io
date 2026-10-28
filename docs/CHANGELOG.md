@@ -6,6 +6,11 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## House 2.0.1 / Release V1, 2026-10-28
 
+### Fixed (live gate, phase 5)
+- Hub CLS before any tap. Cause: the H1 wrapped by `ch` width, so the line count changed when the web font replaced the fallback (measured 0.18 Pixel 7 and 0.21 iPhone 13 with the font swap delayed, 4x CPU, 1.6 Mbps, 150 ms RTT). The H1 now sets two fixed `nowrap` lines (`headlineBreakAfter` in `site.json`, `.ln` spans), and `field.js` decodes inside them. After: 0.003 and 0.0045 with fonts delayed 0, 0.3, 1.5 and 3 s.
+- Back from a room returns focus to the door the visitor left from (`field.js`, traversals only, also after a bfcache restore). Chromium 0 of 20 before, 20 of 20 after.
+- `/changelog/` house links are 2.0.1 only. The 2.0.0 lines are history text.
+
 ### Launch (phase 5)
 - Release V1, the Show Your Work launch. All five sites run on house 2.0.1: the hub and the four rooms (PaperLab, Online Paluwagan, Slop Editorial, Living Mindmap), each with a proof toy, a receipt and an `evidence.json` that the hub reads.
 - New headline "I build AI tools you can check." with the subhead "Four projects. Each one lets you check its claim." (ADR 0013). The page title, Open Graph and Twitter copy and `og-image.png` carry the same line. The old line stays in `site.json` as `fallback`.
