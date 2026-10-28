@@ -41,5 +41,7 @@ jobs:
         run: node scripts/check-house.mjs
       - name: axe (hub and case pages, light and dark)
         run: node scripts/check-axe.mjs
+      - name: Keyboard pass (skip link first, visible focus, Esc returns focus, no traps)
+        run: node scripts/check-keyboard.mjs
       - name: Link check
         run: node scripts/check-links.mjs

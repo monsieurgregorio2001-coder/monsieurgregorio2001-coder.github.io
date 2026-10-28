@@ -6,7 +6,7 @@ A mind map I edit by hand and AI agents extend through MCP tools. It refuses nea
 
 **Proves **Agents and MCP
 
-[Run it locally](https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start)[Read the case](https://monsieurgregorio2001-coder.github.io/work/mindmap/)[Code](https://github.com/monsieurgregorio2001-coder/mindmap-mcp)
+[Open the room](https://monsieurgregorio2001-coder.github.io/mindmap-mcp/)[Read the case](https://monsieurgregorio2001-coder.github.io/work/mindmap/)[Code](https://github.com/monsieurgregorio2001-coder/mindmap-mcp)
 
 - MCP
 - TypeScript
@@ -16,17 +16,17 @@ A mind map I edit by hand and AI agents extend through MCP tools. It refuses nea
 
 ### Living Mindmap
 
- Runs locally
+ Recorded demo
 
 - **Proves**: Agents and MCP
 
-- **Problem**: Ideas from long AI conversations vanish into chat history.
+- **Problem**: Ideas from long AI conversations vanish into chat.
 
-- **What I built**: One SQLite store shared by a web app, a REST API, and a stdio MCP server that refuses near-duplicates.
+- **What I built**: One SQLite store behind a web app, a REST API, and an MCP server.
 
 - **Result**: 12 MCP tools registered by the stdio server
 
-- **Try this**: Clone it, run it locally, and point an agent at the MCP server.
+- **Try this**: Replay the agent, then ask the guard about a near-duplicate.
 
 - **How it is checked**:
 - 42 of 42 Unit tests`npm test`

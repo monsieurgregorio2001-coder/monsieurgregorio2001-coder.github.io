@@ -4,6 +4,16 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+### Added (foyer polish, phase 4)
+- Living Mindmap door, receipt and case CTA now open `/mindmap-mcp/` ("Open the room") with a "Recorded demo" chip. `build.mjs` knows a `demo` status.
+- Order from noise (ADR 0012): on fine-pointer hover or keyboard focus of a door, the glyph cells nearest the door snap into that room's ASCII vocabulary from `house.json` in its hue over 320 ms, then relax after 1.2 s. Off in Calm. About 1.2 KB gz added to `field.js`.
+- `scripts/check-keyboard.mjs`: skip link first, visible focus on every stop, no trap, Esc closes the menu and returns focus. In `npm run check` and `check.yml`.
+- Screenshots in `docs/audits/shots/wave-3/`.
+
+### Changed (foyer polish, phase 4)
+- Receipts are compact slot rows. Problem and What I built are 120 characters or less. "How it is checked" sits in a drawer below 700 px and opens from 700 px up. The featured poster is hidden on phones because the hero door above shows it. Phone page length 6,471 px to 4,207 px.
+- Try this lines match today's rooms. Slop door poster re-shot from the current Slop build.
+
 ### Added (foyer, phase 2)
 - Every hub page runs on house 2.0.0: house crumb, menu, footer (Calm switch, Plain text, live receipts), focus rules and 44 px targets. `hub.css` replaces `style.css` and `case.css`, and `main.js` is gone.
 - First screen per DIRECTION 5.2 and 5.3 with the interim headline kept in `site.json`, four static doors (PaperLab featured and dark, a grouped list for the rest) with proof lines, status chips and hidden "Proves" text. Posters in AVIF with WebP fallback, captured by `scripts/posters.mjs`.
