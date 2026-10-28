@@ -4,6 +4,9 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+### Added (doorway gate, phase 4)
+- `scripts/bench-rooms.mjs` and `.github/workflows/live-gate.yml`: per-pair doorway gate (hub to each room and Back, room to room via the Menu) in Chromium, WebKit and Firefox, live smoke, Calm pass and phone profiles at 4x CPU on the deployed host.
+
 ### Added (foyer, phase 2)
 - Every hub page runs on house 2.0.0: house crumb, menu, footer (Calm switch, Plain text, live receipts), focus rules and 44 px targets. `hub.css` replaces `style.css` and `case.css`, and `main.js` is gone.
 - First screen per DIRECTION 5.2 and 5.3 with the interim headline kept in `site.json`, four static doors (PaperLab featured and dark, a grouped list for the rest) with proof lines, status chips and hidden "Proves" text. Posters in AVIF with WebP fallback, captured by `scripts/posters.mjs`.

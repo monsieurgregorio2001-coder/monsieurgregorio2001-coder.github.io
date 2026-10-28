@@ -8,6 +8,12 @@
           "title": "Unreleased",
           "groups": [
             {
+              "title": "Added (doorway gate, phase 4)",
+              "items": [
+                "`scripts/bench-rooms.mjs` and `.github/workflows/live-gate.yml`: per-pair doorway gate (hub to each room and Back, room to room via the Menu) in Chromium, WebKit and Firefox, live smoke, Calm pass and phone profiles at 4x CPU on the deployed host."
+              ]
+            },
+            {
               "title": "Added (foyer, phase 2)",
               "items": [
                 "Every hub page runs on house 2.0.0: house crumb, menu, footer (Calm switch, Plain text, live receipts), focus rules and 44 px targets. `hub.css` replaces `style.css` and `case.css`, and `main.js` is gone.",

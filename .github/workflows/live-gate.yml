@@ -1,0 +1,59 @@
+name: live-gate
+
+# Live gate on the deployed host (DIRECTION 4.5, 4.8, 8): per-pair doorways, smoke, Calm, phone profiles.
+# Each step prints one ::notice per table row and ::error per failure. Steps continue on failure so every table is read.
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Base URL to gate
+        default: https://monsieurgregorio2001-coder.github.io/
+  schedule:
+    - cron: "43 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      BASE_URL: ${{ inputs.base_url || 'https://monsieurgregorio2001-coder.github.io/' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: scripts/package-lock.json
+      - name: Install tooling
+        working-directory: scripts
+        run: npm ci
+      - name: Install Playwright browsers
+        working-directory: scripts
+        run: npx playwright install --with-deps chromium webkit firefox
+      - name: Pairs, Chromium (20 of 20)
+        if: always()
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser chromium
+      - name: Pairs, WebKit (19 of 20)
+        if: always()
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser webkit
+      - name: Pairs, Firefox (plain navigation)
+        if: always()
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser firefox
+      - name: Live smoke
+        if: always()
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode smoke --browser chromium
+      - name: Calm pass
+        if: always()
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode calm --browser chromium
+      - name: Phone profiles
+        if: always()
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode phones
+      - name: Upload JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-gate
+          path: rooms-*.json

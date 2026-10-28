@@ -143,6 +143,7 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | 1: Inter re-cut with U+20B1, U+2212, U+2009 | later | no subsetting tool offline (no fontTools). The shipped Inter is the hub's. Follow-up before a room shows money in Inter |
 | 1: Fraunces fallback `size-adjust` | later | 108 percent is an estimate. Measure against Georgia in a real browser |
 | 1: doorway on the live host | todo | per-release gate after merge. Local Chromium run of enter and leave passes with types and names set |
+| 4: live gate `scripts/bench-rooms.mjs`, `live-gate.yml` | review | per-pair doorways, smoke, Calm, phone profiles. Runs only in Actions (sandbox cannot reach the host) |
 
 ## Phase 2: Foyer (release V1, wave 2)
 
