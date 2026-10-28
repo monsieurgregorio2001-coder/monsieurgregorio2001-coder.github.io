@@ -36,7 +36,7 @@ jobs:
           - { name: phones, args: "--mode phones", browser: chromium }
     env:
       BASE_URL: ${{ inputs.base_url || 'https://monsieurgregorio2001-coder.github.io/' }}
-      RUNS: ${{ inputs.runs || '2' }}
+      RUNS: ${{ inputs.runs || '20' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
