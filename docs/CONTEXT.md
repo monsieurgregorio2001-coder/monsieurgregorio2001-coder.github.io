@@ -6,6 +6,8 @@ Updated: 2026-10-20 (Asia/Manila).
 
 Static HTML, CSS and vanilla JavaScript on GitHub Pages, served from `main` at the repository root. `index.html` is the page. `projects.json` holds the project data, and `scripts/build.mjs` renders it into `index.html` and into the case pages at `work/<slug>/index.html` (ADR 0007). `hero.js` draws the interactive glyph field and the headline decode (ADR 0005). `main.js` only adds reveal on scroll. `style.css` holds the tokens and the base styles, `case.css` the case pages. `scripts/lib/chrome.mjs` holds the shared header, footer and case-page head. Fonts (Fraunces, Inter, JetBrains Mono) are self-hosted in `assets/fonts/`.
 
+`house/` holds the shared house layer (ADR 0009, 0010). `house/src/` is the source, `house/MOTION.md` lists every animation, and `house/<x.y.z>/` is an immutable release written by `npm run house:release <x.y.z>` in `scripts/`. A released folder never changes: `scripts/check-house.mjs` compares it with its `manifest.json` and with `origin/main`. House 2.0.0 is released and the hub pages do not use it yet (phase 2). `scripts/check-links.mjs` skips `house/`.
+
 See the [README](../README.md) for setup, editing and screenshots.
 
 ## Current context

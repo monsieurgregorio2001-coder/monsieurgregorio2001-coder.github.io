@@ -4,6 +4,11 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+### Added (house 2.0.0, phase 1)
+- The immutable `/house/2.0.0/` folder: tokens, house components (crumb, menu, footer, capsule, label, receipt, drawer, toast, Calm switch), the 210 byte `boot.js`, the head `doorway.js`, the deferred `house.js`, partials, `house.json`, self-hosted fonts, `manifest.json` and the room tools. No current hub page uses it yet.
+- `/house/2.0.0/demo.html`: every component in every state, in light and dark. axe 0 violations at 390 and 1440, CLS 0.
+- `npm run house:release <version>`, `house/MOTION.md`, `scripts/check-house.mjs` (immutability, token lint, budgets, room contract and CLS on the demo) and `scripts/shoot-house.mjs`. `check.yml` runs them.
+
 ### Fixed
 - Hub figures follow the 2026-10-28 evidence runs: Paluwagan 56 tests, Slop 70 unit tests. The Mindmap card drops the 0.5 ms median, which today's run did not reproduce.
 

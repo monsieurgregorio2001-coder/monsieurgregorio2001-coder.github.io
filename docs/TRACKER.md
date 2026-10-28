@@ -136,3 +136,10 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | 0b: `scripts/bench-doorway.mjs` | done | local Chromium 141: 20 of 20 each way, CLS 0, scroll and focus restored. WebKit not installed in the sandbox, skipped |
 | 0b: `.github/workflows/doorway-bench.yml` | done | dispatch plus weekly. The real-host run and the Pages missing-path probe still wait for Actions after merge |
 | 0b: gate result on github.io (ADR 0017) | done | needs the workflow run |
+| 1: house 2.0.0 source, `house:release`, `/house/2.0.0/` | review | `house/src/`, `scripts/house-release.mjs`. boot.js 210 B, doorway.js 1.6 KB gz, house.css 4.2 KB gz. Hub pages untouched |
+| 1: demo page, axe 0 at 390 and 1440, CLS 0 | review | `/house/2.0.0/demo.html`, screenshots in `docs/audits/shots/phase-1-house/` |
+| 1: CI immutability, token lint, contract | review | `scripts/check-house.mjs`, wired into `check.yml` |
+| 1: `house/MOTION.md` | review | every house animation with token and Calm line |
+| 1: Inter re-cut with U+20B1, U+2212, U+2009 | later | no subsetting tool offline (no fontTools). The shipped Inter is the hub's. Follow-up before a room shows money in Inter |
+| 1: Fraunces fallback `size-adjust` | later | 108 percent is an estimate. Measure against Georgia in a real browser |
+| 1: doorway on the live host | todo | per-release gate after merge. Local Chromium run of enter and leave passes with types and names set |
