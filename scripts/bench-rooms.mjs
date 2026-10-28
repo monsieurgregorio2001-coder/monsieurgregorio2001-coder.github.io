@@ -294,7 +294,8 @@ async function modePhones() {
       notice(`phone ${label} ${s.name}`, msg);
       if (s === HUB) {
         const all = runs.flatMap((r, i) => r.shifts.map((x) => ({ ...x, run: i })));
-        all.sort((a, b) => b.v - a.v).slice(0, 8).forEach((x, i) => notice(`shift ${label} #${i + 1}`, `${x.v} at ${x.t} ms run ${x.run} ${x.n} ${x.from} -> ${x.to} (x,y,w,h)`));
+        // Warnings, not notices: Actions keeps only 10 notices per step, and the per-surface rows use them up.
+        all.sort((a, b) => b.v - a.v).slice(0, 5).forEach((x, i) => warn(`shift ${label} #${i + 1}`, `${x.v} at ${x.t} ms run ${x.run} ${x.n} ${x.from} -> ${x.to} (x,y,w,h)`));
       }
       if (!lcp) fail(`phone ${label} ${s.name}`, "no LCP entry recorded");
       if (lcp > b.lcp) fail(`phone ${label} ${s.name}`, `LCP ${lcp} ms over budget ${b.lcp} ms`);
