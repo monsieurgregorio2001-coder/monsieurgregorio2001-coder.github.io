@@ -39,6 +39,8 @@ jobs:
         if: always()
         run: |
           if [ -f doorway-bench.md ]; then cat doorway-bench.md >> "$GITHUB_STEP_SUMMARY"; fi
+          # One annotation per table row, so the result is readable through the check-runs API.
+          if [ -f doorway-bench.md ]; then grep '^|' doorway-bench.md | grep -v -e '---' | while IFS= read -r row; do echo "::notice title=doorway bench::$row"; done; fi
       - name: Upload JSON
         if: always()
         uses: actions/upload-artifact@v4
