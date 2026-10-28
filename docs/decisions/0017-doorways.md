@@ -20,3 +20,7 @@ The signature is bench-gated. On the deployed host, 20 navigations each way must
 - See DIRECTION.md 4.5.
 
 Source: `docs/portfolio/design/DIRECTION.md`, section 9.
+
+## Gate result, 2026-10-28
+
+The phase 0b bench ran on the deployed host (Actions run 40681323874). Chromium 141: 20 of 20 enter, 20 of 20 back, CLS 0. WebKit 26: 20 of 20 enter, 20 of 20 back, within the 19 of 20 gate on every column. The clip-path doorway ships. Missing paths at the root serve the hub's 404 page. Missing paths inside a project path serve GitHub's generic 404, so each room ships its own `404.html`.
