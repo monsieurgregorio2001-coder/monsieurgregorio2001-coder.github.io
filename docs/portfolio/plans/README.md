@@ -5,3 +5,4 @@ Cross-project implementation plans. Hub-only plans live in [the hub's plan folde
 | Plan | State |
 | --- | --- |
 | Portfolio finish, October 2026: [direction](../design/DIRECTION.md) section 10 is the cross-project build order | adopted; per-repository plans in progress |
+| [Release V1 plan](2026-10-28-release-v1.md): waves, agents and gates from 2026-10-28 to launch | active |
