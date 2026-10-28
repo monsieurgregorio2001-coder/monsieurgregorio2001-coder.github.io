@@ -2,8 +2,8 @@
   "schema": 1,
   "room": "mindmap",
   "commit": "832ed45",
-  "ran_at": "2026-10-28T12:38:36Z",
-  "runner": "local linux, Node 22",
+  "ran_at": "2026-10-28T13:46:08Z",
+  "runner": "GitHub Actions ubuntu24, Node 22",
   "tests": [
     {
       "id": "unit",
@@ -224,7 +224,7 @@
     },
     {
       "id": "bench-median-ms",
-      "value": 1.4,
+      "value": 1.1,
       "unit": "ms",
       "label": "median round trip over 160 stdio tool calls",
       "source": "scripts/bench.ts"

@@ -8,7 +8,7 @@ Applied AI engineer · Cebu, Philippines · Open to remote
 
 - [Living MindmapRuns locallyAgents edit through MCP. You review.12 tools](https://monsieurgregorio2001-coder.github.io/work/mindmap/)
 
-- [Slop EditorialLiveGeneration is cheap. Spend is capped.143 of 143 passed](https://monsieurgregorio2001-coder.github.io/slop-editorial/)
+- [Slop EditorialLiveGeneration is cheap. Spend is capped.243 of 243 passed](https://monsieurgregorio2001-coder.github.io/slop-editorial/)
 
 - [Online PaluwaganLiveTry to cheat the ledger.12,000 operations](https://monsieurgregorio2001-coder.github.io/paluwagan/)
 
@@ -78,15 +78,16 @@ No evals. Nothing here is model output to score.
 
 - **What I built**: A Python pipeline that estimates, caps, approves and logs every paid generation, plus the Astro satire site.
 
-- **Result**: 143 of 143 Real-browser checks (Chromium)
+- **Result**: 243 of 243 Real-browser checks (Chromium)
 
 - **Try this**: Walk the gallery, then read how the pipeline asks before it spends.
 
 - **How it is checked**:
-- 21 of 21 Site unit tests`npm test`
-- 49 of 49 Pipeline Python tests`python -m unittest discover -s tests -t .`
-- 146 of 146 Build gates`npm run check`
-- 143 of 143 Real-browser checks (Chromium)`npm run verify`
+- 40 of 40 Site unit tests`npm test`
+- 56 of 56 Pipeline Python tests`python -m unittest discover -s tests -t .`
+- 144 of 144 Build gates`npm run check`
+- 243 of 243 Real-browser checks (Chromium)`npm run verify`
+- 1536 of 1536 Spend cap parity fixtures, Python and TypeScript`npm test`
 
 No evals. Nothing here is model output to score.
 
