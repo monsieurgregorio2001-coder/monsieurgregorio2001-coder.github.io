@@ -19,7 +19,10 @@ for (const [w, h] of [[390, 664], [360, 640]]) {
   for (const [label, sel] of checks) {
     const box = await page.locator(sel).first().boundingBox();
     const ok = box && box.x >= 0 && box.y >= 0 && box.x + box.width <= w && box.y + box.height <= h;
-    console.log(`${ok ? "ok  " : "FAIL"} ${w}x${h} ${label}${box ? ` bottom ${Math.round(box.y + box.height)}` : " missing"}`);
+    const line = `${ok ? "ok  " : "FAIL"} ${w}x${h} ${label}${box ? ` bottom ${Math.round(box.y + box.height)}` : " missing"}`;
+    console.log(line);
+    // In Actions, a failing row is also an annotation so it can be read without the log.
+    if (!ok && process.env.GITHUB_ACTIONS) console.log(`::error title=ten-second gate::${line}`);
     if (!ok) failed++;
   }
   const h1 = await page.locator("h1").first().textContent();
