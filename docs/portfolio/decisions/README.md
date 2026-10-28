@@ -1,6 +1,6 @@
 # Decision index
 
-Cross-project decisions for the whole portfolio. Decisions that only affect the hub site live in [the hub's own ADR series](../../decisions/) (`0001` to `0008`, no prefix). Project-specific decisions live in each project's `docs/decisions/`.
+Cross-project decisions for the whole portfolio. Decisions that only affect the hub site live in [the hub's own ADR series](../../decisions/) (`0001` to `0017`, no prefix). Project-specific decisions live in each project's `docs/decisions/`.
 
 | ID | Decision | State | Decided by |
 | --- | --- | --- | --- |
