@@ -5,6 +5,38 @@
    Clicks and taps send a ripple that brightens, scrambles and nudges glyphs; a
    mouse carries a soft glow. The h1 resolves from scrambled glyphs on load,
    re-scrambles a word on hover and any letter a ripple front crosses. */
+/* Back from a room: return focus to the door the visitor left from (DIRECTION 4.5, live gate).
+   Only on a history traversal (Back or Forward) arriving from a room, never on a normal load.
+   Works with a fresh load (navigation.activation.from) and with bfcache (the door is remembered on pagehide). */
+(function () {
+  "use strict";
+  var doorOfUrl = function (url) {
+    try {
+      var p = new URL(url, location.href);
+      if (p.origin !== location.origin) return null;
+      var links = document.querySelectorAll("a[data-room]");
+      for (var i = 0; i < links.length; i++) {
+        var base = new URL(links[i].getAttribute("href"), location.href).pathname;
+        if (p.pathname === base || p.pathname.indexOf(base) === 0) return links[i];
+      }
+    } catch (e) { /* bad url */ }
+    return null;
+  };
+  var focusDoor = function (door) { if (door) door.focus({ preventScroll: true }); };
+  var act = window.navigation && navigation.activation;
+  if (act && act.navigationType === "traverse" && act.from && act.from.url) focusDoor(doorOfUrl(act.from.url));
+  var left = null;
+  addEventListener("pagehide", function () {
+    var a = document.activeElement;
+    left = a && a.closest ? a.closest("a[data-room]") : null;
+  });
+  addEventListener("pageshow", function (e) {
+    if (!e.persisted) return;
+    var a = document.activeElement;
+    if (left && (!a || a === document.body)) focusDoor(left);
+  });
+})();
+
 (function () {
   "use strict";
   var hero = document.querySelector("[data-field-host]");
@@ -192,23 +224,30 @@
   function splitHeadline() {
     var text = h1.textContent.replace(/\s+/g, " ").trim();
     h1.setAttribute("aria-label", text);
-    h1.textContent = "";
-    text.split(" ").forEach(function (word, wi) {
-      if (wi) h1.appendChild(document.createTextNode(" "));
-      var w = document.createElement("span");
-      w.className = "w";
-      w.setAttribute("aria-hidden", "true");
-      var list = [];
-      for (var i = 0; i < word.length; i++) {
-        var s = document.createElement("span");
-        s.setAttribute("aria-hidden", "true");
-        s.textContent = word[i];
-        w.appendChild(s);
-        var ch = { el: s, until: 0, next: 0, x: 0, y: 0, letter: /[A-Za-z]/.test(word[i]) };
-        chars.push(ch); list.push(ch);
-      }
-      words.push({ el: w, chars: list, last: 0 });
-      h1.appendChild(w);
+    // Fixed lines (.ln, nowrap) keep the line count the same across the font swap. Plain h1 = one pseudo line.
+    var lines = h1.querySelectorAll(".ln"), hosts = [];
+    if (lines.length) lines.forEach(function (l) { hosts.push([l, l.textContent.trim()]); });
+    else hosts.push([h1, text]);
+    hosts.forEach(function (pair) {
+      var host = pair[0];
+      host.textContent = "";
+      pair[1].split(" ").forEach(function (word, wi) {
+        if (wi) host.appendChild(document.createTextNode(" "));
+        var w = document.createElement("span");
+        w.className = "w";
+        w.setAttribute("aria-hidden", "true");
+        var list = [];
+        for (var i = 0; i < word.length; i++) {
+          var s = document.createElement("span");
+          s.setAttribute("aria-hidden", "true");
+          s.textContent = word[i];
+          w.appendChild(s);
+          var ch = { el: s, until: 0, next: 0, x: 0, y: 0, letter: /[A-Za-z]/.test(word[i]) };
+          chars.push(ch); list.push(ch);
+        }
+        words.push({ el: w, chars: list, last: 0 });
+        host.appendChild(w);
+      });
     });
   }
 

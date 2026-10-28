@@ -21,7 +21,7 @@ function forProject(p) {
     .replace(/<tspan x="96" y="345">[^<]*<\/tspan>/, `<tspan x="96" y="345">${esc(p.title)}</tspan>`)
     .replace(/<tspan x="96" y="441">[^<]*<\/tspan>/,
       `<tspan x="96" y="425" font-family="Inter, Helvetica, Arial, sans-serif" font-size="40" letter-spacing="0" fill="#5F5F6B">Proves: ${esc(p.proves)}</tspan>`);
-  if (out.includes("I turn messy")) throw new Error("og-image.svg layout changed: update the substitutions in og.mjs");
+  if (out.includes("I build AI tools")) throw new Error("og-image.svg layout changed: update the substitutions in og.mjs");
   return out;
 }
 

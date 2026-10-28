@@ -141,15 +141,23 @@ const workItem = (p) => lines([
 /* ---------- index ---------- */
 const eyebrow = `Applied AI engineer &middot; Cebu, Philippines<span class="eb-sep" aria-hidden="true"> &middot; </span><span class="eb-line">Open to remote</span>`;
 const quiet = `Every number here comes from a test run or from your own browser. <a href="#work">See the receipts</a>.`;
+// Fixed line breaks so a font swap never changes the line count (CLS). Each .ln is nowrap.
+function h1Lines() {
+  const words = site.headline.split(" "), at = words.indexOf(site.headlineBreakAfter);
+  if (at < 0) return esc(site.headline);
+  const ln = (a) => `<span class="ln">${esc(a.join(" "))}</span>`;
+  // The space between the block spans keeps the text "tools you" for screen readers, search and copy.
+  return ln(words.slice(0, at + 1)) + " " + ln(words.slice(at + 1));
+}
+
 function indexMain() {
-  const interim = site.interim ? " is-interim" : "";
   return `<main id="main">
   <section class="hero" aria-labelledby="hero-h">
     <div class="wrap hero-grid">
       <div class="hero-text" data-field-host>
         <canvas class="field" aria-hidden="true"></canvas>
         <p class="eyebrow">${eyebrow}</p>
-        <h1 id="hero-h" class="display${interim}">${esc(site.headline)}</h1>
+        <h1 id="hero-h" class="display">${h1Lines()}</h1>
         <p class="lede">${esc(site.lede)}</p>
       </div>
       <div class="doors" id="doors">
@@ -202,7 +210,7 @@ ${[lead, ...rest].map((p) => workItem(p).split("\n").map((l) => "      " + l).jo
   <section id="contact" class="contact wrap" aria-labelledby="contact-h">
     <div class="section-head">
       <p class="eyebrow">Contact</p>
-      <h2 id="contact-h" class="title">Have a messy problem worth solving?</h2>
+      <h2 id="contact-h" class="title">Work with me</h2>
     </div>
     <p class="lede">I am open to remote roles and conversations about applied AI, so write to me or find me online.</p>
     <p class="contact-caps"><a class="house-capsule is-filled" href="mailto:${PROFILE.email}">Email me</a><button type="button" class="house-capsule is-text" data-house-copy="${PROFILE.email}">Copy address</button><a class="house-capsule is-ghost" href="${PROFILE.linkedin}">LinkedIn</a><a class="house-capsule is-ghost" href="${PROFILE.github}">GitHub</a></p>
@@ -213,7 +221,7 @@ const SPEC = `<script type="speculationrules">{"prefetch":[{"where":{"selector_m
 const FIELD = `<script src="/field.js" defer></script>`;
 const hubDesc = `Applied AI engineer in Cebu, Philippines, open to remote. ${site.lede}`;
 {
-  const h = head({ title: "Garfield Lim · Applied AI engineer", desc: hubDesc, url: `${SITE}/`, imageAlt: `Garfield Lim. ${site.headline}`, extra: `<link rel="expect" href="#doors" blocking="render">\n${SPEC}` });
+  const h = head({ title: `Garfield Lim · ${site.headline}`, desc: hubDesc, url: `${SITE}/`, imageAlt: `Garfield Lim. ${site.headline}`, extra: `<link rel="expect" href="#doors" blocking="render">\n${SPEC}` });
   const html = shell(h, indexMain(), { after: `${FIELD}\n` });
   wr("index.html", html);
   written.push("index.html");

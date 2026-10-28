@@ -83,6 +83,14 @@
       <h2 id="log-hub" class="cs-h">Hub and house</h2>
       <div class="log-entry">
         <h3>Unreleased <span class="log-date">2026-10-28</span></h3>
+
+      </div>
+      <div class="log-entry">
+        <h3>House 2.0.1 / Release V1, 2026-10-28 <span class="log-date">2026-10-28</span></h3>
+        <h4>Fixed (live gate, phase 5)</h4>
+        <ul><li>Hub CLS before any tap. Cause: the H1 wrapped by <code>ch</code> width, so the line count changed when the web font replaced the fallback (measured 0.18 Pixel 7 and 0.21 iPhone 13 with the font swap delayed, 4x CPU, 1.6 Mbps, 150 ms RTT). The H1 now sets two fixed <code>nowrap</code> lines (<code>headlineBreakAfter</code> in <code>site.json</code>, <code>.ln</code> spans), and <code>field.js</code> decodes inside them. After: 0.003 and 0.0045 with fonts delayed 0, 0.3, 1.5 and 3 s.</li><li>Back from a room returns focus to the door the visitor left from (<code>field.js</code>, traversals only, also after a bfcache restore). Chromium 0 of 20 before, 20 of 20 after.</li><li><code>/changelog/</code> house links are 2.0.1 only. The 2.0.0 lines are history text.</li></ul>
+        <h4>Launch (phase 5)</h4>
+        <ul><li>Release V1, the Show Your Work launch. All five sites run on house 2.0.1: the hub and the four rooms (PaperLab, Online Paluwagan, Slop Editorial, Living Mindmap), each with a proof toy, a receipt and an <code>evidence.json</code> that the hub reads.</li><li>New headline &quot;I build AI tools you can check.&quot; with the subhead &quot;Four projects. Each one lets you check its claim.&quot; (ADR 0013). The page title, Open Graph and Twitter copy and <code>og-image.png</code> carry the same line. The old line stays in <code>site.json</code> as <code>fallback</code>.</li><li>The interim size cap on the H1 is gone, so it uses <code>--h-t-display</code>. <code>check-gate.mjs</code> now fails the build unless the H1 sets in exactly two lines at 360, 390 and 1440, with web fonts and with fallback fonts.</li><li>Contact heading is now &quot;Work with me&quot;. The word &quot;messy&quot; is retired from the hub. About is unchanged.</li><li>Living Mindmap is frozen at its wave 3 state and stays up as a Recorded demo until Gorges replaces it. Gorges comes after V1.</li><li>Handover: <code>docs/portfolio/handovers/2026-10-28-release-v1.md</code>. Screenshots in <code>docs/audits/shots/launch/</code>.</li></ul>
         <h4>Added (doorway gate, phase 4)</h4>
         <ul><li><code>scripts/bench-rooms.mjs</code> and <code>.github/workflows/live-gate.yml</code>: per-pair doorway gate (hub to each room and Back, room to room via the Menu) in Chromium, WebKit and Firefox, live smoke, Calm pass and phone profiles at 4x CPU on the deployed host.</li></ul>
         <h4>Added (foyer polish, phase 4)</h4>
@@ -120,8 +128,10 @@
       <h2 id="log-paperlab" class="cs-h">PaperLab</h2>
       <div class="log-entry">
         <h3>Unreleased <span class="log-date">2026-10-28</span></h3>
+        <h4>Changed</h4>
+        <ul><li>House 2.0.1: lock, sync, CI ref (hub 6b2ee82), room links (Attention, First version) in the Menu, <code>docs/MOTION.md</code>.</li></ul>
         <h4>Added</h4>
-        <ul><li>Attention room at <code>/paperlab/</code> (phase 3a): designed heads on the tested kernel (ADR 0009), Break the math switches, Show the numbers drawer, receipt from <code>evidence.json</code>, house 2.0.0 crumb and footer, <code>404.html</code>.</li><li>First version kept at <code>/paperlab/legacy/</code>.</li><li><code>tests/fixtures/attention.json</code> from <code>scripts/attention_fixture.py</code>, checked at 1e-6.</li><li>ADRs 0008 to 0010, proposed by Claude, reversible.</li><li><code>docs/</code> with vision, ADRs 0001–0007, the ladder plan, v1 audit, tracker.</li><li><code>CLAUDE.md</code> conventions.</li><li>Phase K kernels for Line, Boundary, Net and Memory in <code>src/labs/*/math.ts</code>, tested against NumPy fixtures from <code>scripts/fixtures.py</code>; tiny RNN/LSTM weights from <code>models/memory/train.py</code>.</li></ul>
+        <ul><li>Attention room at <code>/paperlab/</code> (phase 3a): designed heads on the tested kernel (ADR 0009), Break the math switches, Show the numbers drawer, receipt from <code>evidence.json</code>, house 2.0.1 crumb and footer, <code>404.html</code>.</li><li>First version kept at <code>/paperlab/legacy/</code>.</li><li><code>tests/fixtures/attention.json</code> from <code>scripts/attention_fixture.py</code>, checked at 1e-6.</li><li>ADRs 0008 to 0010, proposed by Claude, reversible.</li><li><code>docs/</code> with vision, ADRs 0001–0007, the ladder plan, v1 audit, tracker.</li><li><code>CLAUDE.md</code> conventions.</li><li>Phase K kernels for Line, Boundary, Net and Memory in <code>src/labs/*/math.ts</code>, tested against NumPy fixtures from <code>scripts/fixtures.py</code>; tiny RNN/LSTM weights from <code>models/memory/train.py</code>.</li></ul>
       </div>
     </section>
   </div>
