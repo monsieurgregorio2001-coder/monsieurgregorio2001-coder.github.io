@@ -120,4 +120,4 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | Lighthouse figures out of hub copy | review | cards and case pages. Return when CI measures them |
 | "Now" line and "8 developers" out of the hero | review | `site.json` `now` empty; proof point swapped for the Paluwagan ledger figure. About unchanged (ADR 0008) |
 | Slop figure 143 on the hub | done | already 143 on `main` |
-| Section 9 ADRs (0009 to 0017) | todo | |
+| Section 9 ADRs (0009 to 0017) | review | branch `docs/show-your-work-adrs` |
