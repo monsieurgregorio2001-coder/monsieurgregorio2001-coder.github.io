@@ -16,3 +16,5 @@ Each entry in `projects.json` carries `proves`, `problem`, `build`, `result`, `t
 - Copy stays disciplined; a project without a measured result is shown as "coming soon", not with vague claims.
 - The same fields seed the case-study pages (ADR 0006), so cards and pages never disagree.
 - The structure is a constraint on new projects: if it cannot be described this way, it probably does not belong on the hub.
+
+> Amended by ADR 0011 and ADR 0015 (proposed 2026-10-20).

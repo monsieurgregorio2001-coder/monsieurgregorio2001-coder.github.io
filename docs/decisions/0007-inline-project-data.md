@@ -18,3 +18,5 @@ Keep `projects.json` as the single source of truth. Add `scripts/build.mjs` that
 - Cards exist in the HTML: no loading state, works without JS, indexable.
 - One more step when editing projects: run `node scripts/build.mjs`. CI fails if forgotten.
 - ADR 0001's "no build step" is softened to "no build step required to view or deploy"; the script is a generator, not a bundler.
+
+> Amended by ADR 0011 (proposed 2026-10-20).

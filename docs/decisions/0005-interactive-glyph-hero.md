@@ -36,3 +36,5 @@ Constraints:
 - Adds ~8 KB of JS. No new fonts (JetBrains Mono already shipped).
 - The OG image stays static; a separate screenshot of the resolved hero is used.
 - The `Professionalism/portfolio/index.html` prototype is retired once this ships (see TRACKER).
+
+> Amended by ADR 0012 (proposed 2026-10-20).
