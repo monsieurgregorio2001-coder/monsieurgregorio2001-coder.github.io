@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const offline = process.argv.includes("--offline");
-const skipDirs = new Set(["node_modules", ".git", "docs", ".claude", ".github"]);
+const skipDirs = new Set(["node_modules", ".git", "docs", ".claude", ".github", "house"]); // house/: partials and the demo link foyer pages that arrive in phase 2
 
 function htmlFiles(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {

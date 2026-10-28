@@ -1,0 +1,259 @@
+/* House 2.0 components (DIRECTION 3.6). Styles ONLY house parts: skip link, crumb, menu, footer, capsule, switch,
+   label, receipt, drawer, toast, focus, view transitions and Calm. Reads only --h-* and --room-*.
+   No colour literals and no curves here: both live in tokens.css (CI lints this). */
+
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fonts/fraunces-latin-opsz-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fonts/inter-latin-wght-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2"); }
+/* Fallback faces on local fonts, metrics matched so swap does not shift layout. Inter/Arial from the font tables.
+   Fraunces/Georgia size-adjust is an estimate (Georgia is not installed in the build sandbox). */
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); size-adjust: 107%; ascent-override: 90.5%; descent-override: 22.5%; line-gap-override: 0%; }
+@font-face { font-family: "Fraunces Fallback"; src: local("Georgia"); size-adjust: 108%; ascent-override: 90.5%; descent-override: 23.6%; line-gap-override: 0%; }
+
+@view-transition { navigation: auto; }
+
+:where(.house-skip, .house-crumb, .house-menu, .house-footer, .house-capsule, .house-switch, .house-label, .house-receipt, .house-drawer, .house-toast-region),
+:where(.house-skip, .house-crumb, .house-menu, .house-footer, .house-capsule, .house-switch, .house-label, .house-receipt, .house-drawer, .house-toast-region) * {
+  box-sizing: border-box;
+}
+
+/* Skip link: first focusable element on every page */
+.house-skip {
+  position: fixed; top: var(--h-sp-2); left: var(--h-sp-2); z-index: 100;
+  display: inline-flex; align-items: center; min-height: var(--h-target); padding: 0 var(--h-sp-4);
+  background: var(--h-ink); color: var(--h-bg); border-radius: var(--h-r-pill);
+  font: var(--h-t-callout); letter-spacing: var(--h-tr-callout); text-decoration: none;
+  translate: 0 -200%;
+}
+.house-skip:focus { translate: 0 0; }
+
+/* Capsule: 44 px pill, filled or ghost, or a text button */
+.house-capsule {
+  flex: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--h-sp-2);
+  min-height: var(--h-target); padding: 0 var(--h-sp-5);
+  border: 1px solid transparent; border-radius: var(--h-r-pill);
+  background: transparent; color: var(--h-ink);
+  font: var(--h-t-callout); letter-spacing: var(--h-tr-callout); text-decoration: none; white-space: nowrap;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: scale var(--h-dur-quick) var(--h-spring-snappy), background-color var(--h-dur-quick) var(--h-ease-standard), opacity var(--h-dur-quick) var(--h-ease-standard);
+}
+.house-capsule.is-filled { background: var(--h-ink); color: var(--h-bg); }
+.house-capsule.is-ghost { border-color: var(--h-ink-3); }
+.house-capsule.is-text { padding: 0 var(--h-sp-3); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+.house-capsule.is-ghost:hover, .house-capsule.is-text:hover { background: var(--h-surface-2); }
+.house-capsule.is-filled:hover { opacity: 0.88; }
+.house-capsule:active { scale: var(--h-press-scale); transition-duration: var(--h-dur-press); transition-timing-function: var(--h-ease-out); }
+.house-capsule[disabled], .house-capsule[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+
+/* Label: the truth chip. Never dismissible. */
+.house-label {
+  display: inline-flex; align-items: center; min-height: 28px; padding: 0 var(--h-sp-3);
+  border-radius: var(--h-r-xs); background: var(--h-surface-2); color: var(--h-ink);
+  font: 600 13px / 18px var(--h-font-sans); white-space: nowrap;
+}
+
+/* Crumb */
+.house-crumb {
+  position: sticky; top: 0; z-index: 50; height: var(--h-crumb-h);
+  background: var(--room-bg); color: var(--room-fg); border-bottom: 1px solid var(--room-rule);
+  transition: background-color var(--h-dur-quick) var(--h-ease-standard);
+}
+.house-crumb[data-glass] {
+  background: var(--h-glass-fill); -webkit-backdrop-filter: var(--h-glass-filter); backdrop-filter: var(--h-glass-filter);
+  box-shadow: var(--h-glass-edge); border-bottom-color: var(--h-glass-rule);
+}
+.house-crumb-inner {
+  display: flex; align-items: center; gap: var(--h-sp-2); height: 100%;
+  padding-inline: max(var(--h-sp-4), calc((100% - var(--h-content-max)) / 2));
+}
+@media (min-width: 600px) { .house-crumb-inner { padding-inline: max(var(--h-sp-5), calc((100% - var(--h-content-max)) / 2)); } }
+.house-wordmark {
+  flex: none; display: inline-flex; align-items: center; min-height: var(--h-target);
+  font: var(--h-t-wordmark); letter-spacing: var(--h-tr-title); color: var(--room-fg); text-decoration: none; white-space: nowrap;
+}
+.house-crumb-sep { flex: none; color: var(--room-muted); font: var(--h-t-callout); }
+.house-crumb-room {
+  display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font: var(--h-t-callout); letter-spacing: var(--h-tr-callout); color: var(--room-fg); text-decoration: none;
+  line-height: var(--h-target);
+}
+.house-crumb-spacer { flex: 1 0 0; }
+.house-crumb-links { flex: none; display: none; align-items: center; gap: var(--h-sp-1); }
+.house-crumb-links a {
+  display: inline-flex; align-items: center; min-height: var(--h-target); padding: 0 var(--h-sp-3);
+  font: var(--h-t-callout); letter-spacing: var(--h-tr-callout); color: var(--room-fg); text-decoration: none; border-radius: var(--h-r-pill);
+}
+.house-crumb-links a:hover { background: var(--h-surface-2); }
+@media (min-width: 1024px) { .house-crumb-links { display: flex; } }
+.house-crumb-action { display: none; }
+.house-crumb[data-handoff] .house-crumb-action { display: inline-flex; }
+.house-menu-btn[popovertarget] { anchor-name: --house-menu; }
+.house-menu-btn[aria-expanded="true"] { background: var(--h-surface-2); }
+@media (max-width: 599px) {
+  .house-crumb-inner { gap: var(--h-sp-1); }
+  .house-crumb-inner .house-capsule { padding-inline: var(--h-sp-4); }
+}
+
+/* Menu: native popover, fixed top-right fallback, anchored where supported */
+.house-menu {
+  position: fixed; inset: auto; margin: 0; top: calc(var(--h-crumb-h) + var(--h-sp-2)); right: var(--h-sp-4);
+  width: min(320px, calc(100vw - 2 * var(--h-sp-4))); max-height: calc(100dvh - var(--h-crumb-h) - var(--h-sp-5));
+  overflow: auto; padding: var(--h-sp-2);
+  color: var(--room-fg); background: var(--h-glass-fill); -webkit-backdrop-filter: var(--h-glass-filter); backdrop-filter: var(--h-glass-filter);
+  border: 1px solid var(--room-rule); border-radius: var(--h-r-md); box-shadow: var(--h-shadow-pop);
+}
+@supports (anchor-name: --a) and (position-anchor: --a) {
+  .house-menu[popover] { position-anchor: --house-menu; top: calc(anchor(bottom) + var(--h-sp-2)); right: anchor(right); position-try-fallbacks: flip-inline; }
+}
+.house-menu:not([popover]) { position: static; width: 320px; max-width: 100%; }
+.house-menu[popover] {
+  transition: opacity var(--h-dur-quick) var(--h-ease-out), translate var(--h-dur-quick) var(--h-ease-out), scale var(--h-dur-quick) var(--h-ease-out),
+    overlay var(--h-dur-quick) allow-discrete, display var(--h-dur-quick) allow-discrete;
+  transform-origin: top right;
+}
+.house-menu[popover]:not(:popover-open) { opacity: 0; translate: 0 calc(var(--h-enter-y) * -1); scale: var(--h-enter-scale); }
+@starting-style { .house-menu[popover]:popover-open { opacity: 0; translate: 0 calc(var(--h-enter-y) * -1); scale: var(--h-enter-scale); } }
+.house-menu-h { margin: var(--h-sp-3) var(--h-sp-3) var(--h-sp-1); font: var(--h-t-caption); letter-spacing: var(--h-tr-caption); color: var(--room-muted); }
+.house-menu ul { list-style: none; margin: 0; padding: 0; }
+.house-menu :is(a, button) {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--h-sp-3); width: 100%; min-height: var(--h-target);
+  padding: 0 var(--h-sp-3); border: 0; border-radius: var(--h-r-sm); background: transparent; color: var(--room-fg);
+  font: var(--h-t-callout); letter-spacing: var(--h-tr-callout); text-align: left; text-decoration: none; cursor: pointer;
+}
+.house-menu :is(a, button):hover { background: var(--h-surface-2); }
+.house-menu a[aria-current="page"] { font-weight: 600; box-shadow: inset 3px 0 0 var(--room); }
+.house-menu .house-switch-state { color: var(--room-muted); font: var(--h-t-caption); }
+
+/* Switch: Calm motion. aria-pressed true means Calm is on. */
+.house-switch {
+  display: inline-flex; align-items: center; gap: var(--h-sp-3); min-height: var(--h-target); padding: 0 var(--h-sp-2);
+  border: 0; background: transparent; color: var(--room-fg); font: var(--h-t-callout); letter-spacing: var(--h-tr-callout); cursor: pointer;
+}
+.house-switch-track {
+  position: relative; flex: none; width: 44px; height: 26px; border-radius: var(--h-r-pill);
+  border: 1px solid var(--h-ink-3); background: var(--h-surface-2);
+  transition: background-color var(--h-dur-quick) var(--h-ease-standard);
+}
+.house-switch-thumb {
+  position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: var(--h-r-pill); background: var(--h-ink);
+  transition: translate var(--h-dur-quick) var(--h-spring-snappy);
+}
+.house-switch[aria-pressed="true"] .house-switch-track { background: var(--h-ink); }
+.house-switch[aria-pressed="true"] .house-switch-thumb { translate: 18px 0; background: var(--h-bg); }
+.house-switch:active .house-switch-thumb { scale: var(--h-press-scale); }
+.house-switch-state { color: var(--room-muted); font: var(--h-t-caption); letter-spacing: var(--h-tr-caption); min-width: 2ch; }
+
+/* Footer */
+.house-footer { background: var(--room-bg); color: var(--room-fg); border-top: 1px solid var(--room-rule); font: var(--h-t-callout); }
+.house-footer-inner {
+  display: grid; gap: var(--h-sp-5); padding-block: var(--h-sp-6);
+  padding-inline: max(var(--h-sp-4), calc((100% - var(--h-content-max)) / 2));
+}
+@media (min-width: 600px) { .house-footer-inner { padding-inline: max(var(--h-sp-5), calc((100% - var(--h-content-max)) / 2)); } }
+.house-footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--h-sp-1) var(--h-sp-2); margin: 0 calc(var(--h-sp-3) * -1); padding: 0; list-style: none; }
+.house-footer a {
+  display: inline-flex; align-items: center; min-height: var(--h-target); padding: 0 var(--h-sp-3);
+  color: var(--room-fg); letter-spacing: var(--h-tr-callout); text-underline-offset: 0.2em; text-decoration-thickness: 1px;
+}
+.house-footer-meta { color: var(--room-muted); font: var(--h-t-caption); letter-spacing: var(--h-tr-caption); margin: 0; }
+
+/* Receipt: the same partial in rooms and case pages */
+.house-receipt { background: var(--h-surface); color: var(--h-ink); border: 1px solid var(--h-rule); border-radius: var(--h-r-md); padding: var(--h-sp-5); container-type: inline-size; }
+.house-receipt-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--h-sp-2); margin: 0 0 var(--h-sp-4); }
+.house-receipt-name { margin: 0; font: var(--h-t-heading); letter-spacing: var(--h-tr-heading); }
+.house-receipt-rows { display: grid; gap: var(--h-sp-3); margin: 0; }
+.house-receipt-rows > div { display: grid; gap: var(--h-sp-1); padding-top: var(--h-sp-3); border-top: 1px solid var(--h-rule); }
+.house-receipt-rows dt { color: var(--h-ink-2); font: var(--h-t-label); letter-spacing: var(--h-tr-label); }
+.house-receipt-rows dd { margin: 0; font: var(--h-t-body); letter-spacing: var(--h-tr-body); }
+@container (min-width: 520px) { .house-receipt-rows > div { grid-template-columns: 148px 1fr; gap: var(--h-sp-4); } }
+.house-fig { font: var(--h-t-figure); font-variant-numeric: tabular-nums; }
+.house-fig.is-missing {
+  display: inline-block; padding: 0 var(--h-sp-2); border: 1px dashed var(--h-ink-3); border-radius: var(--h-r-xs);
+  color: var(--h-ink-2); font: var(--h-t-caption); letter-spacing: var(--h-tr-caption);
+}
+
+/* Drawer: native details. Content fades in, the chevron turns. */
+.house-drawer { border: 1px solid var(--room-rule); border-radius: var(--h-r-md); background: var(--h-surface); color: var(--h-ink); }
+.house-drawer > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--h-sp-3); min-height: var(--h-target); padding: 0 var(--h-sp-4);
+  list-style: none; cursor: pointer; font: var(--h-t-callout); letter-spacing: var(--h-tr-callout); border-radius: var(--h-r-md);
+}
+.house-drawer > summary::-webkit-details-marker { display: none; }
+.house-drawer > summary::after {
+  content: ""; flex: none; width: 8px; height: 8px; margin-right: 4px; border: solid currentcolor; border-width: 0 2px 2px 0; rotate: 45deg;
+  transition: rotate var(--h-dur-ui) var(--h-spring-snappy);
+}
+.house-drawer[open] > summary::after { rotate: 225deg; }
+.house-drawer-body { padding: var(--h-sp-2) var(--h-sp-4) var(--h-sp-4); }
+.house-drawer[open] > .house-drawer-body { animation: h-fade-in var(--h-dur-ui) var(--h-ease-out) both; }
+.house-live { display: grid; gap: var(--h-sp-2); margin: 0; }
+.house-live > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--h-sp-2); padding-top: var(--h-sp-2); border-top: 1px solid var(--h-rule); }
+.house-live dt { color: var(--h-ink-2); font: var(--h-t-caption); letter-spacing: var(--h-tr-caption); }
+.house-live dd { margin: 0; font: var(--h-t-caption); letter-spacing: var(--h-tr-caption); }
+.house-live dd[data-r-ok] { font: var(--h-t-figure); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+/* Toast: one at a time, role=status, glass */
+.house-toast-region {
+  position: fixed; inset: auto var(--h-sp-4) var(--h-sp-5); z-index: 90; display: flex; justify-content: center; pointer-events: none;
+}
+.house-toast {
+  display: inline-flex; align-items: center; min-height: var(--h-target); padding: 0 var(--h-sp-5); pointer-events: auto;
+  color: var(--room-fg); background: var(--h-glass-fill); -webkit-backdrop-filter: var(--h-glass-filter); backdrop-filter: var(--h-glass-filter);
+  border: 1px solid var(--room-rule); border-radius: var(--h-r-pill); box-shadow: var(--h-shadow-pop);
+  font: var(--h-t-callout); letter-spacing: var(--h-tr-callout);
+  animation: h-toast-in var(--h-dur-ui) var(--h-spring-smooth) both;
+}
+.house-toast[data-leaving] { animation: h-fade-out var(--h-dur-quick) var(--h-ease-in) both; }
+
+/* Focus: keyboard only, 2 px, 3 px offset. Focus never changes state. */
+:is(.house-skip, .house-crumb, .house-menu, .house-footer, .house-capsule, .house-switch, .house-drawer, .house-receipt, .house-toast) :focus-visible,
+:is(.house-skip, .house-capsule, .house-switch, .house-drawer > summary):focus-visible {
+  outline: 2px solid var(--room-ink); outline-offset: 3px;
+}
+@media (forced-colors: active) {
+  :is(.house-skip, .house-crumb, .house-menu, .house-footer, .house-capsule, .house-switch, .house-drawer, .house-receipt, .house-toast) :focus-visible,
+  :is(.house-skip, .house-capsule, .house-switch, .house-drawer > summary):focus-visible { outline-color: Highlight; }
+  .house-switch-thumb { background: CanvasText; }
+  .house-switch[aria-pressed="true"] .house-switch-track { background: Highlight; }
+  .house-switch[aria-pressed="true"] .house-switch-thumb { background: HighlightText; }
+}
+
+@keyframes h-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes h-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes h-toast-in { from { opacity: 0; translate: 0 var(--h-enter-y); scale: var(--h-enter-scale); } to { opacity: 1; translate: 0 0; scale: 1; } }
+
+/* Doorways (DIRECTION 4.5). doorway.js adds the type and sets --door-t/r/b/l. Names exist only during a transition.
+   Calm adds no type and no names, so every navigation is the plain root crossfade below. */
+::view-transition-group(root) { animation-duration: var(--h-dur-quick); animation-timing-function: var(--h-ease-out); }
+html:active-view-transition-type(room-to-room)::view-transition-group(root) { animation-duration: var(--h-dur-swap); }
+html:active-view-transition-type(enter-room, leave-room)::view-transition-group(root) { animation-duration: var(--h-dur-page); }
+html:active-view-transition-type(enter-room)::view-transition-old(root) { animation: none; }
+html:active-view-transition-type(enter-room)::view-transition-new(root) {
+  animation: h-reveal var(--h-dur-page) var(--h-spring-smooth) both; mix-blend-mode: normal;
+}
+html:active-view-transition-type(leave-room)::view-transition-new(root) { animation: none; }
+html:active-view-transition-type(leave-room)::view-transition-old(root) {
+  animation: h-conceal var(--h-dur-page) var(--h-spring-smooth) both; mix-blend-mode: normal; z-index: 2;
+}
+html.h-door-offscreen:active-view-transition-type(leave-room)::view-transition-group(root) { animation-duration: var(--h-dur-calm); }
+html.h-door-offscreen:active-view-transition-type(leave-room)::view-transition-old(root) { animation: h-fade-out var(--h-dur-calm) var(--h-ease-out) both; z-index: auto; }
+html.h-door-offscreen:active-view-transition-type(leave-room)::view-transition-new(root) { animation: h-fade-in var(--h-dur-calm) var(--h-ease-out) both; }
+::view-transition-group(door) { animation-duration: var(--h-dur-page); animation-timing-function: var(--h-spring-smooth); }
+::view-transition-old(door), ::view-transition-new(door) { mix-blend-mode: normal; }
+::view-transition-old(door) { animation: h-fade-out calc(var(--h-dur-page) * 0.45) var(--h-ease-in) both; }
+::view-transition-new(door) { animation: none; }
+::view-transition-group(house-crumb) { animation-duration: var(--h-dur-quick); }
+::view-transition-group(house-wordmark) { animation-duration: 0s; }
+@keyframes h-reveal {
+  from { clip-path: inset(var(--door-t, 0px) var(--door-r, 0px) var(--door-b, 0px) var(--door-l, 0px) round var(--h-r-lg)); }
+  to { clip-path: inset(0px round 0px); }
+}
+@keyframes h-conceal {
+  from { clip-path: inset(0px round 0px); }
+  to { clip-path: inset(var(--door-t, 0px) var(--door-r, 0px) var(--door-b, 0px) var(--door-l, 0px) round var(--h-r-lg)); }
+}
+
+/* Calm backstop: the dedicated tokens already shorten and flatten everything. A page that sets a longer
+   duration on a house part still gets the fade, never a run over 160 ms. */
+:root[data-motion="calm"] :is(.house-crumb, .house-menu, .house-capsule, .house-switch, .house-drawer, .house-toast) { animation-duration: var(--h-dur-calm); }

@@ -1,0 +1,31 @@
+<footer class="house-footer" data-house-footer>
+  <div class="house-footer-inner">
+    <ul class="house-footer-links">
+      <li><a href="/changelog/">House {{version}}</a></li>
+      <li><a href="/colophon/">Colophon</a></li>
+      <li><a href="/llms.txt">llms.txt</a></li>
+      <li><a href="/index.md" data-house-plain>Plain text</a></li>
+    </ul>
+    <div>
+      <button type="button" class="house-switch" data-house-calm aria-pressed="false">
+        <span class="house-switch-track" aria-hidden="true"><span class="house-switch-thumb"></span></span>
+        <span>Calm motion</span> <span class="house-switch-state" data-state>Off</span>
+      </button>
+    </div>
+    <details class="house-drawer" data-house-receipts data-house-version="{{version}}">
+      <summary>Live receipts</summary>
+      <div class="house-drawer-body">
+        <dl class="house-live">
+          <div><dt>Bytes transferred</dt><dd data-r="bytes">not reported by this browser</dd></div>
+          <div><dt>Largest paint</dt><dd data-r="lcp">not reported by this browser</dd></div>
+          <div><dt>Layout shift</dt><dd data-r="cls">not reported by this browser</dd></div>
+          <div><dt>Slowest interaction</dt><dd data-r="inp">not reported by this browser</dd></div>
+          <div><dt>House version</dt><dd data-r="version" data-r-ok>{{version}}</dd></div>
+          <div><dt>Commit</dt><dd data-r="commit">not reported by this page</dd></div>
+          <div><dt>Build date</dt><dd data-r="built">not reported by this page</dd></div>
+        </dl>
+      </div>
+    </details>
+    <p class="house-footer-meta">Measured in your browser. Nothing is stored or sent.</p>
+  </div>
+</footer>

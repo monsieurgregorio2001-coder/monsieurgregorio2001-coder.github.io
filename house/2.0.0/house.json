@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "foyer": {
+    "path": "/",
+    "title": "Garfield Lim"
+  },
+  "order": "ADR 0004: PaperLab first, then Living Mindmap, Slop Editorial, Online Paluwagan",
+  "rooms": [
+    {
+      "slug": "paperlab",
+      "path": "/paperlab/",
+      "title": "PaperLab",
+      "document_title": "PaperLab · Garfield Lim",
+      "hues": {
+        "light": {
+          "room": "#E14C33",
+          "ink": "#BA3822",
+          "wash": "#FFEBE6"
+        },
+        "dark": {
+          "room": "#FB836D",
+          "ink": "#FB836D",
+          "wash": "#2F1C19"
+        }
+      },
+      "posters": {
+        "door": "/assets/posters/paperlab-door.avif",
+        "door_fallback": "/assets/posters/paperlab-door.webp",
+        "thumb": "/assets/posters/paperlab-thumb.avif"
+      },
+      "field": "Q K V softmax"
+    },
+    {
+      "slug": "mindmap-mcp",
+      "path": "/mindmap-mcp/",
+      "title": "Living Mindmap",
+      "document_title": "Living Mindmap · Garfield Lim",
+      "hues": {
+        "light": {
+          "room": "#7853D5",
+          "ink": "#6F49CA",
+          "wash": "#F0EEFF"
+        },
+        "dark": {
+          "room": "#AD99FB",
+          "ink": "#AD99FB",
+          "wash": "#221F2F"
+        }
+      },
+      "posters": {
+        "door": "/assets/posters/mindmap-mcp-door.avif",
+        "door_fallback": "/assets/posters/mindmap-mcp-door.webp",
+        "thumb": "/assets/posters/mindmap-mcp-thumb.avif"
+      },
+      "field": "add_node()"
+    },
+    {
+      "slug": "slop-editorial",
+      "path": "/slop-editorial/",
+      "title": "Slop Editorial",
+      "document_title": "Slop Editorial · Garfield Lim",
+      "hues": {
+        "light": {
+          "room": "#F2CF3B",
+          "ink": "#7D5E07",
+          "wash": "#F5F0DE"
+        },
+        "dark": {
+          "room": "#F6D653",
+          "ink": "#F6D653",
+          "wash": "#262210"
+        }
+      },
+      "posters": {
+        "door": "/assets/posters/slop-editorial-door.avif",
+        "door_fallback": "/assets/posters/slop-editorial-door.webp",
+        "thumb": "/assets/posters/slop-editorial-thumb.avif"
+      },
+      "field": "$ 4.2"
+    },
+    {
+      "slug": "paluwagan",
+      "path": "/paluwagan/",
+      "title": "Online Paluwagan",
+      "document_title": "Online Paluwagan · Garfield Lim",
+      "hues": {
+        "light": {
+          "room": "#31835D",
+          "ink": "#2B7351",
+          "wash": "#E3F6EA"
+        },
+        "dark": {
+          "room": "#75C59B",
+          "ink": "#75C59B",
+          "wash": "#14261D"
+        }
+      },
+      "posters": {
+        "door": "/assets/posters/paluwagan-door.avif",
+        "door_fallback": "/assets/posters/paluwagan-door.webp",
+        "thumb": "/assets/posters/paluwagan-thumb.avif"
+      },
+      "field": "+1,000.00 = 0.00"
+    }
+  ],
+  "posters_note": "Poster paths are reserved. The files are captured from each live room's first state in phase 2 and phase 4.",
+  "field_note": "ASCII only: the glyph atlas is Latin JetBrains Mono 400 (DIRECTION 5.4).",
+  "version": "2.0.0"
+}
