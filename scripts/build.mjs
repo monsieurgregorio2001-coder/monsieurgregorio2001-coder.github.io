@@ -15,7 +15,7 @@ import { colophonBody } from "./lib/colophon.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://monsieurgregorio2001-coder.github.io";
-const HOUSE = "2.0.0";
+const HOUSE = "2.0.1";
 const H = `/house/${HOUSE}`;
 const rd = (f) => fs.readFileSync(path.join(root, f), "utf8");
 const wr = (f, s) => {
@@ -33,7 +33,7 @@ const twins = []; // [title, path, description] for llms.txt
 
 const lines = (a) => a.filter((l) => l !== "" && l != null).join("\n");
 const PROFILE = { linkedin: "https://www.linkedin.com/in/garfield-lim-8239242a9", github: "https://github.com/monsieurgregorio2001-coder", email: "lim.ggreg@outlook.com" };
-const STATUS = { live: "Live", local: "Runs locally" };
+const STATUS = { live: "Live", demo: "Recorded demo", local: "Runs locally" };
 const roomPath = (p) => `/${p.room}/`;
 const doorHref = (p) => (p.roomShipped ? roomPath(p) : `/work/${p.slug}/`);
 const plain = (s) => render(s, false);
@@ -118,8 +118,9 @@ const doorList = () => `<ul class="door-list" role="list">\n${rest.map((p) => ` 
 
 /* ---------- receipts ---------- */
 const partial = rd(`house/${HOUSE}/partials/receipt.html`).replace(/<!--[\s\S]*?-->\s*/g, "").replace('<span class="house-fig">{{fig:room/id}}</span>', "{{fig:room/id}}");
-function receipt(p) {
-  const checks = render(`{{checks:${p.evidence}}}`) + (p.noEvals ? `<p class="no-evals">${esc(p.noEvals)}</p>` : "");
+function receipt(p, { drawer = false } = {}) {
+  let checks = render(`{{checks:${p.evidence}}}`) + (p.noEvals ? `<p class="no-evals">${esc(p.noEvals)}</p>` : "");
+  if (drawer) checks = `<details class="checks-drawer" data-open-wide><summary>Show the checks</summary>${checks}</details>`;
   const map = { slug: p.room, name: esc(p.title), status: STATUS[p.status], proves: esc(p.proves), problem: esc(p.problem), built: esc(p.built), try: esc(p.try), checks, "fig:room/id": render(p.result) };
   return partial.replace(/\{\{([^}]+)\}\}/g, (m, k) => (k in map ? map[k] : m)).trim();
 }
@@ -131,7 +132,7 @@ const workItem = (p) => lines([
   `<article class="work-item${p === lead ? " is-featured" : ""}" id="work-${p.slug}">`,
   p === lead ? `  <div class="work-poster">${poster(p.room, "door", 1176, 600, { cls: "" })}</div>` : "",
   `  <div class="work-main">`,
-  `    ${receipt(p)}`,
+  `    ${receipt(p, { drawer: true })}`,
   `    ${cta(p)}`,
   `  </div>`,
   `</article>`,

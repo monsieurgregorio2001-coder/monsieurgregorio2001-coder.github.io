@@ -5,7 +5,7 @@
   "description": "Tooling for the hub: card build, screenshots, OG image and CI checks. Run npm ci here once.",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node build.mjs && html-validate ../index.html ../404.html ../work/*/index.html ../colophon/index.html ../changelog/index.html ../lab/doorway/*/index.html ../house/2.0.0/demo.html && node check-copy.mjs && node check-gate.mjs && node check-axe.mjs && node check-links.mjs --offline && node check-house.mjs && node check-budgets.mjs",
+    "check": "node build.mjs && html-validate ../index.html ../404.html ../work/*/index.html ../colophon/index.html ../changelog/index.html ../lab/doorway/*/index.html ../house/2.0.1/demo.html && node check-copy.mjs && node check-gate.mjs && node check-axe.mjs && node check-keyboard.mjs && node check-links.mjs --offline && node check-house.mjs && node check-budgets.mjs",
     "shoot": "node shoot.mjs",
     "bench:doorway": "node bench-doorway.mjs",
     "bench:rooms": "node bench-rooms.mjs",
@@ -14,6 +14,7 @@
     "evidence:pull": "node evidence-pull.mjs",
     "budgets": "node check-budgets.mjs --write",
     "posters": "node posters.mjs",
+    "check:keyboard": "node check-keyboard.mjs",
     "shoot:foyer": "node shoot-foyer.mjs"
   },
   "dependencies": {

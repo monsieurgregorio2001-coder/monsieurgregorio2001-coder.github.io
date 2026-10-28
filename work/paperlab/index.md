@@ -20,13 +20,13 @@ Type a sentence and watch it travel through one layer of the Transformer from At
 
 - **Proves**: AI theory and teaching
 
-- **Problem**: Papers explain attention in equations that few people can picture.
+- **Problem**: Papers explain attention in equations few people can picture.
 
-- **What I built**: A React and TypeScript app that runs real attention math on toy weights in the browser.
+- **What I built**: Real attention math on toy weights, running in the browser.
 
 - **Result**: 66 unit tests on the attention math
 
-- **Try this**: Type your own sentence and step through the stages.
+- **Try this**: Type a sentence, then break the math with a switch.
 
 - **How it is checked**:
 - 19 of 19 Unit tests on the attention kernel`npx vitest run src/lib/transformer.test.ts`

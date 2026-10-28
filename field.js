@@ -152,6 +152,7 @@
       var glowRow = gyRow * gyRow < gReach;
       for (var c = 0; c < cols; c++) {
         var i = r * cols + c, px = c * CW + CW / 2, d = density[i];
+        if (snap && snap.r === r && c >= snap.c && c < snap.c + snap.s.length) continue; // the vocabulary draws this cell
         // Cheap reject: with no ripple or glow this cell would stay empty anyway.
         if (!nr && !glowRow && present[i] > (SPECKLE + 0.6 * d) * thin) continue;
         var wave = 0, dx = 0, dy = 0;
@@ -181,6 +182,7 @@
       }
     }
     // Some noise seeds and moments are much denser than others; keep the glyph count near budget.
+    if (snap) drawSnap(t * 1000);
     if (drawn > BUDGET * cols * rows) thin = Math.max(0.5, thin * 0.96); else thin = Math.min(1, thin + 0.01);
   }
 
@@ -312,6 +314,77 @@
     });
   });
 
+
+  /* ---------- order from noise (DIRECTION 5.4, ADR 0012) ----------
+     Fine pointer hover or keyboard focus on a door: the glyph cells nearest the door, within 160 px, snap into the
+     room's ASCII vocabulary (house.json "field") in that room's hue over 320 ms, hold, then relax after 1.2 s. Off in Calm. */
+  var SNAP_REACH = 160, SNAP_IN = 320, SNAP_HOLD = 1200;
+  var snap = null, vocab = null, vocabAsked = false;
+  function loadVocab(cb) {
+    if (vocab) return cb();
+    if (vocabAsked) return;
+    vocabAsked = true;
+    var sc = document.querySelector('script[src*="/house/"]');
+    var base = sc ? sc.getAttribute("src").replace(/[^/]*$/, "") : "/house/2.0.0/";
+    fetch(base + "house.json").then(function (r) { return r.json(); }).then(function (j) {
+      vocab = {}; j.rooms.forEach(function (m) { vocab[m.slug] = m.field; }); cb();
+    }).catch(function () { vocab = {}; });
+  }
+  function roomInk(slug) { // the house sets hues on :root[data-room], so read them there and put the attribute back
+    var prev = root.getAttribute("data-room");
+    root.setAttribute("data-room", slug);
+    var c = getComputedStyle(root).getPropertyValue("--room-ink").trim();
+    if (prev === null) root.removeAttribute("data-room"); else root.setAttribute("data-room", prev);
+    return c;
+  }
+  function startSnap(door) {
+    if (reduce.matches || !onScreen || document.hidden || !vocab) return;
+    var slug = door.getAttribute("data-room"), s = vocab[slug];
+    if (!s || (snap && snap.door === door)) return;
+    var cr = canvas.getBoundingClientRect(), b = door.getBoundingClientRect();
+    var best = null, bd = SNAP_REACH + 1;
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c + s.length <= cols; c++) {
+        var cx = (c + s.length / 2) * CW, cy = r * CH + CH / 2;
+        var dx = Math.max(b.left - cr.left - cx, 0, cx - (b.right - cr.left)), dy = Math.max(b.top - cr.top - cy, 0, cy - (b.bottom - cr.top));
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d >= bd) continue;
+        var ok = true;
+        for (var k = 0; k < s.length && ok; k++) if (guard[r * cols + c + k]) ok = false;
+        if (ok) { bd = d; best = { r: r, c: c }; }
+      }
+    }
+    if (!best) return;
+    snap = { door: door, s: s, r: best.r, c: best.c, ink: roomInk(slug), t0: performance.now(), end: 0 };
+    wake();
+  }
+  function endSnap(door) { if (snap && snap.door === door && !snap.end) snap.end = Math.max(performance.now(), snap.t0 + 400); }
+  function drawSnap(now) {
+    var n = snap.s.length, age = now - snap.t0;
+    if (!snap.end && age > SNAP_IN + SNAP_HOLD) snap.end = snap.t0 + SNAP_IN + SNAP_HOLD;
+    var out = snap.end ? (now - snap.end) / SNAP_IN : -1;
+    if (out >= 1) { snap = null; return; }
+    ctx.save();
+    ctx.scale(dpr, dpr);
+    ctx.font = FONT; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = snap.ink;
+    for (var k = 0; k < n; k++) {
+      var a = Math.min(1, Math.max(0, (age - (k / n) * SNAP_IN * 0.6) / (SNAP_IN * 0.4)));
+      if (out >= 0) a = Math.min(a, 1 - out);
+      if (a <= 0 || snap.s[k] === " ") continue;
+      ctx.globalAlpha = a;
+      ctx.fillText(snap.s[k], (snap.c + k) * CW + CW / 2, snap.r * CH + CH / 2);
+    }
+    ctx.restore();
+    lastActive = Math.max(lastActive, performance.now()); // keep the loop alive until the snap has relaxed
+    if (!running) start();
+  }
+  document.querySelectorAll(".door[data-room]").forEach(function (door) {
+    door.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") loadVocab(function () { startSnap(door); }); });
+    door.addEventListener("pointerleave", function () { endSnap(door); });
+    door.addEventListener("focus", function () { if (door.matches(":focus-visible")) loadVocab(function () { startSnap(door); }); });
+    door.addEventListener("blur", function () { endSnap(door); });
+  });
+
   var resizeT;
   addEventListener("resize", function () { clearTimeout(resizeT); resizeT = setTimeout(function () { layout(); redraw(); }, 100); });
   document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else start(); });
@@ -340,4 +413,11 @@
   if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
     window.__hero = { running: function () { return running; }, draw: function () { draw(performance.now() / 1000); }, cells: function () { return cols * rows; }, ripples: function () { return ripples.length; } };
   }
+})();
+// Receipts: the check lists sit in a drawer on phones and open from 700 px up (the summary hides when open).
+(function () {
+  var wide = matchMedia("(min-width: 700px)");
+  function sync() { document.querySelectorAll("details[data-open-wide]").forEach(function (d) { d.open = wide.matches; }); }
+  sync();
+  wide.addEventListener("change", sync);
 })();

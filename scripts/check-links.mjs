@@ -19,7 +19,7 @@ function htmlFiles(dir) {
 }
 
 // Room paths belong to other repositories on the same origin (DIRECTION 4.1).
-const roomPaths = JSON.parse(fs.readFileSync(path.join(root, "house/2.0.0/house.json"), "utf8")).rooms.map((r) => r.path);
+const roomPaths = JSON.parse(fs.readFileSync(path.join(root, "house/2.0.1/house.json"), "utf8")).rooms.map((r) => r.path);
 const errors = [], warnings = [], external = new Map();
 
 for (const file of htmlFiles(root)) {

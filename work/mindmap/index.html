@@ -13,8 +13,8 @@
 <link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/work/mindmap/">
 <link rel="alternate" type="text/markdown" href="index.md">
 <!-- house:boot --><script>(function(){var d=document.documentElement,m;try{m=localStorage.getItem("house.motion")}catch(e){}d.dataset.motion=m=="full"||m=="calm"?m:matchMedia("(prefers-reduced-motion:reduce)").matches?"calm":"full"})()</script><!-- /house:boot -->
-<link rel="preload" href="/house/2.0.0/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/house/2.0.0/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.1/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.1/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="article">
 <meta property="og:title" content="Living Mindmap case study · Garfield Lim">
 <meta property="og:description" content="A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.">
@@ -28,11 +28,11 @@
 <meta name="twitter:description" content="A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.">
 <meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/mindmap.png">
 <meta name="twitter:image:alt" content="Living Mindmap. Proves Agents and MCP.">
-<link rel="stylesheet" href="/house/2.0.0/tokens.css">
-<link rel="stylesheet" href="/house/2.0.0/house.css">
+<link rel="stylesheet" href="/house/2.0.1/tokens.css">
+<link rel="stylesheet" href="/house/2.0.1/house.css">
 <link rel="stylesheet" href="/hub.css">
-<script src="/house/2.0.0/doorway.js"></script>
-<script type="module" src="/house/2.0.0/house.js"></script>
+<script src="/house/2.0.1/doorway.js"></script>
+<script type="module" src="/house/2.0.1/house.js"></script>
 <!-- head:end -->
 </head>
 <body>
@@ -63,6 +63,7 @@
   </ul>
   <p class="house-menu-h" id="house-menu-out">Elsewhere</p>
   <ul aria-labelledby="house-menu-out">
+    <li class="house-menu-email"><a href="mailto:lim.ggreg@outlook.com">Email</a></li>
     <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
     <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
   </ul>
@@ -82,7 +83,7 @@
 <h1 id="case-h" class="display">Living Mindmap</h1>
 <p class="lede">A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.</p>
 <p class="proves-line"><b>Proves </b>Agents and MCP</p>
-<p class="work-actions"><a class="house-capsule is-filled" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start">Run it locally<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-ghost" href="/work/mindmap/">Read the case<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-text" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp">Code<span class="vh"> for Living Mindmap</span></a></p>
+<p class="work-actions"><a class="house-capsule is-filled" href="/mindmap-mcp/">Open the room<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-ghost" href="/work/mindmap/">Read the case<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-text" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp">Code<span class="vh"> for Living Mindmap</span></a></p>
 <ul class="tags" role="list"><li>MCP</li><li>TypeScript</li><li>SQLite</li></ul>
     <!-- case-head:end -->
   </section>
@@ -93,14 +94,14 @@
 <article class="house-receipt" data-room="mindmap-mcp">
   <div class="house-receipt-head">
     <h3 class="house-receipt-name">Living Mindmap</h3>
-    <span class="house-label">Runs locally</span>
+    <span class="house-label">Recorded demo</span>
   </div>
   <dl class="house-receipt-rows">
     <div><dt>Proves</dt><dd>Agents and MCP</dd></div>
-    <div><dt>Problem</dt><dd>Ideas from long AI conversations vanish into chat history.</dd></div>
-    <div><dt>What I built</dt><dd>One SQLite store shared by a web app, a REST API, and a stdio MCP server that refuses near-duplicates.</dd></div>
+    <div><dt>Problem</dt><dd>Ideas from long AI conversations vanish into chat.</dd></div>
+    <div><dt>What I built</dt><dd>One SQLite store behind a web app, a REST API, and an MCP server.</dd></div>
     <div><dt>Result</dt><dd><span class="house-fig">12</span> MCP tools registered by the stdio server<!-- src: data/evidence/mindmap.json, commit 832ed45, 2026-10-28T13:46:08Z --></dd></div>
-    <div><dt>Try this</dt><dd>Clone it, run it locally, and point an agent at the MCP server.</dd></div>
+    <div><dt>Try this</dt><dd>Replay the agent, then ask the guard about a near-duplicate.</dd></div>
     <div><dt>How it is checked</dt><dd><ul class="checks"><li><span class="house-fig">42 of 42</span> Unit tests<span class="cmd"><code>npm test</code></span></li><li><span class="house-fig">7 of 7</span> Demo guard scores equal the server findSimilar on every fixture and labelled pair<span class="cmd"><code>npx vitest run tests/demo-parity.test.ts</code></span></li><li><span class="house-fig">12 of 12</span> MCP server lists all 12 tools<span class="cmd"><code>npm run verify:mcp</code></span></li><li><span class="house-fig">46 of 60</span> Labels drafted by Claude Code. Garfield has not reviewed them yet.<span class="cmd"><code>npm run eval:guard</code></span></li></ul><!-- src: data/evidence/mindmap.json, commit 832ed45, 2026-10-28T13:46:08Z --></dd></div>
   </dl>
   </article>
@@ -220,7 +221,7 @@
 <footer class="house-footer" data-house-footer>
   <div class="house-footer-inner">
     <ul class="house-footer-links">
-      <li><a href="/changelog/">House 2.0.0</a></li>
+      <li><a href="/changelog/">House 2.0.1</a></li>
       <li><a href="/colophon/">Colophon</a></li>
       <li><a href="/llms.txt">llms.txt</a></li>
       <li><a href="/index.md" data-house-plain>Plain text</a></li>
@@ -231,7 +232,7 @@
         <span>Calm motion</span> <span class="house-switch-state" data-state>Off</span>
       </button>
     </div>
-    <details class="house-drawer" data-house-receipts data-house-version="2.0.0">
+    <details class="house-drawer" data-house-receipts data-house-version="2.0.1">
       <summary>Live receipts</summary>
       <div class="house-drawer-body">
         <dl class="house-live">
@@ -239,7 +240,7 @@
           <div><dt>Largest paint</dt><dd data-r="lcp">not reported by this browser</dd></div>
           <div><dt>Layout shift</dt><dd data-r="cls">not reported by this browser</dd></div>
           <div><dt>Slowest interaction</dt><dd data-r="inp">not reported by this browser</dd></div>
-          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.0</dd></div>
+          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.1</dd></div>
           <div><dt>Commit</dt><dd data-r="commit">not reported by this page</dd></div>
           <div><dt>Build date</dt><dd data-r="built">not reported by this page</dd></div>
         </dl>
