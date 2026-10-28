@@ -1,6 +1,6 @@
 Applied AI engineer · Cebu, Philippines · Open to remote
 
-# I build AI toolsyou can check.
+# I build AI tools you can check.
 
  Four projects. Each one lets you check its claim.
 

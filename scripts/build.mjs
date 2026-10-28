@@ -146,7 +146,8 @@ function h1Lines() {
   const words = site.headline.split(" "), at = words.indexOf(site.headlineBreakAfter);
   if (at < 0) return esc(site.headline);
   const ln = (a) => `<span class="ln">${esc(a.join(" "))}</span>`;
-  return ln(words.slice(0, at + 1)) + ln(words.slice(at + 1));
+  // The space between the block spans keeps the text "tools you" for screen readers, search and copy.
+  return ln(words.slice(0, at + 1)) + " " + ln(words.slice(at + 1));
 }
 
 function indexMain() {
