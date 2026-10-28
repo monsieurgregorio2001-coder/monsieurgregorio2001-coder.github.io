@@ -4,6 +4,9 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+### Added (doorway bench)
+- Unlinked, noindex `/lab/doorway/a/` and `/b/` fixtures and `scripts/bench-doorway.mjs`, which runs 20 navigations each way in Chromium and WebKit and probes how Pages resolves missing paths. A weekly `doorway-bench` workflow runs it against the live host.
+
 ### Fixed (honesty sweep)
 - Living Mindmap shows "Runs locally" instead of "Live", since it has no hosted demo.
 - Online Paluwagan copy says pre-written reminder templates a person approves, and a seeded payout draw.

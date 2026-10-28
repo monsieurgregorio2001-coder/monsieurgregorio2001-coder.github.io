@@ -28,7 +28,7 @@ jobs:
           node scripts/build.mjs
           git diff --exit-code -- index.html 'work/**/index.html'
       - name: html-validate
-        run: scripts/node_modules/.bin/html-validate index.html 404.html work/*/index.html
+        run: scripts/node_modules/.bin/html-validate index.html 404.html work/*/index.html lab/doorway/*/index.html
       - name: axe (hub and case pages, light and dark)
         run: node scripts/check-axe.mjs
       - name: Link check

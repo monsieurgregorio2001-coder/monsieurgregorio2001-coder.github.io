@@ -5,8 +5,9 @@
   "description": "Tooling for the hub: card build, screenshots, OG image and CI checks. Run npm ci here once.",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node build.mjs && html-validate ../index.html ../404.html ../work/*/index.html && node check-axe.mjs && node check-links.mjs",
-    "shoot": "node shoot.mjs"
+    "check": "node build.mjs && html-validate ../index.html ../404.html ../work/*/index.html ../lab/doorway/*/index.html && node check-axe.mjs && node check-links.mjs",
+    "shoot": "node shoot.mjs",
+    "bench:doorway": "node bench-doorway.mjs"
   },
   "dependencies": {
     "sharp": "^0.33.0"
