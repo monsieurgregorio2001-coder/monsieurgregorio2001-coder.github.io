@@ -19,6 +19,10 @@ Changelog
 - Living Mindmap is frozen at its wave 3 state and stays up as a Recorded demo until Gorges replaces it. Gorges comes after V1.
 - Handover: `docs/portfolio/handovers/2026-10-28-release-v1.md`. Screenshots in `docs/audits/shots/launch/`.
 
+ Added (doorway gate, phase 4)
+
+- `scripts/bench-rooms.mjs` and `.github/workflows/live-gate.yml`: per-pair doorway gate (hub to each room and Back, room to room via the Menu) in Chromium, WebKit and Firefox, live smoke, Calm pass and phone profiles at 4x CPU on the deployed host.
+
  Added (foyer polish, phase 4)
 
 - Living Mindmap door, receipt and case CTA now open `/mindmap-mcp/` ("Open the room") with a "Recorded demo" chip. `build.mjs` knows a `demo` status.
@@ -132,9 +136,13 @@ Changelog
 
 ### Unreleased 2026-10-28
 
+ Changed
+
+- House 2.0.1: lock, sync, CI ref (hub 6b2ee82), room links (Attention, First version) in the Menu, `docs/MOTION.md`.
+
  Added
 
-- Attention room at `/paperlab/` (phase 3a): designed heads on the tested kernel (ADR 0009), Break the math switches, Show the numbers drawer, receipt from `evidence.json`, house 2.0.0 crumb and footer, `404.html`.
+- Attention room at `/paperlab/` (phase 3a): designed heads on the tested kernel (ADR 0009), Break the math switches, Show the numbers drawer, receipt from `evidence.json`, house 2.0.1 crumb and footer, `404.html`.
 - First version kept at `/paperlab/legacy/`.
 - `tests/fixtures/attention.json` from `scripts/attention_fixture.py`, checked at 1e-6.
 - ADRs 0008 to 0010, proposed by Claude, reversible.

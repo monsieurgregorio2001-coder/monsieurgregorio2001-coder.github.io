@@ -13,6 +13,8 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 - Contact heading is now "Work with me". The word "messy" is retired from the hub. About is unchanged.
 - Living Mindmap is frozen at its wave 3 state and stays up as a Recorded demo until Gorges replaces it. Gorges comes after V1.
 - Handover: `docs/portfolio/handovers/2026-10-28-release-v1.md`. Screenshots in `docs/audits/shots/launch/`.
+### Added (doorway gate, phase 4)
+- `scripts/bench-rooms.mjs` and `.github/workflows/live-gate.yml`: per-pair doorway gate (hub to each room and Back, room to room via the Menu) in Chromium, WebKit and Firefox, live smoke, Calm pass and phone profiles at 4x CPU on the deployed host.
 
 ### Added (foyer polish, phase 4)
 - Living Mindmap door, receipt and case CTA now open `/mindmap-mcp/` ("Open the room") with a "Recorded demo" chip. `build.mjs` knows a `demo` status.

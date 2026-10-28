@@ -1,0 +1,60 @@
+name: live-gate
+
+# Live gate on the deployed host (DIRECTION 4.5, 4.8, 8): per-pair doorways, smoke, Calm, phone profiles.
+# One job per pass so each gets its own 50 annotations. A job prints one ::notice per passing table row and ::error per failure.
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Base URL to gate
+        default: https://monsieurgregorio2001-coder.github.io/
+      runs:
+        description: Navigations per direction (Chromium and WebKit)
+        default: "20"
+  schedule:
+    - cron: "43 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: pairs-chromium, args: "--mode pairs --browser chromium", browser: chromium }
+          - { name: pairs-webkit, args: "--mode pairs --browser webkit", browser: webkit }
+          - { name: pairs-firefox, args: "--mode pairs --browser firefox", browser: firefox }
+          - { name: smoke, args: "--mode smoke --browser chromium", browser: chromium }
+          - { name: calm, args: "--mode calm --browser chromium", browser: chromium }
+          - { name: phones, args: "--mode phones", browser: chromium }
+    env:
+      BASE_URL: ${{ inputs.base_url || 'https://monsieurgregorio2001-coder.github.io/' }}
+      RUNS: ${{ inputs.runs || '20' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: scripts/package-lock.json
+      - name: Install tooling
+        working-directory: scripts
+        run: npm ci
+      - name: Install Playwright browser
+        working-directory: scripts
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Run ${{ matrix.name }}
+        run: |
+          if [ "${{ matrix.name }}" = pairs-firefox ]; then R=5; else R="$RUNS"; fi
+          node scripts/bench-rooms.mjs "$BASE_URL" ${{ matrix.args }} --runs "$R"
+      - name: Upload JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-gate-${{ matrix.name }}
+          path: rooms-*.json
