@@ -150,6 +150,14 @@ function h1Lines() {
   return ln(words.slice(0, at + 1)) + " " + ln(words.slice(at + 1));
 }
 
+// The hero lede gets one span per sentence. On phones each is its own nowrap line, so a wide
+// fallback font cannot wrap it to an extra line that the web font then takes back (CLS).
+function ledeLines() {
+  const parts = site.lede.match(/[^.]+\.(\s|$)/g);
+  if (!parts || parts.length < 2) return esc(site.lede);
+  return parts.map((s) => `<span class="ln">${esc(s.trim())}</span>`).join(" ");
+}
+
 function indexMain() {
   return `<main id="main">
   <section class="hero" aria-labelledby="hero-h">
@@ -158,7 +166,7 @@ function indexMain() {
         <canvas class="field" aria-hidden="true"></canvas>
         <p class="eyebrow">${eyebrow}</p>
         <h1 id="hero-h" class="display">${h1Lines()}</h1>
-        <p class="lede">${esc(site.lede)}</p>
+        <p class="lede">${ledeLines()}</p>
       </div>
       <div class="doors" id="doors">
     ${featureDoor(lead)}
