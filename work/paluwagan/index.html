@@ -99,9 +99,9 @@
     <div><dt>Proves</dt><dd>Money logic you can check</dd></div>
     <div><dt>Problem</dt><dd>Paluwagan groups run on chat threads and memory, so late payments and disputes are common.</dd></div>
     <div><dt>What I built</dt><dd>An append-only ledger in integer centavos, a seeded payout draw, and reminder templates a person approves.</dd></div>
-    <div><dt>Result</dt><dd><span class="house-fig">12,000</span> random ledger operations, 0 mismatches<!-- src: data/evidence/paluwagan.json, commit 8f2f963, 2026-10-28T12:00:48Z --></dd></div>
+    <div><dt>Result</dt><dd><span class="house-fig">12,000</span> random ledger operations, 0 mismatches<!-- src: data/evidence/paluwagan.json, commit 4c7630a, 2026-10-28T12:38:19Z --></dd></div>
     <div><dt>Try this</dt><dd>Record a payment, then reverse it and watch the ledger keep both lines.</dd></div>
-    <div><dt>How it is checked</dt><dd><ul class="checks"><li><span class="house-fig">56 of 56</span> Unit and property tests<span class="cmd"><code>npx vitest run</code></span></li></ul><!-- src: data/evidence/paluwagan.json, commit 8f2f963, 2026-10-28T12:00:48Z --></dd></div>
+    <div><dt>How it is checked</dt><dd><ul class="checks"><li><span class="house-fig">71 of 71</span> Unit and property tests<span class="cmd"><code>npx vitest run</code></span></li><li><span class="house-fig">5856 of 5856</span> Reminder drafts scored on four rules<span class="cmd"><code>npm run eval:reminders</code></span></li></ul><!-- src: data/evidence/paluwagan.json, commit 4c7630a, 2026-10-28T12:38:19Z --></dd></div>
   </dl>
   </article>
 <h2 class="cs-h limits-h">What this does not do</h2>

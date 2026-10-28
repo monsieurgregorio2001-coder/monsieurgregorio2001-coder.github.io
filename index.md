@@ -4,7 +4,7 @@ Applied AI engineer · Cebu, Philippines · Open to remote
 
  Four projects. Each one lets you check its claim.
 
- [LivePaperLabBreak the attention math.19 tests](https://monsieurgregorio2001-coder.github.io/paperlab/)
+ [LivePaperLabBreak the attention math.66 tests](https://monsieurgregorio2001-coder.github.io/paperlab/)
 
 - [Living MindmapRuns locallyAgents edit through MCP. You review.12 tools](https://monsieurgregorio2001-coder.github.io/work/mindmap/)
 
@@ -32,12 +32,14 @@ Applied AI engineer · Cebu, Philippines · Open to remote
 
 - **What I built**: A React and TypeScript app that runs real attention math on toy weights in the browser.
 
-- **Result**: 19 unit tests on the attention math
+- **Result**: 66 unit tests on the attention math
 
 - **Try this**: Type your own sentence and step through the stages.
 
 - **How it is checked**:
-- 19 of 19 Unit tests on the attention math`npx vitest run src/lib`
+- 19 of 19 Unit tests on the attention kernel`npx vitest run src/lib/transformer.test.ts`
+- 47 of 47 Designed heads equal the kernel for their stated weights, head 1 puts at least 0.5 on the previous word in every preset, and NumPy agrees at 1e-6`npx vitest run src/lib/designed.test.ts`
+- 99 of 99 Kernels for later labs, not shown in this room`npx vitest run src/labs`
 - 2 of 2 Tests on the evidence tooling`npx vitest run scripts`
 
 No evals. Nothing here is model output to score.
@@ -60,7 +62,9 @@ No evals. Nothing here is model output to score.
 
 - **How it is checked**:
 - 42 of 42 Unit tests`npm test`
+- 7 of 7 Demo guard scores equal the server findSimilar on every fixture and labelled pair`npx vitest run tests/demo-parity.test.ts`
 - 12 of 12 MCP server lists all 12 tools`npm run verify:mcp`
+- 46 of 60 Labels drafted by Claude Code. Garfield has not reviewed them yet.`npm run eval:guard`
 
  [Run it locally](https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start)[Read the case](https://monsieurgregorio2001-coder.github.io/work/mindmap/)[Code](https://github.com/monsieurgregorio2001-coder/mindmap-mcp)
 
@@ -103,7 +107,8 @@ No evals. Nothing here is model output to score.
 - **Try this**: Record a payment, then reverse it and watch the ledger keep both lines.
 
 - **How it is checked**:
-- 56 of 56 Unit and property tests`npx vitest run`
+- 71 of 71 Unit and property tests`npx vitest run`
+- 5856 of 5856 Reminder drafts scored on four rules`npm run eval:reminders`
 
  [Open the room](https://monsieurgregorio2001-coder.github.io/paluwagan/)[Read the case](https://monsieurgregorio2001-coder.github.io/work/paluwagan/)[Code](https://github.com/monsieurgregorio2001-coder/paluwagan)
 

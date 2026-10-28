@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "room": "mindmap",
-  "commit": "d5bf7e8",
-  "ran_at": "2026-10-28T12:00:56Z",
+  "commit": "832ed45",
+  "ran_at": "2026-10-28T12:38:36Z",
   "runner": "local linux, Node 22",
   "tests": [
     {
@@ -13,6 +13,13 @@
       "command": "npm test"
     },
     {
+      "id": "parity",
+      "label": "Demo guard scores equal the server findSimilar on every fixture and labelled pair",
+      "passed": 7,
+      "total": 7,
+      "command": "npx vitest run tests/demo-parity.test.ts"
+    },
+    {
       "id": "verify-mcp",
       "label": "MCP server lists all 12 tools",
       "passed": 12,
@@ -20,8 +27,194 @@
       "command": "npm run verify:mcp"
     }
   ],
-  "evals": [],
+  "evals": [
+    {
+      "id": "guard-pairs",
+      "label": "Labels drafted by Claude Code. Garfield has not reviewed them yet.",
+      "title": "Duplicate guard on 60 labelled title pairs",
+      "passed": 46,
+      "total": 60,
+      "command": "npm run eval:guard",
+      "labelled_by": "evals/guard-pairs.json",
+      "limits": "The guard compares words, not meaning. Synonyms and paraphrases are not caught.",
+      "reviewed_by_owner": false,
+      "threshold": 0.85,
+      "precision": 0.94,
+      "recall": 0.57,
+      "baseline": {
+        "name": "exact match",
+        "precision": null,
+        "recall": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 30
+      },
+      "thresholds": [
+        {
+          "threshold": 0.5,
+          "tp": 18,
+          "fp": 6,
+          "fn": 12,
+          "tn": 24,
+          "precision": 0.75,
+          "recall": 0.6
+        },
+        {
+          "threshold": 0.55,
+          "tp": 18,
+          "fp": 1,
+          "fn": 12,
+          "tn": 29,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "threshold": 0.6,
+          "tp": 18,
+          "fp": 1,
+          "fn": 12,
+          "tn": 29,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "threshold": 0.65,
+          "tp": 18,
+          "fp": 1,
+          "fn": 12,
+          "tn": 29,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "threshold": 0.7,
+          "tp": 17,
+          "fp": 1,
+          "fn": 13,
+          "tn": 29,
+          "precision": 0.94,
+          "recall": 0.57
+        },
+        {
+          "threshold": 0.75,
+          "tp": 17,
+          "fp": 1,
+          "fn": 13,
+          "tn": 29,
+          "precision": 0.94,
+          "recall": 0.57
+        },
+        {
+          "threshold": 0.8,
+          "tp": 17,
+          "fp": 1,
+          "fn": 13,
+          "tn": 29,
+          "precision": 0.94,
+          "recall": 0.57
+        },
+        {
+          "threshold": 0.85,
+          "tp": 17,
+          "fp": 1,
+          "fn": 13,
+          "tn": 29,
+          "precision": 0.94,
+          "recall": 0.57
+        },
+        {
+          "threshold": 0.9,
+          "tp": 16,
+          "fp": 1,
+          "fn": 14,
+          "tn": 29,
+          "precision": 0.94,
+          "recall": 0.53
+        },
+        {
+          "threshold": 0.95,
+          "tp": 15,
+          "fp": 0,
+          "fn": 15,
+          "tn": 30,
+          "precision": 1,
+          "recall": 0.5
+        },
+        {
+          "threshold": 0.99,
+          "tp": 14,
+          "fp": 0,
+          "fn": 16,
+          "tn": 30,
+          "precision": 1,
+          "recall": 0.47
+        }
+      ],
+      "lowest_clean": {
+        "threshold": 0.91,
+        "recall": 0.53
+      },
+      "false_refusals": [
+        {
+          "a": "Supervised learning",
+          "b": "Unsupervised learning",
+          "score": 0.9
+        }
+      ],
+      "by_kind": [
+        {
+          "kind": "plural",
+          "duplicate": true,
+          "total": 6,
+          "refused": 6
+        },
+        {
+          "kind": "spelling",
+          "duplicate": true,
+          "total": 5,
+          "refused": 5
+        },
+        {
+          "kind": "reorder",
+          "duplicate": true,
+          "total": 7,
+          "refused": 6
+        },
+        {
+          "kind": "synonym",
+          "duplicate": true,
+          "total": 12,
+          "refused": 0
+        },
+        {
+          "kind": "near-miss",
+          "duplicate": false,
+          "total": 16,
+          "refused": 0
+        },
+        {
+          "kind": "opposite",
+          "duplicate": false,
+          "total": 5,
+          "refused": 1
+        },
+        {
+          "kind": "unrelated",
+          "duplicate": false,
+          "total": 9,
+          "refused": 0
+        }
+      ]
+    }
+  ],
   "figures": [
+    {
+      "id": "node-min",
+      "value": 20,
+      "unit": "or newer",
+      "label": "Node major version the project needs",
+      "source": "package.json engines"
+    },
     {
       "id": "tools",
       "value": 12,
@@ -31,7 +224,7 @@
     },
     {
       "id": "bench-median-ms",
-      "value": 1.3,
+      "value": 1.4,
       "unit": "ms",
       "label": "median round trip over 160 stdio tool calls",
       "source": "scripts/bench.ts"
@@ -39,8 +232,9 @@
   ],
   "budgets": [],
   "limits": [
-    "Lexical matching only.",
+    "The guard compares words, not meaning.",
     "No model runs in the browser.",
-    "The agent session is recorded, not live."
+    "The agent session is a recording, and the agent's moves were scripted.",
+    "The guard eval labels were drafted by Claude Code and have not been reviewed by Garfield."
   ]
 }

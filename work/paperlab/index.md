@@ -24,12 +24,14 @@ Type a sentence and watch it travel through one layer of the Transformer from At
 
 - **What I built**: A React and TypeScript app that runs real attention math on toy weights in the browser.
 
-- **Result**: 19 unit tests on the attention math
+- **Result**: 66 unit tests on the attention math
 
 - **Try this**: Type your own sentence and step through the stages.
 
 - **How it is checked**:
-- 19 of 19 Unit tests on the attention math`npx vitest run src/lib`
+- 19 of 19 Unit tests on the attention kernel`npx vitest run src/lib/transformer.test.ts`
+- 47 of 47 Designed heads equal the kernel for their stated weights, head 1 puts at least 0.5 on the previous word in every preset, and NumPy agrees at 1e-6`npx vitest run src/lib/designed.test.ts`
+- 99 of 99 Kernels for later labs, not shown in this room`npx vitest run src/labs`
 - 2 of 2 Tests on the evidence tooling`npx vitest run scripts`
 
 No evals. Nothing here is model output to score.
@@ -38,7 +40,7 @@ No evals. Nothing here is model output to score.
 
 - Does not train anything.
 - One layer.
-- Random weights, not learned ones.
+- Hand-set heads, not learned ones.
 
 ## Problem
 

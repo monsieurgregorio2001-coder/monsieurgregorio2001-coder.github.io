@@ -1,16 +1,30 @@
 {
   "schema": 1,
   "room": "paperlab",
-  "commit": "23e8ff9",
-  "ran_at": "2026-10-28T12:00:22Z",
+  "commit": "a26c5da",
+  "ran_at": "2026-10-28T12:37:59Z",
   "runner": "local, Node 22",
   "tests": [
     {
       "id": "unit",
-      "label": "Unit tests on the attention math",
+      "label": "Unit tests on the attention kernel",
       "passed": 19,
       "total": 19,
-      "command": "npx vitest run src/lib"
+      "command": "npx vitest run src/lib/transformer.test.ts"
+    },
+    {
+      "id": "designed-heads",
+      "label": "Designed heads equal the kernel for their stated weights, head 1 puts at least 0.5 on the previous word in every preset, and NumPy agrees at 1e-6",
+      "passed": 47,
+      "total": 47,
+      "command": "npx vitest run src/lib/designed.test.ts"
+    },
+    {
+      "id": "kernels",
+      "label": "Kernels for later labs, not shown in this room",
+      "passed": 99,
+      "total": 99,
+      "command": "npx vitest run src/labs"
     },
     {
       "id": "tooling",
@@ -24,29 +38,29 @@
   "figures": [
     {
       "id": "math-tests",
-      "value": 19,
+      "value": 66,
       "unit": "tests",
       "label": "unit tests on the attention math",
-      "source": "src/lib/transformer.test.ts"
+      "source": "src/lib/transformer.test.ts and src/lib/designed.test.ts"
     },
     {
       "id": "js-gz",
-      "value": 53480,
+      "value": 55491,
       "unit": "bytes",
-      "label": "gzipped JavaScript in the production build",
-      "source": "dist/**/*.js"
+      "label": "gzipped JavaScript before interaction",
+      "source": "dist/index.html and the chunks it loads"
     }
   ],
   "budgets": [
     {
       "id": "js-gz",
       "limit": 120000,
-      "actual": 53480
+      "actual": 55491
     }
   ],
   "limits": [
     "Does not train anything.",
     "One layer.",
-    "Random weights, not learned ones."
+    "Hand-set heads, not learned ones."
   ]
 }

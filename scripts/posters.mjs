@@ -52,14 +52,17 @@ async function shoot(slug, url, schemes, ready) {
 }
 
 const jobs = [];
-const dists = { paperlab: opt("paperlab"), paluwagan: opt("paluwagan"), "slop-editorial": opt("slop-editorial") };
-const mounts = {};
+// Mindmap's room is the static demo build once it ships (--mindmap-demo <dist>); --mindmap-mcp starts the app instead.
+const dists = { paperlab: opt("paperlab"), paluwagan: opt("paluwagan"), "slop-editorial": opt("slop-editorial"), "mindmap-mcp": opt("mindmap-demo") };
+// Rooms link the house by absolute path, so serve it from this checkout.
+const mounts = { "/house/": path.join(root, "house") };
 for (const [slug, dir] of Object.entries(dists)) if (dir) mounts[`/${slug}/`] = dir;
 const srv = await serve(mounts);
 try {
   if (dists.paperlab) await shoot("paperlab", `${srv.base}/paperlab/`, ["dark"]);
   if (dists.paluwagan) await shoot("paluwagan", `${srv.base}/paluwagan/`, ["light", "dark"]);
   if (dists["slop-editorial"]) await shoot("slop-editorial", `${srv.base}/slop-editorial/`, ["light", "dark"]);
+  if (dists["mindmap-mcp"]) await shoot("mindmap-mcp", `${srv.base}/mindmap-mcp/`, ["light", "dark"]);
   const mm = opt("mindmap-mcp");
   if (mm) {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "mm-poster-"));

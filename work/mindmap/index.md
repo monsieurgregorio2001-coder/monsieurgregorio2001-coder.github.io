@@ -30,13 +30,16 @@ A mind map I edit by hand and AI agents extend through MCP tools. It refuses nea
 
 - **How it is checked**:
 - 42 of 42 Unit tests`npm test`
+- 7 of 7 Demo guard scores equal the server findSimilar on every fixture and labelled pair`npx vitest run tests/demo-parity.test.ts`
 - 12 of 12 MCP server lists all 12 tools`npm run verify:mcp`
+- 46 of 60 Labels drafted by Claude Code. Garfield has not reviewed them yet.`npm run eval:guard`
 
 ## What this does not do
 
-- Lexical matching only.
+- The guard compares words, not meaning.
 - No model runs in the browser.
-- The agent session is recorded, not live.
+- The agent session is a recording, and the agent's moves were scripted.
+- The guard eval labels were drafted by Claude Code and have not been reviewed by Garfield.
 
 ## Problem
 

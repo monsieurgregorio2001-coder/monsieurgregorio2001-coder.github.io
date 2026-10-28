@@ -29,7 +29,8 @@ A demo rotating-savings group with a reconciling ledger, a seeded payout draw, a
 - **Try this**: Record a payment, then reverse it and watch the ledger keep both lines.
 
 - **How it is checked**:
-- 56 of 56 Unit and property tests`npx vitest run`
+- 71 of 71 Unit and property tests`npx vitest run`
+- 5856 of 5856 Reminder drafts scored on four rules`npm run eval:reminders`
 
 ## What this does not do
 
