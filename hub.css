@@ -43,6 +43,7 @@ section.wrap { padding-block: var(--h-sp-5); }
 .hero h1 .w > span.s { color: transparent; }
 .hero h1 .w > span.s::after { content: attr(data-g); position: absolute; inset: 0; color: var(--h-ink-3); }
 .hero .lede { font-size: 17px; line-height: 24px; max-width: 30rem; }
+@media (max-width: 599px) { .hero .lede .ln { display: block; white-space: nowrap; } }
 .eb-sep { display: none; }
 .eb-line { display: block; }
 .hero .desk { display: none; }
