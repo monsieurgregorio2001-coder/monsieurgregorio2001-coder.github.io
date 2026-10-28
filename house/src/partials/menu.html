@@ -1,4 +1,7 @@
 <div id="house-menu" class="house-menu" popover>
+  <!-- house:if-links --><p class="house-menu-h" id="house-menu-room">{{room.title}}</p>
+  <ul aria-labelledby="house-menu-room">{{room.links}}</ul>
+  <!-- /house:if-links -->
   <p class="house-menu-h" id="house-menu-rooms">Rooms</p>
   <ul aria-labelledby="house-menu-rooms">
     <li><a href="/paperlab/">PaperLab</a></li>
@@ -14,6 +17,7 @@
   </ul>
   <p class="house-menu-h" id="house-menu-out">Elsewhere</p>
   <ul aria-labelledby="house-menu-out">
+    <li class="house-menu-email"><a href="mailto:lim.ggreg@outlook.com">Email</a></li>
     <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
     <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
   </ul>

@@ -1,0 +1,166 @@
+/* House 2.0 tokens (DIRECTION 3). Every colour, curve, duration, radius and glass value lives here and only here.
+   Components in house.css read --h-* and the room contract --room-*. Rooms keep their own tokens for their own content. */
+
+:root {
+  color-scheme: light dark;
+
+  /* Families (3.1). Fallbacks use size-adjust metrics, declared in house.css. */
+  --h-font-display: "Fraunces", "Fraunces Fallback", Georgia, "Times New Roman", serif;
+  --h-font-sans: "Inter", "Inter Fallback", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --h-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Type (3.1): --h-t-* is the font shorthand, --h-tr-* the tracking. */
+  --h-t-display: 560 clamp(40px, 24px + 4.4vw, 88px) / 1.02 var(--h-font-display);
+  --h-tr-display: -0.025em;
+  --h-t-title: 560 clamp(30px, 22px + 2vw, 52px) / 1.06 var(--h-font-display);
+  --h-tr-title: -0.02em;
+  --h-t-heading: 600 17px / 22px var(--h-font-sans);
+  --h-tr-heading: -0.014em;
+  --h-t-lede: 400 clamp(17px, 15.5px + 0.5vw, 22px) / 1.4 var(--h-font-sans);
+  --h-tr-lede: -0.012em;
+  --h-t-body: 400 16px / 25px var(--h-font-sans);
+  --h-tr-body: -0.011em;
+  --h-t-callout: 500 15px / 21px var(--h-font-sans);
+  --h-tr-callout: -0.006em;
+  --h-t-label: 600 14px / 20px var(--h-font-sans);
+  --h-tr-label: 0;
+  --h-t-caption: 400 13px / 18px var(--h-font-sans);
+  --h-tr-caption: 0;
+  --h-t-figure: 500 15px / 21px var(--h-font-mono);
+  --h-t-wordmark: 600 19px / 1 var(--h-font-display);
+
+  /* Space (3.3) */
+  --h-sp-1: 4px; --h-sp-2: 8px; --h-sp-3: 12px; --h-sp-4: 16px; --h-sp-5: 24px;
+  --h-sp-6: 32px; --h-sp-7: 48px; --h-sp-8: 64px; --h-sp-9: 96px; --h-sp-10: 128px;
+  --h-crumb-h: 52px;
+  --h-target: 44px;
+  --h-content-max: 1200px;
+
+  /* Shape (3.4) */
+  --h-r-xs: 8px; --h-r-sm: 12px; --h-r-md: 18px; --h-r-lg: 28px; --h-r-pill: 999px;
+  --h-shadow-lift: 0 12px 32px -12px rgb(23 23 27 / 0.18);
+  --h-shadow-pop: 0 16px 40px -16px rgb(23 23 27 / 0.28);
+
+  /* Colour (3.2): light */
+  --h-bg: #FAF8F4;
+  --h-surface: #FFFFFF;
+  --h-surface-2: #F2EFE9;
+  --h-ink: #17171B;
+  --h-ink-2: #5F5F6B;
+  --h-ink-3: #8C8B94;
+  --h-rule: #E6E2DA;
+  --h-accent: #2340B8;
+  --h-positive: #1E7A4F;
+  --h-warning: #9A6200;
+  --h-negative: #B42318;
+  --h-scrim: rgb(23 23 27 / 0.32);
+
+  /* Room contract defaults (4.3): the hub's neutrals. A room overrides these seven. */
+  --room-bg: var(--h-bg);
+  --room-fg: var(--h-ink);
+  --room-muted: var(--h-ink-2);
+  --room-rule: var(--h-rule);
+  --room: var(--h-accent);
+  --room-ink: var(--h-accent);
+  --room-wash: var(--h-surface-2);
+
+  /* Glass (3.4): exactly two things, the crumb after 8 px and popovers. */
+  --h-glass-fill: color-mix(in oklab, var(--room-bg) 78%, transparent);
+  --h-glass-filter: blur(20px) saturate(180%);
+  --h-glass-edge: inset 0 -1px 0 color-mix(in oklab, var(--room-fg) 8%, transparent);
+  --h-glass-rule: transparent;
+
+  /* Motion (3.5). Cubic-bezier fallbacks first, linear() springs where supported. */
+  --h-dur-press: 120ms;
+  --h-dur-quick: 200ms;
+  --h-dur-swap: 240ms;
+  --h-dur-ui: 320ms;
+  --h-dur-page: 600ms;
+  --h-dur-calm: 160ms;
+  --h-ease-standard: cubic-bezier(.4, 0, .6, 1);
+  --h-ease-out: cubic-bezier(.2, 0, 0, 1);
+  --h-ease-in: cubic-bezier(.4, 0, 1, 1);
+  --h-spring-smooth: cubic-bezier(.22, 1, .36, 1);
+  --h-spring-snappy: cubic-bezier(.3, 1.1, .5, 1);
+  --h-spring-bouncy: cubic-bezier(.34, 1.45, .64, 1);
+  /* Movement amounts. Calm sets each to none, so a transition is left as an opacity fade. */
+  --h-press-scale: 0.97;
+  --h-lift: -2px;
+  --h-enter-y: 8px;
+  --h-enter-scale: 0.96;
+}
+
+@supports (animation-timing-function: linear(0, 1)) {
+  :root {
+    --h-spring-smooth: linear(0, 0.08 6.25%, 0.238 12.5%, 0.406 18.75%, 0.554 25%, 0.674 31.25%, 0.766 37.5%, 0.835 43.75%, 0.885 50%, 0.921 56.25%, 0.946 62.5%, 0.963 68.75%, 0.975 75%, 0.983 81.25%, 0.989 87.5%, 0.992 93.75%, 1);
+    --h-spring-snappy: linear(0, 0.07 6.25%, 0.221 12.5%, 0.393 18.75%, 0.552 25%, 0.687 31.25%, 0.791 37.5%, 0.868 43.75%, 0.923 50%, 0.959 56.25%, 0.982 62.5%, 0.995 68.75%, 1.002 75%, 1.005 81.25%, 1.006 87.5%, 1.006 93.75%, 1);
+    --h-spring-bouncy: linear(0, 0.077 6.25%, 0.249 12.5%, 0.447 18.75%, 0.633 25%, 0.785 31.25%, 0.898 37.5%, 0.973 43.75%, 1.018 50%, 1.04 56.25%, 1.046 62.5%, 1.043 68.75%, 1.035 75%, 1.026 81.25%, 1.017 87.5%, 1.01 93.75%, 1);
+  }
+}
+
+@media (min-width: 600px) {
+  :root { --h-t-heading: 600 20px / 26px var(--h-font-sans); }
+}
+@media (min-width: 900px) {
+  :root { --h-t-body: 400 17px / 26px var(--h-font-sans); }
+}
+
+/* Dark (3.2): the house follows prefers-color-scheme. There is no Appearance control. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --h-bg: #0F0F12;
+    --h-surface: #17171C;
+    --h-surface-2: #1F1F25;
+    --h-ink: #ECEAE5;
+    --h-ink-2: #A3A1AA;
+    --h-ink-3: #6C6B74;
+    --h-rule: #2A2A31;
+    --h-accent: #9DB0FF;
+    --h-positive: #6FD3A0;
+    --h-warning: #F2C46B;
+    --h-negative: #FF8A80;
+    --h-scrim: rgb(0 0 0 / 0.5);
+    --h-shadow-lift: none;
+    --h-shadow-pop: 0 0 0 1px rgb(236 234 229 / 0.08);
+    --h-glass-fill: color-mix(in oklab, var(--room-bg) 72%, transparent);
+  }
+}
+
+/* Room hues (3.2). A room page sets data-room on <html> to take its hue, then overrides what it needs. */
+:root[data-room="paperlab"] { --room: #E14C33; --room-ink: #BA3822; --room-wash: #FFEBE6; }
+:root[data-room="paluwagan"] { --room: #31835D; --room-ink: #2B7351; --room-wash: #E3F6EA; }
+:root[data-room="mindmap-mcp"] { --room: #7853D5; --room-ink: #6F49CA; --room-wash: #F0EEFF; }
+:root[data-room="slop-editorial"] { --room: #F2CF3B; --room-ink: #7D5E07; --room-wash: #F5F0DE; }
+@media (prefers-color-scheme: dark) {
+  :root[data-room="paperlab"] { --room: #FB836D; --room-ink: #FB836D; --room-wash: #2F1C19; }
+  :root[data-room="paluwagan"] { --room: #75C59B; --room-ink: #75C59B; --room-wash: #14261D; }
+  :root[data-room="mindmap-mcp"] { --room: #AD99FB; --room-ink: #AD99FB; --room-wash: #221F2F; }
+  :root[data-room="slop-editorial"] { --room: #F6D653; --room-ink: #F6D653; --room-wash: #262210; }
+}
+
+/* Glass fallbacks: solid fill and a 1px rule. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active) {
+  :root { --h-glass-fill: var(--room-bg); --h-glass-filter: none; --h-glass-rule: var(--room-rule); }
+}
+@supports not (backdrop-filter: blur(1px)) {
+  :root { --h-glass-fill: var(--room-bg); --h-glass-rule: var(--room-rule); }
+}
+
+/* Calm (3.5): Motion off, or OS reduced motion with no stored choice. Every transition keeps its
+   opacity fade at 160 ms on the out curve. Springs jump to end states. boot.js sets data-motion. */
+:root[data-motion="calm"] {
+  --h-dur-press: var(--h-dur-calm); --h-dur-quick: var(--h-dur-calm); --h-dur-swap: var(--h-dur-calm);
+  --h-dur-ui: var(--h-dur-calm); --h-dur-page: var(--h-dur-calm);
+  --h-ease-standard: var(--h-ease-out); --h-ease-in: var(--h-ease-out);
+  --h-spring-smooth: var(--h-ease-out); --h-spring-snappy: var(--h-ease-out); --h-spring-bouncy: var(--h-ease-out);
+  --h-press-scale: 1; --h-lift: 0px; --h-enter-y: 0px; --h-enter-scale: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion="full"]) {
+    --h-dur-press: var(--h-dur-calm); --h-dur-quick: var(--h-dur-calm); --h-dur-swap: var(--h-dur-calm);
+    --h-dur-ui: var(--h-dur-calm); --h-dur-page: var(--h-dur-calm);
+    --h-ease-standard: var(--h-ease-out); --h-ease-in: var(--h-ease-out);
+    --h-spring-smooth: var(--h-ease-out); --h-spring-snappy: var(--h-ease-out); --h-spring-bouncy: var(--h-ease-out);
+    --h-press-scale: 1; --h-lift: 0px; --h-enter-y: 0px; --h-enter-scale: 1;
+  }
+}

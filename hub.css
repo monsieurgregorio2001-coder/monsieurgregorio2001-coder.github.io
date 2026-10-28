@@ -1,4 +1,4 @@
-/* Hub styles on house 2.0.0 (DIRECTION 5). Reads only --h-* and --room-*. New values are tokens in the block below. */
+/* Hub styles on house 2.0.1 (DIRECTION 5). Reads only --h-* and --room-*. New values are tokens in the block below. */
 :root {
   --hub-door-bg: #0C0D0F;
   --hub-door-fg: #EFEFEA;

@@ -17,7 +17,7 @@ Plain HTML, CSS, and a small amount of vanilla JavaScript. There is no build ste
 - `index.html` holds the page.
 - `projects.json` holds the case card data. `scripts/build.mjs` renders it into `index.html`.
 - `main.js` only adds the reveal-on-scroll effect.
-- `hub.css` holds the hub styles on house 2.0.0 tokens. Dark mode follows `prefers-color-scheme`.
+- `hub.css` holds the hub styles on house 2.0.1 tokens. Dark mode follows `prefers-color-scheme`.
 - `work/<slug>/index.html` holds one case-study page per project (ADR 0006), styled by `hub.css`.
 - `scripts/lib/chrome.mjs` holds the shared header, footer and case-page `<head>`.
 - `assets/shots/<slug>/` holds the case-page detail crops; `assets/og/<slug>.png` the case-page Open Graph images.
