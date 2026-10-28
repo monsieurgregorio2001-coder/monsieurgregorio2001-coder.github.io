@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "room": "paluwagan",
+  "commit": "4c7630a",
+  "ran_at": "2026-10-28T12:38:19Z",
+  "runner": "local, Node 22",
+  "tests": [
+    {
+      "id": "unit",
+      "label": "Unit and property tests",
+      "passed": 71,
+      "total": 71,
+      "command": "npx vitest run"
+    }
+  ],
+  "evals": [
+    {
+      "id": "reminder-rubric",
+      "label": "Reminder drafts scored on four rules",
+      "passed": 5856,
+      "total": 5856,
+      "command": "npm run eval:reminders",
+      "labelled_by": "evals/reminders.md",
+      "limits": "Tone is not scored."
+    }
+  ],
+  "figures": [
+    {
+      "id": "ops",
+      "value": 12000,
+      "unit": "operations",
+      "label": "random ledger operations, 0 mismatches",
+      "source": "src/domain/ledger.test.ts"
+    }
+  ],
+  "budgets": [
+    {
+      "id": "js-gz",
+      "limit": 70000,
+      "actual": 66999
+    }
+  ],
+  "limits": [
+    "No real money moves. Sends are simulated.",
+    "No real group has used this yet."
+  ]
+}

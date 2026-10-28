@@ -4,6 +4,15 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+### Added (foyer, phase 2)
+- Every hub page runs on house 2.0.0: house crumb, menu, footer (Calm switch, Plain text, live receipts), focus rules and 44 px targets. `hub.css` replaces `style.css` and `case.css`, and `main.js` is gone.
+- First screen per DIRECTION 5.2 and 5.3 with the interim headline kept in `site.json`, four static doors (PaperLab featured and dark, a grouped list for the rest) with proof lines, status chips and hidden "Proves" text. Posters in AVIF with WebP fallback, captured by `scripts/posters.mjs`.
+- Work as receipts on the house Receipt partial, one CTA set ("Open the room", "Read the case", "Code"). Case pages use the same Receipt.
+- Evidence slots: `data/evidence/`, `npm run evidence:pull`, the "Refresh evidence" workflow. Typed figures are gone from `projects.json` and the case pages.
+- `/colophon/` (tokens and springs computed from `tokens.css`), `/changelog/`, a static 404, `llms.txt`, an `index.md` twin beside every page, `.nojekyll`.
+- Glyph field per ADR 0012: settles within 5 s of load or the last input, lighter on phones, weighted to the text column. The decode on load stays.
+- CI: the 10-second gate, copy lint, budgets, axe on every page.
+
 ### Added (house 2.0.0, phase 1)
 - The immutable `/house/2.0.0/` folder: tokens, house components (crumb, menu, footer, capsule, label, receipt, drawer, toast, Calm switch), the 210 byte `boot.js`, the head `doorway.js`, the deferred `house.js`, partials, `house.json`, self-hosted fonts, `manifest.json` and the room tools. No current hub page uses it yet.
 - `/house/2.0.0/demo.html`: every component in every state, in light and dark. axe 0 violations at 390 and 1440, CLS 0.

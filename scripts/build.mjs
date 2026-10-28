@@ -1,215 +1,401 @@
-// Renders the Work section of index.html and the generated blocks of each case page from projects.json (ADR 0006, 0007).
-// Usage: node scripts/build.mjs   (no dependencies; works from any cwd)
-// index.html: header, now (from site.json), cards, noscript and footer markers.
-// work/<slug>/index.html: head, header, case-head, screens, case-nav and footer markers. Prose outside markers is hand-written.
-// Idempotent: the output depends only on projects.json, so a second run changes nothing.
-// CI runs it and fails if the committed index.html differs from the output.
+// Hub build (ADR 0007, 0011, 0015). Renders from projects.json, site.json, data/evidence/*.json and the house tokens:
+//   index.html, 404.html, colophon/, changelog/, work/<slug>/ generated blocks, a plain-text twin (index.md) beside every page,
+//   llms.txt, sitemap.xml and .nojekyll. The house crumb, footer and boot script are injected by house-sync (the hub is its own HOUSE_DIR).
+// Usage: node scripts/build.mjs   (no dependencies, works from any cwd). CI runs it and fails if committed output differs.
+// A slot with no evidence ({{fig:room/id}} and friends) fails the build.
+// data/changelog.json is refreshed from sibling clones when they exist (CHANGELOG_DIR, default: the folder above the repo).
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { esc, header, footer, caseHead } from "./lib/chrome.mjs";
+import { esc, loadEvidence, makeSlots } from "./lib/slots.mjs";
+import { htmlToMd } from "./lib/md.mjs";
+import { colophonBody } from "./lib/colophon.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const indexPath = path.join(root, "index.html");
-const projects = JSON.parse(fs.readFileSync(path.join(root, "projects.json"), "utf8"))
-  .slice()
-  .sort((a, b) => a.order - b.order);
+const SITE = "https://monsieurgregorio2001-coder.github.io";
+const HOUSE = "2.0.0";
+const H = `/house/${HOUSE}`;
+const rd = (f) => fs.readFileSync(path.join(root, f), "utf8");
+const wr = (f, s) => {
+  const p = path.join(root, f);
+  fs.mkdirSync(path.dirname(p), { recursive: true });
+  if (!fs.existsSync(p) || fs.readFileSync(p, "utf8") !== s) fs.writeFileSync(p, s);
+};
+const projects = JSON.parse(rd("projects.json")).slice().sort((a, b) => a.order - b.order);
+const site = JSON.parse(rd("site.json"));
+const evidence = loadEvidence(root);
+const { render, missing } = makeSlots(evidence);
+const houseJson = JSON.parse(rd(`house/${HOUSE}/house.json`));
+const written = []; // html pages to sync
+const twins = []; // [title, path, description] for llms.txt
 
-
-// Port of the old main.js withNumbers: wrap measured numbers in .num, never a trailing , or .
-function withNumbers(text) {
-  const re = /\d[\d,.]*/g;
-  let out = "", last = 0, m;
-  while ((m = re.exec(text))) {
-    let end = re.lastIndex;
-    if (/[.,]$/.test(m[0])) { end -= 1; re.lastIndex = end; }
-    out += esc(text.slice(last, m.index)) + `<span class="num">${esc(text.slice(m.index, end))}</span>`;
-    last = end;
-  }
-  return out + esc(text.slice(last));
-}
-
-const caseUrl = (p) => `/work/${p.slug}/`;
-const btn = (label, href, primary, name) =>
-  `<a class="${primary ? "btn primary" : "btn"}" href="${esc(href)}" rel="noopener" aria-label="${esc(label + " for " + name)}">${esc(label)}</a>`;
-const caseLink = (p) =>
-  `<a class="case-link" href="${esc(caseUrl(p))}" aria-label="${esc("Read the case for " + p.title)}">Read the case</a>`;
-
-// cardImage is the 1600x1000 2x crop; fall back to the old 1200x750 shot.
-function picture(p) {
-  const img = p.cardImage || p.image;
-  const [w, h] = p.cardImage ? [1600, 1000] : [1200, 750];
-  return `<figure class="shot"><picture><source type="image/webp" srcset="${esc(img)}.webp"><img src="${esc(img)}.png" width="${w}" height="${h}" loading="lazy" decoding="async" alt="${esc(p.imageAlt || "")}"></picture></figure>`;
-}
-
-// Badge per status: "live" is hosted, "local" runs from the repository, anything else is not out yet.
-const BADGES = { live: "Live", local: "Runs locally" };
-const meta = (p, live) =>
-  `<div class="meta"><span class="${p.status === "live" ? "badge live" : "badge"}">${live ? BADGES[p.status] : "Coming soon"}</span><p class="proves"><b>Proves </b>${esc(p.proves)}</p></div>`;
-
-function pcr(p) {
-  const rows = [["Problem", p.problem], ["Build", p.build], ["Result", p.result]]
-    .filter((r) => r[1])
-    .map(([k, v]) => `<div><dt>${k}</dt><dd>${k === "Result" ? withNumbers(v) + (p.resultSource ? `<!-- src: ${esc(p.resultSource)} -->` : "") : esc(v)}</dd></div>`);
-  return rows.length ? `<dl class="pcr">${rows.join("")}</dl>` : "";
-}
-
-const tags = (p) =>
-  p.tags && p.tags.length ? `<ul class="tags" role="list">${p.tags.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "";
-
-// Proof figures must come from the Result text: every number in a figure has to appear there.
-const numbersIn = (s) => s.match(/\d(?:[\d,.]*\d)?/g) || [];
-function figures(p) {
-  if (!p.figures || !p.figures.length) return "";
-  const nums = new Set(numbersIn(p.result));
-  for (const f of p.figures) {
-    if (!f.source) throw new Error(`${p.title}: figure ${f.value} has no source`);
-    for (const n of numbersIn(f.value)) {
-      if (!nums.has(n)) throw new Error(`${p.title}: figure number ${n} does not appear in result`);
-    }
-  }
-  const items = p.figures.map((f) => `<li><span class="fig num">${esc(f.value)}</span><span class="fig-label">${esc(f.label)}</span>${f.source ? `<!-- src: ${esc(f.source)} -->` : ""}</li>`);
-  return `<ul class="figures" role="list" aria-label="${esc(p.title + " in numbers")}">${items.join("")}</ul>`;
-}
-
-const lines = (arr) => arr.filter((l) => l.trim()).join("\n");
-
-function featured(p, i) {
-  const actions = [];
-  if (p.demoUrl) actions.push(btn("Open the demo", p.demoUrl, true, p.title));
-  actions.push(`<a class="btn" href="${esc(caseUrl(p))}" aria-label="${esc("Read the case for " + p.title)}">Read the case</a>`);
-  if (p.repoUrl) actions.push(`<a class="case-link" href="${esc(p.repoUrl)}" rel="noopener" aria-label="${esc("Code for " + p.title)}">Code</a>`);
-  return lines([
-    `<article class="case featured reveal" id="work-${esc(p.slug)}" style="--i:${i}">`,
-    `  ${picture(p)}`,
-    `  <div class="body">`,
-    `    ${meta(p, true)}`,
-    `    <h3 class="display">${esc(p.title)}</h3>`,
-    `    <p class="pitch">${esc(p.pitch)}</p>`,
-    `    ${figures(p)}`,
-    `    ${pcr(p)}`,
-    `    ${tags(p)}`,
-    `    <p class="actions">${actions.join("")}</p>`,
-    `  </div>`,
-    `</article>`,
-  ]);
-}
-
-function card(p, i) {
-  if (!BADGES[p.status]) {
-    return lines([
-      `<article class="case soon reveal" id="work-${esc(p.slug)}" style="--i:${i}">`,
-      `  ${meta(p, false)}`,
-      `  <h3>${esc(p.title)}</h3>`,
-      `  <p class="pitch">${esc(p.pitch)}</p>`,
-      `  <p class="note">Case study and links to follow.</p>`,
-      `</article>`,
-    ]);
-  }
-  const actions = [];
-  if (p.demoUrl) actions.push(btn(p.demoLabel || "Live demo", p.demoUrl, true, p.title));
-  if (p.repoUrl) actions.push(btn("Code", p.repoUrl, !p.demoUrl, p.title));
-  actions.push(caseLink(p));
-  return lines([
-    `<article class="case reveal" id="work-${esc(p.slug)}" style="--i:${i}">`,
-    p.image ? `  ${picture(p)}` : "",
-    `  <div class="body">`,
-    `    ${meta(p, true)}`,
-    `    <h3>${esc(p.title)}</h3>`,
-    `    <p class="pitch">${esc(p.pitch)}</p>`,
-    `    ${pcr(p)}`,
-    `    ${tags(p)}`,
-    `    <p class="actions">${actions.join("")}</p>`,
-    `  </div>`,
-    `</article>`,
-  ]);
-}
-
-const indent = (s, n) => s.split("\n").map((l) => " ".repeat(n) + l).join("\n");
-
+const lines = (a) => a.filter((l) => l !== "" && l != null).join("\n");
+const PROFILE = { linkedin: "https://www.linkedin.com/in/garfield-lim-8239242a9", github: "https://github.com/monsieurgregorio2001-coder", email: "lim.ggreg@outlook.com" };
+const STATUS = { live: "Live", local: "Runs locally" };
+const roomPath = (p) => `/${p.room}/`;
+const doorHref = (p) => (p.roomShipped ? roomPath(p) : `/work/${p.slug}/`);
+const plain = (s) => render(s, false);
 const lead = projects.find((p) => p.featured);
 const rest = projects.filter((p) => p !== lead);
-let cards = "";
-if (lead) cards += indent(featured(lead, 0), 4) + "\n";
-cards += `    <ul id="cards" class="cards" role="list">\n`;
-rest.forEach((p, i) => {
-  cards += `      <li>\n${indent(card(p, i + (lead ? 1 : 0)), 8)}\n      </li>\n`;
-});
-cards += `    </ul>`;
+const resume = fs.existsSync(path.join(root, "resume.pdf"));
 
-const noscript =
-  `      <ul class="plain">\n` +
-  projects
-    .map((p) => {
-      const links = [`<a href="${esc(caseUrl(p))}">Read the case</a>`];
-      if (p.demoUrl) links.push(`<a href="${esc(p.demoUrl)}">${esc(p.demoLabel || "Live demo")}</a>`);
-      return `        <li><strong>${esc(p.title)}</strong>. ${esc(p.pitch)} ${links.join(" &middot; ")}.</li>`;
-    })
-    .join("\n") +
-  `\n      </ul>`;
+/* ---------- page shell ---------- */
+function head({ title, desc, url, type = "website", image = `${SITE}/assets/og-image.png`, imageAlt = "", noindex = false, twin = true, extra = "" }) {
+  return lines([
+    `<meta charset="utf-8">`,
+    `<meta name="viewport" content="width=device-width, initial-scale=1">`,
+    `<title>${esc(title)}</title>`,
+    `<meta name="description" content="${esc(desc)}">`,
+    noindex ? `<meta name="robots" content="noindex">` : "",
+    `<meta name="color-scheme" content="light dark">`,
+    `<meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">`,
+    `<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">`,
+    `<link rel="icon" href="/favicon.svg" type="image/svg+xml">`,
+    url ? `<link rel="canonical" href="${url}">` : "",
+    twin ? `<link rel="alternate" type="text/markdown" href="index.md">` : "",
+    `<!-- house:boot --><!-- /house:boot -->`,
+    `<link rel="preload" href="${H}/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>`,
+    `<link rel="preload" href="${H}/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>`,
+    ...(noindex ? [] : [
+      `<meta property="og:type" content="${type}">`,
+      `<meta property="og:title" content="${esc(title)}">`,
+      `<meta property="og:description" content="${esc(desc)}">`,
+      `<meta property="og:url" content="${url}">`,
+      `<meta property="og:image" content="${image}">`,
+      `<meta property="og:image:width" content="1200">`,
+      `<meta property="og:image:height" content="630">`,
+      `<meta property="og:image:alt" content="${esc(imageAlt)}">`,
+      `<meta name="twitter:card" content="summary_large_image">`,
+      `<meta name="twitter:title" content="${esc(title)}">`,
+      `<meta name="twitter:description" content="${esc(desc)}">`,
+      `<meta name="twitter:image" content="${image}">`,
+      `<meta name="twitter:image:alt" content="${esc(imageAlt)}">`,
+    ]),
+    `<link rel="stylesheet" href="${H}/tokens.css">`,
+    `<link rel="stylesheet" href="${H}/house.css">`,
+    `<link rel="stylesheet" href="/hub.css">`,
+    `<script src="${H}/doorway.js"></script>`,
+    `<script type="module" src="${H}/house.js"></script>`,
+    extra,
+  ]);
+}
+const shell = (headHtml, main, { after = "" } = {}) => `<!doctype html>
+<html lang="en">
+<head>
+${headHtml}
+</head>
+<body>
+<a class="house-skip" href="#main">Skip to content</a>
+<!-- house:crumb --><!-- /house:crumb -->
+${main}
+<!-- house:footer --><!-- /house:footer -->
+${after}</body>
+</html>
+`;
 
-function between(html, name, body, file = "index.html") {
+/* ---------- doors ---------- */
+const poster = (slug, kind, w, h, { eager = false, cls = "" } = {}) => {
+  const dir = "/assets/posters/";
+  const dark = fs.existsSync(path.join(root, "assets/posters", `${slug}-${kind}-dark.avif`));
+  const set = (sfx, ext) => `${dir}${slug}-${kind}${sfx}.${ext}`;
+  const src = [];
+  if (dark) src.push(`<source media="(prefers-color-scheme: dark)" type="image/avif" srcset="${set("-dark", "avif")}">`, `<source media="(prefers-color-scheme: dark)" type="image/webp" srcset="${set("-dark", "webp")}">`);
+  src.push(`<source type="image/avif" srcset="${set("", "avif")}">`);
+  return `<picture${cls ? ` class="${cls}"` : ""} data-door-poster>${src.join("")}<img src="${set("", "webp")}" width="${w}" height="${h}" alt=""${eager ? ` fetchpriority="high"` : ` loading="lazy"`} decoding="async"></picture>`;
+};
+const chip = (p) => `<span class="house-label">${STATUS[p.status]}</span>`;
+const doorAttrs = (p) => `href="${doorHref(p)}"${p.roomShipped ? ` data-room="${p.room}"` : ""}`;
+const proves = (p) => `<span class="vh">Proves: ${esc(p.proves)}.</span>`;
+function featureDoor(p) {
+  return `<a class="door door-feature" ${doorAttrs(p)}>${poster(p.room, "door", 1176, 600, { eager: true, cls: "door-poster" })}<span class="door-body"><span class="door-top">${chip(p)}</span><span class="door-name">${esc(p.title)}</span><span class="door-proof">${esc(p.proof)}</span><span class="door-fig">${render(p.doorFig)}</span></span>${proves(p)}</a>`;
+}
+function rowDoor(p) {
+  return `<a class="door door-row" ${doorAttrs(p)}>${poster(p.room, "thumb", 320, 204, { cls: "door-thumb" })}<span class="door-body"><span class="door-line"><span class="door-name">${esc(p.title)}</span>${chip(p)}</span><span class="door-proof">${esc(p.proof)}</span><span class="door-fig">${render(p.doorFig)}</span></span><span class="door-chev" aria-hidden="true"></span>${proves(p)}</a>`;
+}
+const doorList = () => `<ul class="door-list" role="list">\n${rest.map((p) => `      <li>${rowDoor(p)}</li>`).join("\n")}\n    </ul>`;
+
+/* ---------- receipts ---------- */
+const partial = rd(`house/${HOUSE}/partials/receipt.html`).replace(/<!--[\s\S]*?-->\s*/g, "").replace('<span class="house-fig">{{fig:room/id}}</span>', "{{fig:room/id}}");
+function receipt(p) {
+  const checks = render(`{{checks:${p.evidence}}}`) + (p.noEvals ? `<p class="no-evals">${esc(p.noEvals)}</p>` : "");
+  const map = { slug: p.room, name: esc(p.title), status: STATUS[p.status], proves: esc(p.proves), problem: esc(p.problem), built: esc(p.built), try: esc(p.try), checks, "fig:room/id": render(p.result) };
+  return partial.replace(/\{\{([^}]+)\}\}/g, (m, k) => (k in map ? map[k] : m)).trim();
+}
+const cta = (p) => {
+  const room = p.roomShipped ? `<a class="house-capsule is-filled" href="${roomPath(p)}">Open the room<span class="vh"> for ${esc(p.title)}</span></a>` : `<a class="house-capsule is-filled" href="${esc(p.openUrl)}">${esc(p.openLabel)}<span class="vh"> for ${esc(p.title)}</span></a>`;
+  return `<p class="work-actions">${room}<a class="house-capsule is-ghost" href="/work/${p.slug}/">Read the case<span class="vh"> for ${esc(p.title)}</span></a><a class="house-capsule is-text" href="${esc(p.repoUrl)}">Code<span class="vh"> for ${esc(p.title)}</span></a></p>`;
+};
+const workItem = (p) => lines([
+  `<article class="work-item${p === lead ? " is-featured" : ""}" id="work-${p.slug}">`,
+  p === lead ? `  <div class="work-poster">${poster(p.room, "door", 1176, 600, { cls: "" })}</div>` : "",
+  `  <div class="work-main">`,
+  `    ${receipt(p)}`,
+  `    ${cta(p)}`,
+  `  </div>`,
+  `</article>`,
+]);
+
+/* ---------- index ---------- */
+const eyebrow = `Applied AI engineer &middot; Cebu, Philippines<span class="eb-sep" aria-hidden="true"> &middot; </span><span class="eb-line">Open to remote</span>`;
+const quiet = `Every number here comes from a test run or from your own browser. <a href="#work">See the receipts</a>.`;
+function indexMain() {
+  const interim = site.interim ? " is-interim" : "";
+  return `<main id="main">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero-grid">
+      <div class="hero-text" data-field-host>
+        <canvas class="field" aria-hidden="true"></canvas>
+        <p class="eyebrow">${eyebrow}</p>
+        <h1 id="hero-h" class="display${interim}">${esc(site.headline)}</h1>
+        <p class="lede">${esc(site.lede)}</p>
+      </div>
+      <div class="doors" id="doors">
+    ${featureDoor(lead)}
+    ${doorList()}
+      </div>
+      <div class="hero-actions">
+        <p class="hero-caps"><a class="house-capsule is-filled" href="${roomPath(lead)}">Open ${esc(lead.title)}</a><a class="house-capsule is-ghost desk" href="mailto:${PROFILE.email}">Email me</a><button type="button" class="house-capsule is-text" data-house-copy="${PROFILE.email}">Copy address</button></p>
+        <p class="hero-links desk"><a href="${PROFILE.linkedin}">LinkedIn</a><a href="${PROFILE.github}">GitHub</a>${resume ? `<a class="house-capsule is-ghost" href="/resume.pdf">Resume</a>` : ""}</p>
+        <p class="quiet">${quiet}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="work wrap" aria-labelledby="work-h">
+    <div class="section-head">
+      <p class="eyebrow">Selected work</p>
+      <h2 id="work-h" class="title">Four projects I built and tested.</h2>
+    </div>
+    <div class="work-list">
+${[lead, ...rest].map((p) => workItem(p).split("\n").map((l) => "      " + l).join("\n")).join("\n")}
+    </div>
+  </section>
+
+  <section id="how" class="how wrap" aria-labelledby="how-h">
+    <div class="section-head">
+      <h2 id="how-h" class="title">How I work</h2>
+    </div>
+    <ol class="rules" role="list">
+      <li><strong>Spec first.</strong> I write down what done looks like before I build.</li>
+      <li><strong>Measure everything.</strong> Tests and numbers settle the arguments.</li>
+      <li><strong>Humans approve what matters.</strong> Agents draft and people decide.</li>
+    </ol>
+    <p class="more"><a href="/colophon/">Read the colophon</a> for how this site is built.</p>
+  </section>
+
+  <section id="about" class="about wrap" aria-labelledby="about-h">
+    <div class="section-head">
+      <p class="eyebrow">About</p>
+      <h2 id="about-h" class="title">Agents that earn their place in real work.</h2>
+    </div>
+    <div class="prose">
+      <p>I am an Applied AI Engineer in Cebu, Philippines, open to remote work, building LLM agents, RAG systems, MCP servers, and full-stack products.</p>
+      <p>I am a Technical Director. I lead a team of developers across several products. Before that I built LLM agents for healthcare: patient intake, scheduling and insurance checks.</p>
+      <p>I was the founding engineer of an AI recruitment CRM.</p>
+      <p>I earned a BS in Computer Science, magna cum laude, and won the gSIC i-CREATe Gold Prize in 2024.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="contact wrap" aria-labelledby="contact-h">
+    <div class="section-head">
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-h" class="title">Have a messy problem worth solving?</h2>
+    </div>
+    <p class="lede">I am open to remote roles and conversations about applied AI, so write to me or find me online.</p>
+    <p class="contact-caps"><a class="house-capsule is-filled" href="mailto:${PROFILE.email}">Email me</a><button type="button" class="house-capsule is-text" data-house-copy="${PROFILE.email}">Copy address</button><a class="house-capsule is-ghost" href="${PROFILE.linkedin}">LinkedIn</a><a class="house-capsule is-ghost" href="${PROFILE.github}">GitHub</a></p>
+  </section>
+</main>`;
+}
+const SPEC = `<script type="speculationrules">{"prefetch":[{"where":{"selector_matches":"a[data-room]"},"eagerness":"moderate"}]}</script>`;
+const FIELD = `<script src="/field.js" defer></script>`;
+const hubDesc = `Applied AI engineer in Cebu, Philippines, open to remote. ${site.lede}`;
+{
+  const h = head({ title: "Garfield Lim · Applied AI engineer", desc: hubDesc, url: `${SITE}/`, imageAlt: `Garfield Lim. ${site.headline}`, extra: `<link rel="expect" href="#doors" blocking="render">\n${SPEC}` });
+  const html = shell(h, indexMain(), { after: `${FIELD}\n` });
+  wr("index.html", html);
+  written.push("index.html");
+  twins.push(["Home", "/", hubDesc]);
+}
+
+/* ---------- 404 ---------- */
+{
+  const main = `<main id="main">
+  <section class="hero hero-404" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="hero-text" data-field-host data-field="still">
+        <canvas class="field" aria-hidden="true"></canvas>
+        <h1 id="hero-h" class="display">This room is not built.</h1>
+        <p class="lede">The address you followed does not lead anywhere. These four rooms do.</p>
+      </div>
+      <ul class="door-list door-list-404" role="list">
+${[lead, ...rest].map((p) => `        <li>${rowDoor(p)}</li>`).join("\n")}
+      </ul>
+      <p class="hero-caps"><a class="house-capsule is-filled" href="/">Back to the house</a></p>
+    </div>
+  </section>
+</main>`;
+  const h = head({ title: "This room is not built · Garfield Lim", desc: "This room is not built.", noindex: true, twin: false });
+  wr("404.html", shell(h, main, { after: `${FIELD}\n` }));
+  written.push("404.html");
+}
+
+/* ---------- case pages ---------- */
+function between(html, name, body, file) {
   const re = new RegExp(`(<!-- ${name}:start -->)[\\s\\S]*?(\\n[ \\t]*<!-- ${name}:end -->)`);
   if (!re.test(html)) throw new Error(`markers for ${name} not found in ${file}`);
   return html.replace(re, (_, a, b) => a + "\n" + body + b);
 }
-
-function update(file, blocks) {
-  const rel = path.relative(root, file);
-  const before = fs.readFileSync(file, "utf8");
-  const after = blocks.reduce((h, [name, body]) => between(h, name, body, rel), before);
-  if (after !== before) fs.writeFileSync(file, after);
-  console.log(rel, after !== before ? "updated" : "already up to date");
-}
-
-// Hero "Now" line from site.json, so it can be updated without touching the HTML. An empty line renders nothing.
-const site = JSON.parse(fs.readFileSync(path.join(root, "site.json"), "utf8"));
-const now = site.now ? `    <p class="now">${esc(site.now)}</p>` : "";
-
-update(indexPath, [["header", header("")], ["now", now], ["cards", cards], ["noscript", noscript], ["footer", footer()]]);
-
-// Case pages (ADR 0006). The header block, screens and prev/next nav come from projects.json so cards and pages agree.
 const up = "../../";
-function caseHeader(p) {
-  const links = [];
-  if (p.demoUrl) links.push(btn(p.demoLabel || "Live demo", p.demoUrl, true, p.title));
-  if (p.repoUrl) links.push(btn("Code", p.repoUrl, !p.demoUrl, p.title));
-  return lines([
-    `<p class="eyebrow">Case study</p>`,
-    `<h1 id="case-h" class="display">${esc(p.title)}</h1>`,
-    `<p class="lead">${esc(p.pitch)}</p>`,
-    `<p class="proves"><b>Proves </b>${esc(p.proves)}</p>`,
-    `<p class="actions">${links.join("")}</p>`,
-    tags(p),
-  ]);
-}
-function screens(p) {
-  if (!p.screens || !p.screens.length) throw new Error(`${p.title}: screens[] is empty`);
-  return p.screens
-    .map((s) => `<figure class="screen"><picture><source type="image/webp" srcset="${up}${esc(s.file)}.webp"><img src="${up}${esc(s.file)}.png" width="1600" height="1000" loading="lazy" decoding="async" alt="${esc(s.alt)}"></picture><figcaption>${esc(s.caption)}</figcaption></figure>`)
-    .join("\n");
-}
+const caseHead = (p) => head({ title: `${p.title} case study · Garfield Lim`, desc: plain(p.pitch), url: `${SITE}/work/${p.slug}/`, type: "article", image: `${SITE}/assets/og/${p.slug === "mindmap" ? "mindmap" : p.slug}.png`, imageAlt: `${p.title}. Proves ${p.proves}.` });
+const caseHero = (p) => lines([
+  `<p class="eyebrow">Case study</p>`,
+  `<h1 id="case-h" class="display">${esc(p.title)}</h1>`,
+  `<p class="lede">${esc(plain(p.pitch))}</p>`,
+  `<p class="proves-line"><b>Proves </b>${esc(p.proves)}</p>`,
+  cta(p),
+  `<ul class="tags" role="list">${p.tags.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>`,
+]);
+const caseReceipt = (p) => lines([
+  `<h2 class="vh">Receipt</h2>`,
+  receipt(p),
+  `<h2 class="cs-h limits-h">What this does not do</h2>`,
+  render(`{{limits:${p.evidence}}}`),
+]);
+const screens = (p) => p.screens.map((s) => `<figure class="screen"><picture><source type="image/webp" srcset="${up}${esc(s.file)}.webp"><img src="${up}${esc(s.file)}.png" width="1600" height="1000" loading="lazy" decoding="async" alt="${esc(s.alt)}"></picture><figcaption>${esc(s.caption)}</figcaption></figure>`).join("\n");
 function caseNav(p) {
   const i = projects.indexOf(p);
   const prev = projects[(i - 1 + projects.length) % projects.length];
   const next = projects[(i + 1) % projects.length];
   return lines([
     `<nav class="case-nav wrap" aria-label="More case studies">`,
-    `  <a class="prev" href="/work/${esc(prev.slug)}/"><span class="eyebrow">Previous</span><span class="t">${esc(prev.title)}</span></a>`,
-    `  <a class="back" href="/#work-${esc(p.slug)}">Back to work</a>`,
-    `  <a class="next" href="/work/${esc(next.slug)}/"><span class="eyebrow">Next</span><span class="t">${esc(next.title)}</span></a>`,
+    `  <a class="prev" href="/work/${prev.slug}/"><span class="cn-l">Previous</span><span class="t">${esc(prev.title)}</span></a>`,
+    `  <a class="back" href="/#work-${p.slug}">Back to work</a>`,
+    `  <a class="next" href="/work/${next.slug}/"><span class="cn-l">Next</span><span class="t">${esc(next.title)}</span></a>`,
     `</nav>`,
   ]);
 }
 for (const p of projects) {
-  const file = path.join(root, "work", p.slug, "index.html");
-  if (!fs.existsSync(file)) continue;
-  update(file, [
-    ["head", caseHead(p, up)],
-    ["header", header("/")],
-    ["case-head", caseHeader(p)],
-    ["screens", screens(p)],
-    ["case-nav", caseNav(p)],
-    ["footer", footer()],
-  ]);
+  const file = `work/${p.slug}/index.html`;
+  let html = rd(file);
+  html = between(html, "head", caseHead(p), file);
+  html = between(html, "case-head", caseHero(p), file);
+  html = between(html, "receipt", caseReceipt(p), file);
+  html = between(html, "screens", screens(p), file);
+  html = between(html, "case-nav", caseNav(p), file);
+  // Slots written by hand in the prose.
+  html = html.replace(/\{\{(?:fig|figs|test|figs-test|checks|limits):[^}]+\}\}/g, (m) => render(m));
+  wr(file, html);
+  written.push(file);
+  twins.push([`${p.title} case study`, `/work/${p.slug}/`, plain(p.pitch)]);
+}
+
+/* ---------- changelog ---------- */
+function mdItems(s) {
+  return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
+}
+function parseChangelog(text) {
+  const sections = [];
+  let cur = null, sub = null;
+  for (const line of text.split("\n")) {
+    let m;
+    if ((m = line.match(/^## (.+)/))) { cur = { title: m[1].trim(), groups: [] }; sections.push(cur); sub = null; }
+    else if ((m = line.match(/^### (.+)/)) && cur) { sub = { title: m[1].trim(), items: [] }; cur.groups.push(sub); }
+    else if ((m = line.match(/^- (.+)/)) && cur) { if (!sub) { sub = { title: "Changes", items: [] }; cur.groups.push(sub); } sub.items.push(m[1].trim()); }
+    else if (/^\s+\S/.test(line) && sub && sub.items.length) sub.items[sub.items.length - 1] += " " + line.trim();
+  }
+  return sections.slice(0, 3);
+}
+{
+  const dir = process.env.CHANGELOG_DIR || path.resolve(root, "..");
+  const rooms = [["hub", "Hub and house", root], ["paperlab", "PaperLab", path.join(dir, "paperlab")], ["mindmap-mcp", "Living Mindmap", path.join(dir, "mindmap-mcp")], ["slop-editorial", "Slop Editorial", path.join(dir, "slop-editorial")], ["paluwagan", "Online Paluwagan", path.join(dir, "paluwagan")]];
+  const file = path.join(root, "data", "changelog.json");
+  const prev = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : { rooms: {} };
+  const out = { rooms: {} };
+  for (const [slug, title, base] of rooms) {
+    const src = path.join(base, "docs", "CHANGELOG.md");
+    if (fs.existsSync(src)) {
+      // A sibling's published changelog is its origin/main copy, so a branch in progress never leaks onto this page.
+      let date = "", text = fs.readFileSync(src, "utf8");
+      const git = (...a) => execFileSync("git", a, { cwd: base, stdio: ["ignore", "pipe", "ignore"] }).toString();
+      try {
+        if (base !== root) { text = git("show", "origin/main:docs/CHANGELOG.md"); date = git("log", "-1", "--format=%cs", "origin/main", "--", "docs/CHANGELOG.md").trim(); }
+        else date = git("log", "-1", "--format=%cs", "--", "docs/CHANGELOG.md").trim();
+      } catch { /* not a git checkout, or the file is not on main yet */ }
+      const entry = { title, date, sections: parseChangelog(text) };
+      // Keep the committed date when the sibling has uncommitted changes only.
+      out.rooms[slug] = entry.date || !prev.rooms[slug] ? entry : prev.rooms[slug];
+    } else if (prev.rooms[slug]) out.rooms[slug] = prev.rooms[slug];
+  }
+  wr("data/changelog.json", JSON.stringify(out, null, 2) + "\n");
+  const groups = Object.entries(out.rooms).map(([slug, r]) => `    <section class="log-room" aria-labelledby="log-${slug}">
+      <h2 id="log-${slug}" class="cs-h">${esc(r.title)}</h2>
+${r.sections.map((s) => `      <div class="log-entry">
+        <h3>${esc(s.title)}${r.date ? ` <span class="log-date">${esc(r.date)}</span>` : ""}</h3>
+${s.groups.map((g) => `        <h4>${esc(g.title)}</h4>\n        <ul>${g.items.map((i) => `<li>${mdItems(i)}</li>`).join("")}</ul>`).join("\n")}
+      </div>`).join("\n")}
+    </section>`).join("\n");
+  const main = `<main id="main">
+  <div class="wrap doc">
+    <p class="eyebrow">Changelog</p>
+    <h1 class="title">What changed</h1>
+    <p class="lede">Each repository keeps its own changelog. This page reads them at build time, newest first. The dates are when each file last changed.</p>
+${groups}
+  </div>
+</main>`;
+  const h = head({ title: "Changelog · Garfield Lim", desc: "What changed in the house and in each room.", url: `${SITE}/changelog/`, imageAlt: "Garfield Lim changelog." });
+  wr("changelog/index.html", shell(h, main));
+  written.push("changelog/index.html");
+  twins.push(["Changelog", "/changelog/", "What changed in the house and in each room."]);
+}
+
+/* ---------- colophon ---------- */
+{
+  const main = `<main id="main">
+  <div class="wrap doc">
+    <p class="eyebrow">Colophon</p>
+    <h1 class="title">How this site is made</h1>
+${colophonBody({ root, house: HOUSE, houseJson, esc })}
+  </div>
+</main>`;
+  const h = head({ title: "Colophon · Garfield Lim", desc: "Tokens, springs, fonts, stack, budgets and the AI policy behind this site.", url: `${SITE}/colophon/`, imageAlt: "Garfield Lim colophon." });
+  wr("colophon/index.html", shell(h, main));
+  written.push("colophon/index.html");
+  twins.push(["Colophon", "/colophon/", "Tokens, springs, fonts, stack, budgets and the AI policy behind this site."]);
+}
+
+/* ---------- house sync, twins, llms.txt, sitemap ---------- */
+execFileSync("node", [`house/${HOUSE}/tools/house-sync.mjs`, ...written], { cwd: root, env: { ...process.env, HOUSE_DIR: root }, stdio: "inherit" });
+for (const f of written) {
+  if (f === "404.html") continue;
+  const html = rd(f);
+  const main = (html.match(/<main[\s\S]*<\/main>/) || [""])[0];
+  wr(f.replace(/index\.html$/, "index.md"), htmlToMd(main));
+}
+const abs = (p) => `${SITE}${p}`;
+wr("llms.txt", `# Garfield Lim
+
+> Applied AI engineer in Cebu, Philippines, open to remote. ${site.lede} Every number on these pages comes from a test run or from your own browser.
+
+## Pages
+
+${twins.map(([t, p, d]) => `- [${t}](${abs(p)}index.md): ${d}`).join("\n")}
+
+## Rooms
+
+${[lead, ...rest].map((p) => `- [${p.title}](${abs(p.roomShipped ? roomPath(p) : `/work/${p.slug}/`)}): ${p.proof}`).join("\n")}
+
+## Contact
+
+- Email: ${PROFILE.email}
+- [LinkedIn](${PROFILE.linkedin})
+- [GitHub](${PROFILE.github})
+`);
+wr("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${twins.map(([, p]) => `  <url><loc>${abs(p)}</loc></url>`).join("\n")}\n</urlset>\n`);
+wr(".nojekyll", "");
+console.log(`build: ${written.length} pages, ${twins.length} twins`);
+if (missing.length) {
+  console.error(`build: ${missing.length} evidence slot(s) not measured yet:\n  ${[...new Set(missing)].join("\n  ")}`);
+  process.exit(1);
 }

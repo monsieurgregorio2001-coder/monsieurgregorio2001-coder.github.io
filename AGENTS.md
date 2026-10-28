@@ -15,7 +15,7 @@ Inspect the code and `git status` before editing. Keep changes focused, preserve
 
 - No framework and no bundler. The site is static HTML, CSS and vanilla JS on GitHub Pages. `scripts/` may use Node for tooling only (card generator, screenshots, Open Graph images, checks).
 - `projects.json` is the single source of truth for project data. After editing it run `node scripts/build.mjs` and commit the regenerated HTML. CI fails if they differ (ADR 0007).
-- Fonts are self-hosted in `assets/fonts/` under the OFL. No Google Fonts or any other third-party request.
+- Fonts are self-hosted under the OFL and served from `/house/2.0.0/fonts/`. No Google Fonts or any other third-party request.
 - No analytics, no cookies, no tracking.
 
 ## Copy rules

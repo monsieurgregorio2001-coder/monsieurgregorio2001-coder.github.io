@@ -1,11 +1,13 @@
-/* Hero glyph field and headline decode (ADR 0005).
+/* Hero glyph field and headline decode (ADR 0005, amended by ADR 0012).
+   The field settles to a still frame within 5 s of load or of the last input, stops when hidden or off screen,
+   draws one still frame in Calm, is lighter on phones, and is weighted to the text column.
    A sparse grid of JetBrains Mono glyphs whose density drifts with value noise.
    Clicks and taps send a ripple that brightens, scrambles and nudges glyphs; a
    mouse carries a soft glow. The h1 resolves from scrambled glyphs on load,
    re-scrambles a word on hover and any letter a ripple front crosses. */
 (function () {
   "use strict";
-  var hero = document.querySelector(".hero");
+  var hero = document.querySelector("[data-field-host]");
   var canvas = hero && hero.querySelector("canvas.field");
   var h1 = hero && hero.querySelector("h1");
   if (!canvas || !h1 || !canvas.getContext) return;
@@ -17,15 +19,25 @@
   var CW = 7, CH = 14;
   var RIPPLE_SPEED = 520, RIPPLE_WIDTH = 34, RIPPLE_LIFE = 1.2, MAX_RIPPLES = 6;
   var GLOW_RADIUS = 70;
-  var SPECKLE = 0.06;      // share of empty-density cells still drawn (prototype: 0.12; halved for the 4 ms budget)
-  var BUDGET = 0.12;       // max share of cells drawn per frame; denser noise seeds get thinned toward it
+  var LIGHT = matchMedia("(max-width: 599px), (pointer: coarse)").matches; // phones and touch: about half the glyphs, no churn
+  var SETTLE = 5000;       // ms after load or the last input, then one still frame
+  var SPECKLE = LIGHT ? 0.03 : 0.06;      // share of empty-density cells still drawn (prototype: 0.12; halved for the 4 ms budget)
+  var BUDGET = LIGHT ? 0.06 : 0.12;       // max share of cells drawn per frame; denser noise seeds get thinned toward it
   var thin = 1;            // adaptive multiplier on the presence threshold, 0.5..1
   var FIELD_ALPHA = 0.6;   // global damping so the headline reads first
   var GUARD_ALPHA = 0.15;  // cap for cells under the h1 (and the other hero text) box
   var DECODE_TOTAL = 1100, DECODE_HOLD = 300, CHAR_SCRAMBLE = 300, HOVER_DEBOUNCE = 600;
 
   // data-static (the 404): one frame, no loop, no ripple, headline resolved, as under reduced motion.
-  var reduce = hero.hasAttribute("data-static") ? { matches: true, addEventListener: function () {} } : matchMedia("(prefers-reduced-motion: reduce)");
+  // Calm (the house switch or the OS setting) draws one still frame. data-field="still" decodes once, then stays still (the 404).
+  var STILL = hero.getAttribute("data-field") === "still";
+  var mq = matchMedia("(prefers-reduced-motion: reduce)");
+  var root = document.documentElement;
+  var reduce = {
+    get matches() { return root.dataset.motion === "calm" || (root.dataset.motion !== "full" && mq.matches); },
+    addEventListener: function (t, f) { mq.addEventListener(t, f); new MutationObserver(f).observe(root, { attributes: true, attributeFilter: ["data-motion"] }); }
+  };
+  var lastActive = performance.now();
   var dark = matchMedia("(prefers-color-scheme: dark)");
 
   var dpr = 1, W = 0, H = 0, cols = 0, rows = 0;
@@ -60,7 +72,7 @@
   var LEVELS = 24;
   function buildAtlas() {
     var s = getComputedStyle(document.documentElement);
-    var colors = [s.getPropertyValue("--muted").trim(), s.getPropertyValue("--accent").trim()];
+    var colors = [s.getPropertyValue("--h-ink-2").trim(), s.getPropertyValue("--h-accent").trim()];
     atlas = document.createElement("canvas");
     atlas.width = CHARS.length * CW * dpr;
     atlas.height = colors.length * LEVELS * CH * dpr;
@@ -84,12 +96,9 @@
   // hero's height, so canvas x == clientX and canvas y == clientY - hero top.
   function layout() {
     var hr = hero.getBoundingClientRect();
-    W = document.documentElement.clientWidth;
+    W = Math.ceil(hr.width);
     H = Math.ceil(hr.height);
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.style.left = -hr.left + "px";
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
+    dpr = Math.min(window.devicePixelRatio || 1, LIGHT ? 1.5 : 2);
     canvas.width = W * dpr;
     canvas.height = H * dpr;
     cols = Math.ceil(W / CW) + 1;
@@ -103,16 +112,16 @@
     // Contrast guard: flag every cell overlapping the h1 box. The eyebrow, lead and proof points get
     // the same cap, since ripples otherwise run dark glyphs through their smaller text.
     guard.fill(0);
-    hero.querySelectorAll("h1, .eyebrow, .lead, .proof").forEach(function (el) {
+    hero.querySelectorAll("h1, .eyebrow, .lede").forEach(function (el) {
       var b = el.getBoundingClientRect();
-      var c0 = Math.max(0, Math.floor(b.left / CW)), c1 = Math.min(cols - 1, Math.floor(b.right / CW));
+      var c0 = Math.max(0, Math.floor((b.left - hr.left) / CW)), c1 = Math.min(cols - 1, Math.floor((b.right - hr.left) / CW));
       var r0 = Math.max(0, Math.floor((b.top - hr.top) / CH)), r1 = Math.min(rows - 1, Math.floor((b.bottom - hr.top) / CH));
       for (var r = r0; r <= r1; r++) for (var c = c0; c <= c1; c++) guard[r * cols + c] = 1;
     });
     // Headline character centres, read once per layout, compared to ripple radii per frame.
     chars.forEach(function (ch) {
       var cr = ch.el.getBoundingClientRect();
-      ch.x = cr.left + cr.width / 2; ch.y = cr.top - hr.top + cr.height / 2;
+      ch.x = cr.left - hr.left + cr.width / 2; ch.y = cr.top - hr.top + cr.height / 2;
     });
     buildAtlas();
     updateDensity(performance.now() / 1000);
@@ -124,7 +133,8 @@
         var n = 0.65 * noise(c * 0.035 + t * 0.03, r * 0.07 - t * 0.01) +
                 0.35 * noise(c * 0.09 - t * 0.05, r * 0.16 + 7.3);
         var i = r * cols + c;
-        density[i] = smoothstep(0.52, 0.85, n);
+        // Weighted to the text column: the right edge of the host thins out.
+        density[i] = smoothstep(0.52, 0.85, n) * (1 - 0.65 * smoothstep(0.55, 1, c / cols));
         accent[i] = noise(c * 0.02 + 40, r * 0.04 + t * 0.02) > 0.62 ? 1 : 0;
       }
     }
@@ -239,8 +249,14 @@
   function frame(now) {
     if (!running) return;
     var t = now / 1000;
-    if (frameN++ % 3 === 0) updateDensity(t);
-    var churn = (cols * rows * 0.004) | 0;
+    if (STILL) {
+      tickHeadline(now);
+      if (chars.some(function (c) { return c.until; })) requestAnimationFrame(frame); else running = false;
+      return;
+    }
+    if (now - lastActive > SETTLE) { running = false; draw(t); return; }
+    if (frameN++ % (LIGHT ? 6 : 3) === 0) updateDensity(t);
+    var churn = LIGHT ? 0 : (cols * rows * 0.004) | 0;
     for (var k = 0; k < churn; k++) glyph[(Math.random() * glyph.length) | 0] = randChar();
     rippleHits(t);
     draw(t);
@@ -248,10 +264,11 @@
     requestAnimationFrame(frame);
   }
   function start() {
-    if (running || reduce.matches || document.hidden || !onScreen) return;
+    if (running || STILL || reduce.matches || document.hidden || !onScreen) return;
     running = true; requestAnimationFrame(frame);
   }
   function stop() { running = false; }
+  function wake() { lastActive = performance.now(); start(); }
   function redraw() { if (!running) draw(performance.now() / 1000); }
 
   /* ---------- events ---------- */
@@ -259,6 +276,7 @@
   function ripple(e) {
     var p = local(e);
     ripples.push({ x: p.x, y: p.y, t: performance.now() / 1000 });
+    wake();
     if (ripples.length > MAX_RIPPLES) ripples.shift();
   }
   // Mouse ripples on press. Touch and pen ripple only on a tap (moved < 10 px,
@@ -279,7 +297,7 @@
   hero.addEventListener("pointercancel", function () { down = null; });
   hero.addEventListener("pointermove", function (e) {
     if (e.pointerType !== "mouse") return; // no glow on touch or pen
-    var p = local(e); pointer.x = p.x; pointer.y = p.y;
+    var p = local(e); pointer.x = p.x; pointer.y = p.y; wake();
   });
   hero.addEventListener("pointerleave", function () { pointer.x = pointer.y = -9999; });
 
@@ -302,7 +320,7 @@
   }
   dark.addEventListener("change", function () { buildAtlas(); redraw(); });
   reduce.addEventListener("change", function () {
-    if (!reduce.matches) return start();
+    if (!reduce.matches) { wake(); return; }
     stop(); ripples.length = 0;
     chars.forEach(function (ch) { ch.until = 0; ch.el.classList.remove("s"); });
     redraw();
@@ -313,12 +331,13 @@
   layout();
   draw(performance.now() / 1000);
   start();
+  if (STILL && !reduce.matches) { running = true; requestAnimationFrame(frame); }
   // The atlas needs the real mono face; Fraunces swapping in moves the headline, so re-measure.
   if (document.fonts) {
     document.fonts.load(FONT).then(function () { buildAtlas(); redraw(); });
     document.fonts.ready.then(function () { layout(); redraw(); });
   }
   if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
-    window.__hero = { draw: function () { draw(performance.now() / 1000); }, cells: function () { return cols * rows; }, ripples: function () { return ripples.length; } };
+    window.__hero = { running: function () { return running; }, draw: function () { draw(performance.now() / 1000); }, cells: function () { return cols * rows; }, ripples: function () { return ripples.length; } };
   }
 })();

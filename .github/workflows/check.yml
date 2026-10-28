@@ -28,9 +28,15 @@ jobs:
       - name: Build output matches committed HTML
         run: |
           node scripts/build.mjs
-          git diff --exit-code -- index.html 'work/**/index.html'
+          git diff --exit-code -- . ':!scripts'
       - name: html-validate
-        run: scripts/node_modules/.bin/html-validate index.html 404.html work/*/index.html lab/doorway/*/index.html house/*/demo.html
+        run: scripts/node_modules/.bin/html-validate index.html 404.html colophon/index.html changelog/index.html work/*/index.html lab/doorway/*/index.html house/*/demo.html
+      - name: Copy lint (banned words, em dashes, semicolons)
+        run: node scripts/check-copy.mjs
+      - name: Ten-second gate (390x664 and 360x640, JS off, reduced motion, fonts blocked)
+        run: node scripts/check-gate.mjs
+      - name: Budgets (JS 20 KB, CSS 14 KB, first load 300 KB at 390)
+        run: node scripts/check-budgets.mjs
       - name: House (immutability, token lint, budgets, room contract and CLS on the demo)
         run: node scripts/check-house.mjs
       - name: axe (hub and case pages, light and dark)
