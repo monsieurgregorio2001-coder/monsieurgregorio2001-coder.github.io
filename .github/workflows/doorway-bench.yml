@@ -1,0 +1,49 @@
+name: doorway-bench
+
+# Doorway gate (ADR 0017, DIRECTION 4.5): 20 navigations each way on the deployed host.
+# Chromium 20 of 20, Playwright WebKit 19 of 20 or better. Also records how Pages resolves missing paths.
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Base URL to bench
+        default: https://monsieurgregorio2001-coder.github.io/
+  schedule:
+    - cron: "17 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: scripts/package-lock.json
+      - name: Install tooling
+        working-directory: scripts
+        run: npm ci
+      - name: Install Playwright browsers
+        working-directory: scripts
+        run: npx playwright install --with-deps chromium webkit
+      - name: Run the bench
+        env:
+          BASE_URL: ${{ inputs.base_url || 'https://monsieurgregorio2001-coder.github.io/' }}
+        run: node scripts/bench-doorway.mjs "$BASE_URL" --out doorway-bench.json --summary doorway-bench.md
+      - name: Job summary
+        if: always()
+        run: |
+          if [ -f doorway-bench.md ]; then cat doorway-bench.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Upload JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: doorway-bench
+          path: |
+            doorway-bench.json
+            doorway-bench.md

@@ -127,3 +127,12 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | Slop diagram label, "Proves" lines, Work heading, shorter pitches | review | `projects.json`, regenerated |
 | 44 px targets, 404 copy | review | wordmark, proof links, footer |
 | About numbers cut | review | roles kept, owner decision 2026-10-28 |
+
+## Release V1 — Wave 1
+
+| Item | Status | Notes |
+| --- | --- | --- |
+| 0b: doorway bench fixtures `/lab/doorway/a/`, `/b/` | review | unlinked, noindex, not in the sitemap. DIRECTION 4.5 doorway, self-contained |
+| 0b: `scripts/bench-doorway.mjs` | review | local Chromium 141: 20 of 20 each way, CLS 0, scroll and focus restored. WebKit not installed in the sandbox, skipped |
+| 0b: `.github/workflows/doorway-bench.yml` | review | dispatch plus weekly. The real-host run and the Pages missing-path probe still wait for Actions after merge |
+| 0b: gate result on github.io (ADR 0017) | todo | needs the workflow run |

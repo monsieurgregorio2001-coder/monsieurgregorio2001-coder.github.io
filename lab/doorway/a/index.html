@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Doorway bench A</title>
+  <link rel="expect" href="#door" blocking="render">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #faf8f4; --ink: #1a1a1f; --door: #2f5d50; --door-ink: #ffffff; --room: #e9dcc3;
+      --dur-page: 600ms; --dur-calm: 160ms;
+      --spring: cubic-bezier(.2, 0, 0, 1);
+      --spring: linear(0, 0.08 6.25%, 0.238 12.5%, 0.406 18.75%, 0.554 25%, 0.674 31.25%, 0.766 37.5%, 0.835 43.75%, 0.885 50%, 0.921 56.25%, 0.946 62.5%, 0.963 68.75%, 0.975 75%, 0.983 81.25%, 0.989 87.5%, 0.992 93.75%, 1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f0f12; --ink: #f1efe9; --door: #7fb8a6; --door-ink: #0f0f12; --room: #2a2518; }
+    }
+    @view-transition { navigation: auto; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 1.125rem/1.5 system-ui, sans-serif; }
+    main { max-width: 40rem; margin: 0 auto; padding: 1rem; }
+    .spacer { height: 900px; }
+    .door { display: block; height: 220px; border-radius: 28px; background: var(--door); color: var(--door-ink); padding: 1rem; text-decoration: none; font-weight: 700; }
+    #room-hero { height: 320px; background: var(--room); border-radius: 0; padding: 1rem; }
+    a { color: inherit; }
+
+    /* Enter: the old page stays opaque, the live new page is revealed from the door rect. */
+    ::view-transition-group(root) { animation-duration: var(--dur-page); }
+    html:active-view-transition-type(enter-room)::view-transition-old(root) { animation: none; }
+    html:active-view-transition-type(enter-room)::view-transition-new(root) {
+      animation: reveal var(--dur-page) var(--spring) both; mix-blend-mode: normal;
+    }
+    /* Leave: the room (old root) clips down into the live door rect. */
+    html:active-view-transition-type(leave-room)::view-transition-new(root) { animation: none; }
+    html:active-view-transition-type(leave-room)::view-transition-old(root) {
+      animation: conceal var(--dur-page) var(--spring) both; mix-blend-mode: normal; z-index: 2;
+    }
+    @keyframes reveal {
+      from { clip-path: inset(var(--door-t, 0px) var(--door-r, 0px) var(--door-b, 0px) var(--door-l, 0px) round 28px); }
+      to { clip-path: inset(0px round 0px); }
+    }
+    @keyframes conceal {
+      from { clip-path: inset(0px round 0px); }
+      to { clip-path: inset(var(--door-t, 0px) var(--door-r, 0px) var(--door-b, 0px) var(--door-l, 0px) round 28px); }
+    }
+    /* Calm and reduced motion: a 160 ms root crossfade, no clip. */
+    @media (prefers-reduced-motion: reduce) {
+      html:active-view-transition-type(enter-room, leave-room)::view-transition-old(root) { animation: fade-out var(--dur-calm) ease-out both; z-index: auto; }
+      html:active-view-transition-type(enter-room, leave-room)::view-transition-new(root) { animation: fade-in var(--dur-calm) ease-out both; }
+    }
+    /* Door less than half visible on leave: crossfade instead of clipping. */
+    html.door-offscreen:active-view-transition-type(leave-room)::view-transition-old(root) { animation: fade-out var(--dur-calm) ease-out both; z-index: auto; }
+    html.door-offscreen:active-view-transition-type(leave-room)::view-transition-new(root) { animation: fade-in var(--dur-calm) ease-out both; }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+  </style>
+  <script>
+    (() => {
+      const KEY = "house.door", LOG = "bench.log", root = document.documentElement;
+      const here = () => (location.pathname.replace(/index\.html$/, "").endsWith("/b/") ? "room" : "foyer");
+      const roomOf = (url) => { try { return new URL(url).pathname.replace(/index\.html$/, "").endsWith("/b/") ? "room" : "foyer"; } catch { return null; } };
+      const typeFor = (from, to) => (from === "foyer" && to === "room" ? "enter-room" : from === "room" && to === "foyer" ? "leave-room" : null);
+      const log = (o) => { try { const l = JSON.parse(sessionStorage.getItem(LOG) || "[]"); l.push(o); sessionStorage.setItem(LOG, JSON.stringify(l)); } catch { /* no storage */ } };
+      const visibleFraction = (r) => {
+        const w = Math.max(0, Math.min(r.right, innerWidth) - Math.max(r.left, 0));
+        const h = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
+        return (w * h) / Math.max(1, r.width * r.height);
+      };
+      const setRect = (r) => {
+        for (const [k, v] of [["t", r.top], ["r", innerWidth - r.right], ["b", innerHeight - r.bottom], ["l", r.left]]) root.style.setProperty("--door-" + k, v + "px");
+      };
+
+      addEventListener("pageswap", (e) => {
+        const from = here();
+        const to = e.activation ? roomOf(e.activation.entry.url) : null;
+        const type = typeFor(from, to);
+        if (e.viewTransition && type) e.viewTransition.types.add(type);
+        if (from === "foyer") {
+          const d = document.getElementById("door");
+          if (d) { const r = d.getBoundingClientRect(); try { sessionStorage.setItem(KEY, JSON.stringify({ t: r.top, r: innerWidth - r.right, b: innerHeight - r.bottom, l: r.left })); } catch { /* no storage */ } }
+        }
+        log({ ev: "pageswap", at: from, hasVT: !!e.viewTransition, types: e.viewTransition ? [...e.viewTransition.types] : [] });
+      });
+
+      addEventListener("pagereveal", (e) => {
+        const at = here();
+        const act = window.navigation && navigation.activation;
+        const from = act && act.from ? roomOf(act.from.url) : null;
+        const type = typeFor(from, at);
+        const rec = { ev: "pagereveal", at, hasVT: !!e.viewTransition, navType: act ? act.navigationType : null, types: [], finished: false };
+        if (e.viewTransition) {
+          if (type) e.viewTransition.types.add(type);
+          // Enter: the stored rect of the clicked door. Leave: the live rect of the door, after scroll restoration.
+          if (at === "room") { try { const r = JSON.parse(sessionStorage.getItem(KEY) || "null"); if (r) { root.style.setProperty("--door-t", r.t + "px"); root.style.setProperty("--door-r", r.r + "px"); root.style.setProperty("--door-b", r.b + "px"); root.style.setProperty("--door-l", r.l + "px"); } } catch { /* no storage */ } }
+          else { const d = document.getElementById("door"); if (d) { const r = d.getBoundingClientRect(); setRect(r); if (visibleFraction(r) < 0.5) root.classList.add("door-offscreen"); } }
+          rec.types = [...e.viewTransition.types];
+          e.viewTransition.finished.then(() => { rec.finished = true; root.classList.remove("door-offscreen"); log(rec); }, (err) => { rec.error = String(err); log(rec); });
+        } else log(rec);
+        if (at === "foyer" && act && act.navigationType === "traverse") { const d = document.getElementById("door"); if (d) d.focus({ preventScroll: true }); }
+      });
+      addEventListener("pageshow", (e) => { if (e.persisted) log({ ev: "pageshow-bfcache", at: here() }); });
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Doorway bench A</h1>
+    <p>Mini foyer for the doorway bench. Not linked, not indexed.</p>
+    <div class="spacer"></div>
+    <a id="door" class="door" href="../b/">Door poster: enter the room</a>
+    <div class="spacer"></div>
+  </main>
+</body>
+</html>
