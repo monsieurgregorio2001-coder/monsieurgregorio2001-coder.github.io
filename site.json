@@ -1,7 +1,6 @@
 {
-  "headline": "I turn messy operations into working AI systems.",
+  "headline": "I build AI tools you can check.",
   "fallback": "I turn messy operations into working AI systems.",
-  "launch": "I build AI tools you can check.",
   "lede": "Four projects. Each one lets you check its claim.",
-  "interim": true
+  "interim": false
 }

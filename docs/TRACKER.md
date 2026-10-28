@@ -163,3 +163,15 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | Mindmap door to Recorded demo, room CTAs | review | `phase-4/foyer-polish`. |
 | Keyboard pass in CI | review | `scripts/check-keyboard.mjs`. |
 | Phone page length about 3,800 px | review | 4,207 px at 390 and 3,940 px at 1440 after receipts were tightened. About 400 px over target. |
+
+## Phase 5: Launch (release V1, wave 4)
+
+| Item | Status | Notes |
+| --- | --- | --- |
+| Headline switch to "I build AI tools you can check." | review | `site.json`, interim size cap removed, title, Open Graph and Twitter copy and `og-image.png` changed together. `phase-5/launch` |
+| H1 in exactly two lines at 360, 390 and 1440 | review | asserted in `scripts/check-gate.mjs`, web fonts and fallback fonts |
+| Contact heading "Work with me" | review | retires "messy" |
+| Changelog "House 2.0.1 / Release V1" | review | `docs/CHANGELOG.md` and `/changelog/` |
+| CURRENT-STATE and handover | review | `docs/portfolio/handovers/2026-10-28-release-v1.md` |
+| Launch screenshots | review | `docs/audits/shots/launch/` at 360, 390, 1440, light and dark |
+| Live gate, Firefox and WebKit, real devices | todo | lead and owner, see the handover |

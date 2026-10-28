@@ -1,6 +1,6 @@
 Applied AI engineer · Cebu, Philippines · Open to remote
 
-# I turn messy operations into working AI systems.
+# I build AI tools you can check.
 
  Four projects. Each one lets you check its claim.
 
@@ -141,7 +141,7 @@ No evals. Nothing here is model output to score.
 
  Contact
 
-## Have a messy problem worth solving?
+## Work with me
 
  I am open to remote roles and conversations about applied AI, so write to me or find me online.
 

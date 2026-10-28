@@ -4,6 +4,16 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+## House 2.0.1 / Release V1, 2026-10-28
+
+### Launch (phase 5)
+- Release V1, the Show Your Work launch. All five sites run on house 2.0.1: the hub and the four rooms (PaperLab, Online Paluwagan, Slop Editorial, Living Mindmap), each with a proof toy, a receipt and an `evidence.json` that the hub reads.
+- New headline "I build AI tools you can check." with the subhead "Four projects. Each one lets you check its claim." (ADR 0013). The page title, Open Graph and Twitter copy and `og-image.png` carry the same line. The old line stays in `site.json` as `fallback`.
+- The interim size cap on the H1 is gone, so it uses `--h-t-display`. `check-gate.mjs` now fails the build unless the H1 sets in exactly two lines at 360, 390 and 1440, with web fonts and with fallback fonts.
+- Contact heading is now "Work with me". The word "messy" is retired from the hub. About is unchanged.
+- Living Mindmap is frozen at its wave 3 state and stays up as a Recorded demo until Gorges replaces it. Gorges comes after V1.
+- Handover: `docs/portfolio/handovers/2026-10-28-release-v1.md`. Screenshots in `docs/audits/shots/launch/`.
+
 ### Added (foyer polish, phase 4)
 - Living Mindmap door, receipt and case CTA now open `/mindmap-mcp/` ("Open the room") with a "Recorded demo" chip. `build.mjs` knows a `demo` status.
 - Order from noise (ADR 0012): on fine-pointer hover or keyboard focus of a door, the glyph cells nearest the door snap into that room's ASCII vocabulary from `house.json` in its hue over 320 ms, then relax after 1.2 s. Off in Calm. About 1.2 KB gz added to `field.js`.

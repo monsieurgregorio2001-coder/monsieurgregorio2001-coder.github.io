@@ -29,6 +29,24 @@ for (const [w, h] of [[390, 664], [360, 640]]) {
   if (!h1.trim().length) { console.log("FAIL H1 text empty"); failed++; }
   await ctx.close();
 }
+// DIRECTION 3.1: the launch H1 sets in exactly two lines at 360, 390 and 1440, with the real fonts and with fallback fonts.
+for (const [w, h] of [[360, 640], [390, 664], [1440, 900]]) {
+  for (const fonts of [true, false]) {
+    const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: "reduce" });
+    if (!fonts) await ctx.route("**/*.woff2", (r) => r.abort());
+    const page = await ctx.newPage();
+    await page.goto(srv.base + "/", { waitUntil: "load" });
+    await page.evaluate(() => document.fonts.ready);
+    const n = await page.evaluate(() => {
+      const el = document.querySelector("h1");
+      return Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight));
+    });
+    const line = `${n === 2 ? "ok  " : "FAIL"} ${w} H1 lines ${n} (${fonts ? "web fonts" : "fallback fonts"})`;
+    console.log(line);
+    if (n !== 2) { failed++; if (process.env.GITHUB_ACTIONS) console.log(`::error title=H1 lines::${line}`); }
+    await ctx.close();
+  }
+}
 await b.close();
 srv.close();
 if (failed) { console.error(`gate: ${failed} failure(s)`); process.exit(1); }
