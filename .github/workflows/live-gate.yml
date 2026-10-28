@@ -3,8 +3,6 @@ name: live-gate
 # Live gate on the deployed host (DIRECTION 4.5, 4.8, 8): per-pair doorways, smoke, Calm, phone profiles.
 # One job per pass so each gets its own 50 annotations. A job prints one ::notice per passing table row and ::error per failure.
 on:
-  push:
-    branches: [phase-4/doorway-gate]
   workflow_dispatch:
     inputs:
       base_url:
