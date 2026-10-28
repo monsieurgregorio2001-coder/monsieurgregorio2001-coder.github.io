@@ -4,6 +4,12 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+### Fixed (honesty sweep)
+- Living Mindmap shows "Runs locally" instead of "Live", since it has no hosted demo.
+- Online Paluwagan copy says pre-written reminder templates a person approves, and a seeded payout draw.
+- Lighthouse figures removed from the cards and case pages until CI measures them.
+- The hero drops the "Now" line and the "8 developers" proof point. A Paluwagan ledger figure takes that slot.
+
 ### Added
 - A "Now" line under the hero lead, from `site.json`.
 - Hero proof points link to their cards; a PaperLab Lighthouse figure replaces the degree line.

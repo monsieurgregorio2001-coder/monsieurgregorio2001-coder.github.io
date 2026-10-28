@@ -130,7 +130,6 @@
       <ul class="results" role="list">
         <li><span class="fig num">19 tests</span><span class="how"><code>npm test</code> runs <span class="num">19</span> Vitest tests on the math: softmax rows sum to <span class="num">1</span> within <span class="num">1e-6</span>, attention shapes, causal masking, positional encoding against the paper formula, layer norm, tokenizer edges and determinism.<!-- src: paperlab/README.md "Tests and measured results", 2026-10-14; 19 it( in src/lib/transformer.test.ts, counted 2026-10-15 --></span></li>
         <li><span class="fig num">58 KB</span><span class="how">Initial JS and CSS, gzipped: <span class="num">53.5</span> KB JS plus <span class="num">4.4</span> KB CSS, from the production build. Self-hosted fonts add about <span class="num">159</span> KB.<!-- src: paperlab/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
-        <li><span class="fig num">96 / 100 / 100 / 100</span><span class="how">Lighthouse mobile preset on the build served by <code>vite preview</code>: performance, accessibility, best practices, SEO.<!-- src: paperlab/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
         <li><span class="fig num">0 violations</span><span class="how">axe-core in light and dark, on all four steps, at <span class="num">360</span> and <span class="num">1280</span> px, colour contrast included. No horizontal scroll at <span class="num">360</span> px.<!-- src: paperlab/README.md "Tests and measured results" table, 2026-10-14 --></span></li>
       </ul>
       <p class="fine">Measured on one machine against a local build, not the live site.</p>
@@ -151,7 +150,7 @@
   <section class="cs wrap" aria-labelledby="next-h">
     <h2 id="next-h" class="cs-h">What I'd do next</h2>
     <ul class="later">
-      <li>Re-run Lighthouse and axe against the live Pages URL, not only <code>vite preview</code>.</li>
+      <li>Measure Lighthouse and axe in CI against the live Pages URL, not only <code>vite preview</code>.</li>
       <li>Add a second layer, so the residual stream can be followed from one block into the next.</li>
       <li>Offer a small subword vocabulary beside the word tokenizer, to show why real models split words.</li>
     </ul>

@@ -8,7 +8,7 @@
     "proves": "AI theory and teaching",
     "problem": "Papers explain attention in equations that few people can picture.",
     "build": "A React and TypeScript app that runs real attention math on toy weights in the browser, with per-head heatmaps and step controls.",
-    "result": "19 unit tests on the math, about 58 KB gzipped, and Lighthouse mobile scores of 96 for performance and 100 in the other three.",
+    "result": "19 unit tests on the math and about 58 KB gzipped.",
     "tags": [
       "React",
       "TypeScript",
@@ -46,10 +46,6 @@
       {
         "value": "58 KB",
         "label": "gzipped"
-      },
-      {
-        "value": "96 / 100 / 100 / 100",
-        "label": "Lighthouse mobile"
       }
     ]
   },
@@ -58,10 +54,10 @@
     "order": 4,
     "featured": false,
     "title": "Online Paluwagan",
-    "pitch": "A demo rotating-savings group with a reconciling ledger, fair payout rotation, and payment reminder drafts a human approves before anything is sent.",
+    "pitch": "A demo rotating-savings group with a reconciling ledger, a seeded payout draw, and pre-written reminder templates a person approves before anything is sent.",
     "proves": "Fintech and the Philippine market",
     "problem": "Paluwagan groups run on chat threads and memory, so late payments and disputes are common.",
-    "build": "An append-only ledger in integer centavos, seeded fair rotation, rule-based risk flags, and human-approved reminder drafts in English and Filipino.",
+    "build": "An append-only ledger in integer centavos, a seeded payout draw, rule-based risk flags, and pre-written reminder templates in English and Filipino that a person approves.",
     "result": "53 tests, including 12,000 randomized ledger operations, arrears included, that always reconcile.",
     "tags": [
       "React",
@@ -113,7 +109,7 @@
     "demoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start",
     "demoLabel": "Run locally",
     "repoUrl": "https://github.com/monsieurgregorio2001-coder/mindmap-mcp",
-    "status": "live",
+    "status": "local",
     "cardImage": "assets/shots/mindmap-hero",
     "screens": [
       {
@@ -142,7 +138,7 @@
     "proves": "Taste and editorial judgment",
     "problem": "AI makes images nearly free, so publications drift into content that nobody decided to make.",
     "build": "A Python pipeline that estimates, caps, approves, and logs every paid generation, plus an Astro and Three.js site whose build gates enforce voice, honesty, links, and speed.",
-    "result": "68 unit tests across the pipeline and the site, 143 real-browser checks, 146 build gates, and Lighthouse 100 on accessibility, best practices, and SEO.",
+    "result": "68 unit tests across the pipeline and the site, 143 real-browser checks, and 146 build gates.",
     "tags": [
       "Astro",
       "Python",

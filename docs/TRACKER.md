@@ -108,3 +108,16 @@ Notes for the owner:
 | Writing section | |
 | Custom domain | |
 | Filipino translation | |
+
+## Show Your Work, phase 0: honesty sweep (hub)
+
+Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 10.
+
+| Item | Status | Notes |
+| --- | --- | --- |
+| Living Mindmap badge "Live" to "Runs locally" | review | new `local` status in `projects.json`, rendered by `build.mjs` |
+| Paluwagan copy: pre-written reminder templates, seeded payout draw | review | card, noscript list, case page |
+| Lighthouse figures out of hub copy | review | cards and case pages. Return when CI measures them |
+| "Now" line and "8 developers" out of the hero | review | `site.json` `now` empty; proof point swapped for the Paluwagan ledger figure. About unchanged (ADR 0008) |
+| Slop figure 143 on the hub | done | already 143 on `main` |
+| Section 9 ADRs (0009 to 0017) | todo | |
