@@ -1,0 +1,12 @@
+<header class="house-crumb" data-house-crumb>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+    <!-- house:if-room --><span class="house-crumb-sep" aria-hidden="true">/</span><a class="house-crumb-room" href="{{room.path}}" aria-current="page">{{room.title}}</a><!-- /house:if-room -->
+    <span class="house-crumb-spacer"></span>
+    <nav class="house-crumb-links" aria-label="Sections"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" popovertarget="house-menu" aria-expanded="false" aria-controls="house-menu">Menu</button>
+    {{menu}}
+  </div>
+</header>

@@ -1,0 +1,17 @@
+<!-- House receipt (DIRECTION 4.4, 5.6). The hub fills {{slots}} from data/evidence/<room>.json.
+     A slot with no value renders the .is-missing figure below, and CI fails on it. -->
+<article class="house-receipt" data-room="{{slug}}">
+  <div class="house-receipt-head">
+    <h3 class="house-receipt-name">{{name}}</h3>
+    <span class="house-label">{{status}}</span>
+  </div>
+  <dl class="house-receipt-rows">
+    <div><dt>Proves</dt><dd>{{proves}}</dd></div>
+    <div><dt>Problem</dt><dd>{{problem}}</dd></div>
+    <div><dt>What I built</dt><dd>{{built}}</dd></div>
+    <div><dt>Result</dt><dd><span class="house-fig">{{fig:room/id}}</span></dd></div>
+    <div><dt>Try this</dt><dd>{{try}}</dd></div>
+    <div><dt>How it is checked</dt><dd>{{checks}}</dd></div>
+  </dl>
+  <!-- Missing slot: <span class="house-fig is-missing">not measured yet</span> -->
+</article>

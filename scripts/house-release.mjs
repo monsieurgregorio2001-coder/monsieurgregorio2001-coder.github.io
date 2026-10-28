@@ -1,4 +1,4 @@
-// npm run house:release 2.0.0
+// npm run house:release <version>
 // Writes the immutable folder /house/<version>/ from house/src/ (DIRECTION 4.2). Refuses to touch a folder that exists.
 // Output: tokens.css house.css boot.js doorway.js house.js house.json demo.html fonts/ partials/ tools/ manifest.json.
 import fs from "node:fs";
@@ -33,16 +33,24 @@ for (const f of ["tokens.css", "house.css", "boot.js", "house.js"]) write(f, rea
 write("doorway.js", read("doorway.js").replace("/*house:rooms*/[]", JSON.stringify(houseJson.rooms.map((r) => [r.slug, r.path]))));
 write("house.json", JSON.stringify({ ...houseJson, version }, null, 2) + "\n");
 // The demo uses the partials themselves, so it cannot drift from them.
-const menuHtml = bake(read("partials/menu.html")).trim();
-const crumbOf = ({ menu, room, glass }) => {
+const menuOf = (room, links) => {
+  const m = bake(read("partials/menu.html")).trim();
+  if (!room || !links) return m.replace(/[ \t]*<!-- house:if-links -->[\s\S]*?<!-- \/house:if-links -->\n?/, "");
+  return m.replace(/<!-- house:if-links -->|<!-- \/house:if-links -->/g, "").replaceAll("{{room.title}}", room.title)
+    .replace("{{room.links}}", links.map(([label, href]) => `\n    <li><a href="${href}">${label}</a></li>`).join("") + "\n  ");
+};
+const menuHtml = menuOf();
+const sampleLinks = [["Works", "/slop-editorial/works/"], ["Certificate", "/slop-editorial/authenticity/"], ["Releases", "/slop-editorial/releases/"], ["Method", "/slop-editorial/about/"]];
+const crumbOf = ({ menu, room, glass, links }) => {
   let c = bake(read("partials/crumb.html"));
-  c = menu ? c.replace("{{menu}}", menuHtml) : c.replace("{{menu}}", "").replace(/ popovertarget="[^"]*"| aria-controls="[^"]*"/g, "");
+  c = menu ? c.replace("{{menu}}", menu === true ? menuHtml : menuOf(room, links)) : c.replace("{{menu}}", "").replace(/ popovertarget="[^"]*"| aria-controls="[^"]*"/g, "");
   c = room ? c.replace(/<!-- \/?house:if-room -->/g, "").replaceAll("{{room.path}}", room.path).replaceAll("{{room.title}}", room.title) : c.replace(/<!-- house:if-room -->[\s\S]*?<!-- \/house:if-room -->/, "");
   if (!menu) c = c.replace(/<nav class="house-crumb-links" aria-label="Sections">([\s\S]*?)<\/nav>/, '<div class="house-crumb-links">$1</div>');
   c = c.replace(/[ \t]+$/gm, "");
   return (glass ? c.replace('data-house-crumb', 'data-house-crumb data-glass') : c).trim();
 };
-const staticMenu = menuHtml.replace(" popover>", ">").replace(' id="house-menu"', "").replace(/ id="house-menu-[a-z]+"/g, "").replace(/ aria-labelledby="[^"]*"/g, "").replace(/ data-house-calm/g, "").replace(/ data-house-plain/g, "");
+const staticOf = (m) => m.replace(" popover>", ">").replace(' id="house-menu"', "").replace(/ id="house-menu-[a-z]+"/g, "").replace(/ aria-labelledby="[^"]*"/g, "").replace(/ data-house-calm/g, "").replace(/ data-house-plain/g, "");
+const staticMenu = staticOf(menuHtml);
 const fill = (html, name, body) => html.replace(new RegExp(`<!-- house:${name} --><!-- /house:${name} -->`), () => `<!-- house:${name} -->\n${body}\n<!-- /house:${name} -->`);
 let demo = bake(read("demo.html"));
 demo = fill(demo, "boot", "").replace("<!-- house:boot -->\n\n<!-- /house:boot -->", `<script>${read("boot.js").trim()}</script>`);
@@ -50,7 +58,9 @@ demo = fill(demo, "crumb", crumbOf({ menu: true }));
 demo = fill(demo, "crumb-frame", crumbOf({}));
 demo = fill(demo, "crumb-frame-glass", crumbOf({ glass: true }));
 demo = fill(demo, "crumb-frame-room", crumbOf({ room: houseJson.rooms[0] }));
+demo = fill(demo, "crumb-rooms", houseJson.rooms.map((r) => `<div>\n<div class="frame no-links" inert>${crumbOf({ room: r })}</div>\n<p class="cap">/ ${r.title}</p>\n</div>`).join("\n"));
 demo = fill(demo, "menu-frame", staticMenu);
+demo = fill(demo, "menu-frame-room", staticOf(menuOf(houseJson.rooms[2], sampleLinks)));
 demo = fill(demo, "footer", bake(read("partials/footer.html")).trim());
 write("demo.html", demo);
 for (const f of fs.readdirSync(path.join(src, "partials"))) write(`partials/${f}`, bake(read(`partials/${f}`)));

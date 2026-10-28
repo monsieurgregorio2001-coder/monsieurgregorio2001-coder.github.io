@@ -19,6 +19,7 @@
   h1 { margin: 0 0 var(--h-sp-4); font: var(--h-t-title); letter-spacing: var(--h-tr-title); text-wrap: balance; }
   h2 { margin: var(--h-sp-8) 0 var(--h-sp-2); font: var(--h-t-heading); font-size: 24px; line-height: 30px; letter-spacing: var(--h-tr-heading); }
   p { margin: 0 0 var(--h-sp-4); max-width: 40rem; text-wrap: pretty; }
+  h3 { margin: var(--h-sp-6) 0 var(--h-sp-2); font: 600 17px / 24px var(--h-font-sans); }
   .lede { font: var(--h-t-lede); letter-spacing: var(--h-tr-lede); color: var(--room-muted); }
   .cap { margin: var(--h-sp-2) 0 0; color: var(--h-ink-2); font: var(--h-t-caption); letter-spacing: var(--h-tr-caption); }
   .grid > * { min-width: 0; }
@@ -67,10 +68,16 @@
       <p class="cap">In a room: "/ PaperLab" with aria-current.</p>
     </div>
   </div>
+  <h3>Room names</h3>
+  <p>All four room names in the crumb. On a phone (under 600 px) a room crumb steps the wordmark down to 17 px and moves Email into the Menu, so "Online Paluwagan" fits at 360 px with no ellipsis. The row stays 52 px and every target stays 44 px.</p>
+  <div class="grid two"><!-- house:crumb-rooms --><!-- /house:crumb-rooms --></div>
 
   <h2>Menu</h2>
   <p>A native popover. Use the Menu button in the crumb to open the real one. Esc closes it and returns focus. This is the open state, shown in place.</p>
   <div class="grid"><div class="on-wash"><!-- house:menu-frame --><!-- /house:menu-frame --></div></div>
+  <h3>Room links in the Menu</h3>
+  <p>New in 2.0.1. A room passes its own pages to house-sync (<code>--links links.json</code> or <code>"links"</code> in <code>house.lock.json</code>) and they list in the Menu under the room's name. A room that passes nothing gets the Menu above. The sample links below are Slop Editorial's.</p>
+  <div class="grid"><div class="on-wash"><!-- house:menu-frame-room --><!-- /house:menu-frame-room --></div></div>
 
   <h2>Capsules</h2>
   <div class="states">

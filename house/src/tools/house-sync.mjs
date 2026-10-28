@@ -8,6 +8,9 @@
 // HOUSE_DIR is a checkout of the public hub repo (a sibling folder locally, a checkout at tag house-<version> in CI).
 // house.lock.json in the working directory pins { version, manifest } (manifest is the sha256 of manifest.json).
 // Every file in the pinned folder is hashed against the manifest before anything is injected.
+// Room links (2.0.1): a room may list its own pages in the Menu under its name. Pass --links links.json, or put the same
+// array under "links" in house.lock.json. Format: [{ "label": "Works", "href": "/slop-editorial/works/" }, ...]. href starts with one "/".
+// A room that passes nothing gets the menu unchanged. The block needs a room (data-room on <html> or --room).
 // Markers in a page: <!-- house:boot -->, <!-- house:crumb -->, <!-- house:footer -->, each closed by <!-- /house:name -->.
 // --check writes nothing and exits 1 when a page differs from what sync would write (drift fails CI).
 import fs from "node:fs";
@@ -52,6 +55,17 @@ for (const [rel, info] of Object.entries(manifest.files)) {
 
 const read = (rel) => fs.readFileSync(path.join(dir, rel), "utf8");
 const houseJson = JSON.parse(read("house.json"));
+const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const linksFile = opt("--links");
+const links = linksFile ? JSON.parse(fs.readFileSync(linksFile, "utf8")) : lock.links || [];
+if (!Array.isArray(links)) fail("room links must be an array of { label, href }");
+for (const l of links) if (!l || !l.label || typeof l.href !== "string" || !/^\/(?!\/)/.test(l.href)) fail(`bad room link ${JSON.stringify(l)}: needs a label and an href starting with one "/"`);
+const menuOf = (room) => {
+  const m = read("partials/menu.html").trim();
+  if (!room || !links.length) return m.replace(/[ \t]*<!-- house:if-links -->[\s\S]*?<!-- \/house:if-links -->\n?/, "");
+  return m.replace(/<!-- house:if-links -->|<!-- \/house:if-links -->/g, "").replaceAll("{{room.title}}", esc(room.title))
+    .replace("{{room.links}}", links.map((l) => `\n    <li><a href="${esc(l.href)}">${esc(l.label)}</a></li>`).join("") + "\n  ");
+};
 const roomOf = (html, slug) => {
   const s = slug || (html.match(/<html[^>]*\sdata-room="([^"]+)"/) || [])[1];
   return houseJson.rooms.find((r) => r.slug === s) || null;
@@ -59,7 +73,7 @@ const roomOf = (html, slug) => {
 
 function parts(html, slug) {
   const room = roomOf(html, slug);
-  let crumb = read("partials/crumb.html").replace("{{menu}}", read("partials/menu.html").trim());
+  let crumb = read("partials/crumb.html").replace("{{menu}}", menuOf(room));
   crumb = room
     ? crumb.replace(/<!-- house:if-room -->|<!-- \/house:if-room -->/g, "").replaceAll("{{room.path}}", room.path).replaceAll("{{room.title}}", room.title)
     : crumb.replace(/<!-- house:if-room -->[\s\S]*?<!-- \/house:if-room -->/, "");
@@ -88,7 +102,7 @@ if (flag("--404")) {
   process.exit(0);
 }
 
-const files = args.filter((a, i) => !a.startsWith("--") && args[i - 1] !== "--room");
+const files = args.filter((a, i) => !a.startsWith("--") && args[i - 1] !== "--room" && args[i - 1] !== "--links");
 if (!files.length) fail("no HTML files given");
 let drift = 0;
 for (const f of files) {

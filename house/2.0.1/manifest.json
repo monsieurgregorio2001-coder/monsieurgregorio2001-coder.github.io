@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "version": "2.0.1",
+  "files": {
+    "boot.js": {
+      "sha256": "10440e03551a83523816f8c41bb2d2394155d3575b77e386d5898175077c19ee",
+      "bytes": 210
+    },
+    "demo.html": {
+      "sha256": "66727d356c3e3430a70d4e1df87014c336b207af4dba9ff19293a94c4fa96c9e",
+      "bytes": 20907
+    },
+    "doorway.js": {
+      "sha256": "c851c460de8419edab1af5f2e542b4edd8bc75d2c045bea406191e3c80b72fa1",
+      "bytes": 4558
+    },
+    "fonts/LICENSE-Fraunces.txt": {
+      "sha256": "cd3384cafac6f2bddc3955273958a2e029f97027c8037ac539ef5744a77b579e",
+      "bytes": 4504
+    },
+    "fonts/LICENSE-Inter.txt": {
+      "sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
+      "bytes": 4477
+    },
+    "fonts/LICENSE-JetBrainsMono.txt": {
+      "sha256": "403581b69dac5cff4079205e01c6b467e56af449ecbd7247693ddb1baafa005b",
+      "bytes": 4524
+    },
+    "fonts/fraunces-latin-opsz-normal.woff2": {
+      "sha256": "7234ed860a9cc83045413c4faee63c960a8f2d1917adcf728119307d56e0d783",
+      "bytes": 67304
+    },
+    "fonts/inter-latin-wght-normal.woff2": {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "bytes": 48256
+    },
+    "fonts/jetbrains-mono-latin-400-normal.woff2": {
+      "sha256": "14425ba9c695763c1547f48a206b7aa60350a33ae23de09f0407877f3fcd89eb",
+      "bytes": 21168
+    },
+    "fonts/jetbrains-mono-latin-500-normal.woff2": {
+      "sha256": "cb182feeed4d798ff6961d3c79f7026279448fca0676438aaecb21f3fc39553a",
+      "bytes": 21832
+    },
+    "house.css": {
+      "sha256": "5030ca2aefd3dd873b26fe438f63ff748d58afa5321781f7893cad5568f0c327",
+      "bytes": 19198
+    },
+    "house.js": {
+      "sha256": "d5ef52dda48fa76497d62a92f086ac968abbdf6ba4ae42de7639bdd75b44416f",
+      "bytes": 6109
+    },
+    "house.json": {
+      "sha256": "edb90e4f0561761483687f310aaa25715c6644955801529e9e79600b7cdefd1a",
+      "bytes": 3037
+    },
+    "partials/404.html": {
+      "sha256": "74afeae306dfff7c46a6bc663fb014ae244288d2ba1c23a0f4980c3e1e8522d4",
+      "bytes": 1808
+    },
+    "partials/crumb.html": {
+      "sha256": "6462d042f0b78fe856ac4587131615dcd0e1092baef1726582b22b7f31a8c00a",
+      "bytes": 863
+    },
+    "partials/footer.html": {
+      "sha256": "590ea0732ee419772612f26ec48096b3361e81fd82462328c92559ccd94b432f",
+      "bytes": 1657
+    },
+    "partials/menu.html": {
+      "sha256": "d3ff1c51febfa1dec5a34e8e84f45dcd087a2e9038d1cc61fa4ca7489eaa74a5",
+      "bytes": 1477
+    },
+    "partials/receipt.html": {
+      "sha256": "fd30020ce455f5472fd387e4054e83dff87b6e13571c1a030c7d7017a5ca751f",
+      "bytes": 869
+    },
+    "tokens.css": {
+      "sha256": "2dcacb552edde74787682d1a1dde69a23d777ea06a2c6fba2ab114ccbddaab5d",
+      "bytes": 7657
+    },
+    "tools/astro-integration.mjs": {
+      "sha256": "09f3748664e068bd5cc9a1e17b5eb58c11543cfa7bbd06bfa8fd34e2a7ead576",
+      "bytes": 487
+    },
+    "tools/house-contract.mjs": {
+      "sha256": "03eeff7e34608aab040e58763452333bdcecddc07a539b034b166045793bdd1a",
+      "bytes": 6728
+    },
+    "tools/house-sync.mjs": {
+      "sha256": "c9ab01d8caa368edf8cc1e92b14696ae710685f3e22a7b7400e20ef40fc6860a",
+      "bytes": 6472
+    },
+    "tools/vite-plugin.mjs": {
+      "sha256": "9cc00cd1cb266574c7c613b91179b599b91905b6fa920fed5305f0c39c7b781b",
+      "bytes": 1372
+    }
+  },
+  "contract": {
+    "tokens": [
+      "--room-bg",
+      "--room-fg",
+      "--room-muted",
+      "--room-rule",
+      "--room",
+      "--room-ink",
+      "--room-wash"
+    ],
+    "elements": [
+      "#main",
+      "a.house-skip[href=#main] as the first link",
+      "one h1",
+      ".house-crumb",
+      ".house-footer"
+    ],
+    "head": [
+      "boot.js inline or blocking before the first stylesheet",
+      "/house/2.0.1/tokens.css",
+      "/house/2.0.1/house.css"
+    ],
+    "title": "{Room} · Garfield Lim",
+    "markers": [
+      "house:boot",
+      "house:crumb",
+      "house:footer"
+    ],
+    "hub_markup": [
+      "a[data-room=<slug>] with [data-door-poster]",
+      "#room-hero in each room"
+    ]
+  }
+}
