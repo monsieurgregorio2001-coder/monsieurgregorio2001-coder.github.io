@@ -10,6 +10,9 @@ on:
       base_url:
         description: Base URL to gate
         default: https://monsieurgregorio2001-coder.github.io/
+      runs:
+        description: Navigations per direction (Chromium and WebKit)
+        default: "20"
   schedule:
     - cron: "43 5 * * 1"
 
@@ -21,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
+      RUNS: ${{ inputs.runs || '2' }}
       BASE_URL: ${{ inputs.base_url || 'https://monsieurgregorio2001-coder.github.io/' }}
     steps:
       - uses: actions/checkout@v4
@@ -37,24 +41,31 @@ jobs:
         run: npx playwright install --with-deps chromium webkit firefox
       - name: Pairs, Chromium (20 of 20)
         if: always()
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser chromium
+        timeout-minutes: 25
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser chromium --runs "$RUNS"
       - name: Pairs, WebKit (19 of 20)
         if: always()
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser webkit
+        timeout-minutes: 25
+        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser webkit --runs "$RUNS"
       - name: Pairs, Firefox (plain navigation)
         if: always()
+        timeout-minutes: 25
         run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser firefox
       - name: Live smoke
         if: always()
+        timeout-minutes: 25
         run: node scripts/bench-rooms.mjs "$BASE_URL" --mode smoke --browser chromium
       - name: Calm pass
         if: always()
+        timeout-minutes: 25
         run: node scripts/bench-rooms.mjs "$BASE_URL" --mode calm --browser chromium
       - name: Phone profiles
         if: always()
+        timeout-minutes: 25
         run: node scripts/bench-rooms.mjs "$BASE_URL" --mode phones
       - name: Upload JSON
         if: always()
+        timeout-minutes: 25
         uses: actions/upload-artifact@v4
         with:
           name: live-gate

@@ -81,7 +81,9 @@ async function pairRun(browser, kind, A, B) {
   await page.goto(base + A.path, { waitUntil: "load" });
   await page.evaluate(() => sessionStorage.removeItem("rooms.log"));
   const wantF = kind === "enter" ? "enter-room" : "room-to-room", wantB = kind === "enter" ? "leave-room" : "room-to-room";
+  let streak = 0;
   for (let i = 0; i < RUNS; i++) {
+    if (streak >= 3) { out.aborted = i; break; }
     await page.evaluate(() => scrollTo(0, 300)); await sleep(100);
     if (kind === "enter") {
       const door = page.locator(`a[data-room="${B.slug}"]`).first();
@@ -95,7 +97,7 @@ async function pairRun(browser, kind, A, B) {
     const before = await state(page), n0 = await count(page);
     errors.length = 0;
     await page.keyboard.press("Enter");
-    await page.waitForURL((u) => u.pathname.startsWith("/" + B.path), { timeout: 15000 }).catch(() => {});
+    await page.waitForURL((u) => u.pathname.startsWith("/" + B.path), { timeout: 8000 }).catch(() => {});
     if (vtBrowser) await waitReveal(page, n0 + 1); else await sleep(400);
     let rec = (await readLog(page)).filter((r) => r.ev === "pagereveal").pop() || {};
     const sf = await state(page);
@@ -103,7 +105,7 @@ async function pairRun(browser, kind, A, B) {
       ok: !!sf.path?.startsWith("/" + B.path) && !errors.length && (!vtBrowser || (rec.hasVT && rec.finished && rec.types?.includes(wantF))) });
     errors.length = 0;
     const n1 = await count(page);
-    await page.goBack({ waitUntil: "load" }).catch(() => {});
+    await page.goBack({ waitUntil: "load", timeout: 15000 }).catch(() => {});
     await sleep(150);
     let log = await readLog(page);
     const bf = log.some((r) => r.ev === "bfcache");
@@ -116,6 +118,8 @@ async function pairRun(browser, kind, A, B) {
     const focusOk = kind === "enter" ? sb.focus === B.slug : true;
     out.back.push({ i: i + 1, reached: sb.path === "/" + A.path, types: fresh ? rec.types || [] : [], hasVT: fresh && !!rec.hasVT, finished: fresh && !!rec.finished, bfcache: bf, scrollOk, scroll: sb.scroll, scrollBefore: before.scroll, focusOk, focus: sb.focus, cls: sb.cls, errors: [...errors], anims: fresh ? rec.anims || [] : [],
       ok: sb.path === "/" + A.path && !errors.length && scrollOk && (!vtBrowser || bf || (fresh && rec.hasVT && rec.finished && rec.types?.includes(wantB))) });
+    streak = out.fwd[i].ok && out.back[i].ok ? 0 : streak + 1;
+    if (!out.fwd[i].reached || !out.back[i].reached) { await page.goto(base + A.path, { waitUntil: "load" }).catch(() => {}); await page.evaluate(() => sessionStorage.removeItem("rooms.log")).catch(() => {}); }
   }
   await context.close();
   return out;
@@ -135,7 +139,7 @@ async function modePairs() {
     const ok = f >= gate && b >= gate;
     const types = [...new Set([...r.fwd, ...r.back].flatMap((x) => x.types))].join("+") || "none";
     result.pairs.push({ label: p.label, kind: p.kind, fwd: f, back: b, scrollRestored: sr, focusRestored: fr, maxCls: cls, ok, runs: r });
-    const msg = `forward ${f}/${RUNS}, back ${b}/${RUNS}, gate ${gate}, scroll ${sr}/${RUNS}, focus ${p.kind === "enter" ? fr + "/" + RUNS : "n/a"}, max CLS ${cls}, types ${types}, ${ok ? "pass" : "FAIL"}`;
+    const msg = `${r.aborted ? "aborted after " + r.aborted + " runs (3 failures in a row), " : ""}forward ${f}/${RUNS}, back ${b}/${RUNS}, gate ${gate}, scroll ${sr}/${RUNS}, focus ${p.kind === "enter" ? fr + "/" + RUNS : "n/a"}, max CLS ${cls}, types ${types}, ${ok ? "pass" : "FAIL"}`;
     notice(`${BROWSER} ${p.label}`, msg);
     if (!ok) {
       const bad = [...r.fwd.filter((x) => !x.ok).map((x) => ({ d: "fwd", ...x })), ...r.back.filter((x) => !x.ok).map((x) => ({ d: "back", ...x }))].slice(0, 2)
