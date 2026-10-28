@@ -83,6 +83,8 @@
       <h2 id="log-hub" class="cs-h">Hub and house</h2>
       <div class="log-entry">
         <h3>Unreleased <span class="log-date">2026-10-28</span></h3>
+        <h4>Added (doorway gate, phase 4)</h4>
+        <ul><li><code>scripts/bench-rooms.mjs</code> and <code>.github/workflows/live-gate.yml</code>: per-pair doorway gate (hub to each room and Back, room to room via the Menu) in Chromium, WebKit and Firefox, live smoke, Calm pass and phone profiles at 4x CPU on the deployed host.</li></ul>
         <h4>Added (foyer polish, phase 4)</h4>
         <ul><li>Living Mindmap door, receipt and case CTA now open <code>/mindmap-mcp/</code> (&quot;Open the room&quot;) with a &quot;Recorded demo&quot; chip. <code>build.mjs</code> knows a <code>demo</code> status.</li><li>Order from noise (ADR 0012): on fine-pointer hover or keyboard focus of a door, the glyph cells nearest the door snap into that room&#39;s ASCII vocabulary from <code>house.json</code> in its hue over 320 ms, then relax after 1.2 s. Off in Calm. About 1.2 KB gz added to <code>field.js</code>.</li><li><code>scripts/check-keyboard.mjs</code>: skip link first, visible focus on every stop, no trap, Esc closes the menu and returns focus. In <code>npm run check</code> and <code>check.yml</code>.</li><li>Screenshots in <code>docs/audits/shots/wave-3/</code>.</li></ul>
         <h4>Changed (foyer polish, phase 4)</h4>
