@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>House 2.0.0 demo · Garfield Lim</title>
+<meta name="description" content="Every house component in every state, in light and dark. Not linked from the site.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script>(function(){var d=document.documentElement,m;try{m=localStorage.getItem("house.motion")}catch(e){}d.dataset.motion=m=="full"||m=="calm"?m:matchMedia("(prefers-reduced-motion:reduce)").matches?"calm":"full"})()</script>
+<link rel="preload" href="/house/2.0.0/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.0/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/house/2.0.0/tokens.css">
+<link rel="stylesheet" href="/house/2.0.0/house.css">
+<style>
+  body { margin: 0; background: var(--room-bg); color: var(--room-fg); font: var(--h-t-body); letter-spacing: var(--h-tr-body); }
+  main { max-width: var(--h-content-max); margin: 0 auto; padding: var(--h-sp-7) var(--h-sp-4) var(--h-sp-9); }
+  h1 { margin: 0 0 var(--h-sp-4); font: var(--h-t-title); letter-spacing: var(--h-tr-title); text-wrap: balance; }
+  h2 { margin: var(--h-sp-8) 0 var(--h-sp-2); font: var(--h-t-heading); font-size: 24px; line-height: 30px; letter-spacing: var(--h-tr-heading); }
+  p { margin: 0 0 var(--h-sp-4); max-width: 40rem; text-wrap: pretty; }
+  .lede { font: var(--h-t-lede); letter-spacing: var(--h-tr-lede); color: var(--room-muted); }
+  .cap { margin: var(--h-sp-2) 0 0; color: var(--h-ink-2); font: var(--h-t-caption); letter-spacing: var(--h-tr-caption); }
+  .grid > * { min-width: 0; }
+  .grid { display: grid; gap: var(--h-sp-5); margin-top: var(--h-sp-4); }
+  @media (min-width: 900px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--h-sp-3); }
+  .frame { position: relative; overflow: hidden; border: 1px solid var(--room-rule); border-radius: var(--h-r-md); background: var(--h-surface); }
+  .frame .house-crumb { position: relative; z-index: 0; }
+  .frame.no-links .house-crumb-links { display: none; }
+  .frame.has-bg::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(135deg, var(--room-wash) 0 16px, var(--room-rule) 16px 32px);
+  }
+  .frame.has-bg .house-crumb { z-index: 1; }
+  .frame .pad { position: relative; padding: var(--h-sp-4); }
+  .toast-static { display: flex; justify-content: center; padding: var(--h-sp-5) var(--h-sp-4); background: var(--room-wash); border-radius: var(--h-r-md); }
+  .toast-static .house-toast { animation: none; }
+  .on-wash { padding: var(--h-sp-5); background: var(--room-wash); border-radius: var(--h-r-md); }
+  .states { display: grid; gap: var(--h-sp-4); }
+  .tok { display: grid; gap: var(--h-sp-2); }
+  .tok > div { display: flex; flex-wrap: wrap; align-items: center; gap: var(--h-sp-2); }
+</style>
+<script type="module" src="/house/2.0.0/house.js"></script>
+</head>
+<body>
+<a class="house-skip" href="#main">Skip to content</a>
+<!-- house:crumb -->
+<header class="house-crumb" data-house-crumb>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+
+    <span class="house-crumb-spacer"></span>
+    <nav class="house-crumb-links" aria-label="Sections"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" popovertarget="house-menu" aria-expanded="false" aria-controls="house-menu">Menu</button>
+    <div id="house-menu" class="house-menu" popover>
+  <p class="house-menu-h" id="house-menu-rooms">Rooms</p>
+  <ul aria-labelledby="house-menu-rooms">
+    <li><a href="/paperlab/">PaperLab</a></li>
+    <li><a href="/mindmap-mcp/">Living Mindmap</a></li>
+    <li><a href="/slop-editorial/">Slop Editorial</a></li>
+    <li><a href="/paluwagan/">Online Paluwagan</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-pages">The house</p>
+  <ul aria-labelledby="house-menu-pages">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-out">Elsewhere</p>
+  <ul aria-labelledby="house-menu-out">
+    <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
+    <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-set">Settings</p>
+  <ul aria-labelledby="house-menu-set">
+    <li><button type="button" data-house-calm aria-pressed="false">Calm motion <span class="house-switch-state" data-state>Off</span></button></li>
+    <li><a href="/index.md" data-house-plain>Plain text</a></li>
+  </ul>
+</div>
+  </div>
+</header>
+<!-- /house:crumb -->
+<main id="main">
+  <p class="house-label">Sample content</p>
+  <h1>House 2.0.0, every part in every state</h1>
+  <p class="lede">This page is the house layer on its own. The values in the receipts are sample text, not measurements. Switch your system theme to see dark. Turn on Calm motion in the footer to see how everything settles.</p>
+
+  <h2>Crumb</h2>
+  <p>52 px, opaque at rest, glass after 8 px of scroll. The real crumb is at the top of this page. Scroll to see it change. The wordmark and the Menu button are 44 px targets.</p>
+  <div class="grid two">
+    <div>
+      <div class="frame" inert><!-- house:crumb-frame -->
+<header class="house-crumb" data-house-crumb>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+
+    <span class="house-crumb-spacer"></span>
+    <div class="house-crumb-links"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></div>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" aria-expanded="false">Menu</button>
+
+  </div>
+</header>
+<!-- /house:crumb-frame --></div>
+      <p class="cap">Hub crumb, opaque.</p>
+    </div>
+    <div>
+      <div class="frame has-bg" inert><!-- house:crumb-frame-glass -->
+<header class="house-crumb" data-house-crumb data-glass>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+
+    <span class="house-crumb-spacer"></span>
+    <div class="house-crumb-links"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></div>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" aria-expanded="false">Menu</button>
+
+  </div>
+</header>
+<!-- /house:crumb-frame-glass --><div class="pad"><br><br></div></div>
+      <p class="cap">Hub crumb, glass, over a striped page.</p>
+    </div>
+    <div>
+      <div class="frame no-links" inert><!-- house:crumb-frame-room -->
+<header class="house-crumb" data-house-crumb>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+    <span class="house-crumb-sep" aria-hidden="true">/</span><a class="house-crumb-room" href="/paperlab/" aria-current="page">PaperLab</a>
+    <span class="house-crumb-spacer"></span>
+    <div class="house-crumb-links"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></div>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" aria-expanded="false">Menu</button>
+
+  </div>
+</header>
+<!-- /house:crumb-frame-room --></div>
+      <p class="cap">In a room: "/ PaperLab" with aria-current.</p>
+    </div>
+  </div>
+
+  <h2>Menu</h2>
+  <p>A native popover. Use the Menu button in the crumb to open the real one. Esc closes it and returns focus. This is the open state, shown in place.</p>
+  <div class="grid"><div class="on-wash"><!-- house:menu-frame -->
+<div class="house-menu">
+  <p class="house-menu-h">Rooms</p>
+  <ul>
+    <li><a href="/paperlab/">PaperLab</a></li>
+    <li><a href="/mindmap-mcp/">Living Mindmap</a></li>
+    <li><a href="/slop-editorial/">Slop Editorial</a></li>
+    <li><a href="/paluwagan/">Online Paluwagan</a></li>
+  </ul>
+  <p class="house-menu-h">The house</p>
+  <ul>
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <p class="house-menu-h">Elsewhere</p>
+  <ul>
+    <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
+    <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
+  </ul>
+  <p class="house-menu-h">Settings</p>
+  <ul>
+    <li><button type="button" aria-pressed="false">Calm motion <span class="house-switch-state" data-state>Off</span></button></li>
+    <li><a href="/index.md">Plain text</a></li>
+  </ul>
+</div>
+<!-- /house:menu-frame --></div></div>
+
+  <h2>Capsules</h2>
+  <div class="states">
+    <div class="row">
+      <a class="house-capsule is-filled" href="#main">Open PaperLab</a>
+      <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email me</a>
+      <button type="button" class="house-capsule is-text" data-house-copy="lim.ggreg@outlook.com">Copy address</button>
+      <button type="button" class="house-capsule is-filled" disabled>Disabled</button>
+    </div>
+    <p class="cap">Filled, ghost, text, disabled. Press scales to 0.97 over 120 ms and releases on the snappy spring. "Copy address" raises the toast.</p>
+  </div>
+
+  <h2>Label</h2>
+  <div class="row"><span class="house-label">Live</span><span class="house-label">Recorded demo</span><span class="house-label">Runs locally</span><span class="house-label">Sample content</span></div>
+  <p class="cap">The truth chip. 13/600 on the grouped-list surface. Never dismissible.</p>
+
+  <h2>Receipt</h2>
+  <div class="grid two">
+    <div>
+      <article class="house-receipt">
+        <div class="house-receipt-head"><h3 class="house-receipt-name">Sample room</h3><span class="house-label">Sample content</span></div>
+        <dl class="house-receipt-rows">
+          <div><dt>Proves</dt><dd>A claim you can check.</dd></div>
+          <div><dt>Problem</dt><dd>What this room exists to solve, in one line.</dd></div>
+          <div><dt>What I built</dt><dd>The smallest thing that proves it.</dd></div>
+          <div><dt>Result</dt><dd><span class="house-fig">3 of 3 sample checks</span></dd></div>
+          <div><dt>Try this</dt><dd><a href="#main">One action to take</a></dd></div>
+          <div><dt>How it is checked</dt><dd>Sample test row, sample eval row.</dd></div>
+        </dl>
+      </article>
+      <p class="cap">Filled.</p>
+    </div>
+    <div>
+      <article class="house-receipt">
+        <div class="house-receipt-head"><h3 class="house-receipt-name">Sample room</h3><span class="house-label">Sample content</span></div>
+        <dl class="house-receipt-rows">
+          <div><dt>Proves</dt><dd>A claim you can check.</dd></div>
+          <div><dt>Problem</dt><dd>What this room exists to solve, in one line.</dd></div>
+          <div><dt>What I built</dt><dd>The smallest thing that proves it.</dd></div>
+          <div><dt>Result</dt><dd><span class="house-fig is-missing">not measured yet</span></dd></div>
+          <div><dt>Try this</dt><dd><a href="#main">One action to take</a></dd></div>
+          <div><dt>How it is checked</dt><dd><span class="house-fig is-missing">not measured yet</span></dd></div>
+        </dl>
+      </article>
+      <p class="cap">With a slot that is not measured yet. On the real site this state fails CI and never reaches main.</p>
+    </div>
+  </div>
+
+  <h2>Drawer</h2>
+  <div class="grid two">
+    <div>
+      <details class="house-drawer"><summary>Closed drawer</summary><div class="house-drawer-body"><p>Native details. Nothing here needs JavaScript.</p></div></details>
+    </div>
+    <div>
+      <details class="house-drawer" open><summary>Open drawer</summary><div class="house-drawer-body"><p>The content fades in and the chevron turns. In Calm only the fade remains.</p></div></details>
+    </div>
+  </div>
+
+  <h2>Toast</h2>
+  <div class="toast-static" inert><div class="house-toast">Copied.</div></div>
+  <p class="cap">One at a time, role=status, 4 seconds, pauses on hover and focus. Use "Copy address" above to raise the real one.</p>
+
+  <h2>Calm switch</h2>
+  <div class="row" inert>
+    <button type="button" class="house-switch" aria-pressed="false"><span class="house-switch-track" aria-hidden="true"><span class="house-switch-thumb"></span></span><span>Calm motion</span> <span class="house-switch-state">Off</span></button>
+    <button type="button" class="house-switch" aria-pressed="true"><span class="house-switch-track" aria-hidden="true"><span class="house-switch-thumb"></span></span><span>Calm motion</span> <span class="house-switch-state">On</span></button>
+  </div>
+  <p class="cap">Off and on. The live switch is in the footer and the menu.</p>
+</main>
+<!-- house:footer -->
+<footer class="house-footer" data-house-footer>
+  <div class="house-footer-inner">
+    <ul class="house-footer-links">
+      <li><a href="/changelog/">House 2.0.0</a></li>
+      <li><a href="/colophon/">Colophon</a></li>
+      <li><a href="/llms.txt">llms.txt</a></li>
+      <li><a href="/index.md" data-house-plain>Plain text</a></li>
+    </ul>
+    <div>
+      <button type="button" class="house-switch" data-house-calm aria-pressed="false">
+        <span class="house-switch-track" aria-hidden="true"><span class="house-switch-thumb"></span></span>
+        <span>Calm motion</span> <span class="house-switch-state" data-state>Off</span>
+      </button>
+    </div>
+    <details class="house-drawer" data-house-receipts data-house-version="2.0.0">
+      <summary>Live receipts</summary>
+      <div class="house-drawer-body">
+        <dl class="house-live">
+          <div><dt>Bytes transferred</dt><dd data-r="bytes">not reported by this browser</dd></div>
+          <div><dt>Largest paint</dt><dd data-r="lcp">not reported by this browser</dd></div>
+          <div><dt>Layout shift</dt><dd data-r="cls">not reported by this browser</dd></div>
+          <div><dt>Slowest interaction</dt><dd data-r="inp">not reported by this browser</dd></div>
+          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.0</dd></div>
+          <div><dt>Commit</dt><dd data-r="commit">not reported by this page</dd></div>
+          <div><dt>Build date</dt><dd data-r="built">not reported by this page</dd></div>
+        </dl>
+      </div>
+    </details>
+    <p class="house-footer-meta">Measured in your browser. Nothing is stored or sent.</p>
+  </div>
+</footer>
+<!-- /house:footer -->
+</body>
+</html>
