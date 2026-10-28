@@ -61,7 +61,7 @@
     "proves": "Money logic you can check",
     "problem": "Paluwagan groups run on chat threads and memory, so late payments and disputes are common.",
     "build": "An append-only ledger in integer centavos, a seeded payout draw, rule-based risk flags, and pre-written reminder templates in English and Filipino that a person approves.",
-    "result": "53 tests, including 12,000 randomized ledger operations, arrears included, that always reconcile.",
+    "result": "56 tests, including 12,000 random ledger operations, arrears included, that reconcile in every run so far.",
     "tags": [
       "React",
       "TypeScript",
@@ -91,7 +91,7 @@
         "caption": "Risk flags with their reasons, and the arrears a short payout created."
       }
     ],
-    "resultSource": "paluwagan/README.md \"Tests and measured results\", `npm test`, 53 passed in 6 files, re-run 2026-10-28; 12,000 operations from the same table, 2026-10-14"
+    "resultSource": "`npm run evidence` in paluwagan, 56 passed, 12,000 operations counted by src/domain/ledger.test.ts, 2026-10-28"
   },
   {
     "slug": "mindmap",
@@ -102,7 +102,7 @@
     "proves": "Agents and MCP",
     "problem": "Ideas from long AI conversations vanish into chat history.",
     "build": "One SQLite store shared by a React Flow UI, a REST API, and a stdio MCP server with near-duplicate detection.",
-    "result": "42 tests, 0 failures across 160 real MCP calls, 0.5 ms median per call.",
+    "result": "42 tests and 0 failures across 160 real MCP calls.",
     "tags": [
       "MCP",
       "TypeScript",
@@ -132,7 +132,7 @@
         "caption": "Search across maps. The MCP tool search_nodes runs the same query."
       }
     ],
-    "resultSource": "mindmap-mcp/README.md \"Tests\" and \"Measured results\", scripts/bench.ts, 2026-10-14; tests/*.test.ts, 6 files, 2026-10-15"
+    "resultSource": "`npm run evidence` in mindmap-mcp, 42 passed, bench calls=160 with 0 failures, 2026-10-28"
   },
   {
     "slug": "slop-editorial",
@@ -143,7 +143,7 @@
     "proves": "A paid pipeline that asks before it spends",
     "problem": "AI makes images nearly free, so publications drift into content that nobody decided to make.",
     "build": "A Python pipeline that estimates, caps, approves, and logs every paid generation, plus an Astro and Three.js site whose build gates enforce voice, honesty, links, and speed.",
-    "result": "68 unit tests across the pipeline and the site, 143 real-browser checks, and 146 build gates.",
+    "result": "70 unit tests across the pipeline and the site, 143 real-browser checks, and 146 build gates.",
     "tags": [
       "Astro",
       "Python",
@@ -173,6 +173,6 @@
         "caption": "The exhibition. Nine works hung in order, each labelled like the platforms it mocks."
       }
     ],
-    "resultSource": "`npm run verify`, 143 passed 0 failed, re-run 2026-10-28; 68 unit tests and 146 build gates from slop-editorial/README.md \"Tests and measured results\" table, 2026-10-14"
+    "resultSource": "evidence script in slop-editorial, 21 site and 49 pipeline tests, 146 gates, `npm run verify` 143 passed 0 failed, 2026-10-28"
   }
 ]

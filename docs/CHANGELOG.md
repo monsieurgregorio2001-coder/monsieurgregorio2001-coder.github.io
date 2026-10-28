@@ -4,6 +4,9 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 
 ## Unreleased
 
+### Fixed
+- Hub figures follow the 2026-10-28 evidence runs: Paluwagan 56 tests, Slop 70 unit tests. The Mindmap card drops the 0.5 ms median, which today's run did not reproduce.
+
 ### Added (doorway bench)
 - Unlinked, noindex `/lab/doorway/a/` and `/b/` fixtures and `scripts/bench-doorway.mjs`, which runs 20 navigations each way in Chromium and WebKit and probes how Pages resolves missing paths. A weekly `doorway-bench` workflow runs it against the live host.
 
