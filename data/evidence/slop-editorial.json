@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "room": "slop-editorial",
-  "commit": "4bc99c5",
-  "ran_at": "2026-10-28T13:03:18Z",
+  "commit": "ca11efd",
+  "ran_at": "2026-10-28T15:15:27Z",
   "runner": "GitHub Actions ubuntu24, Node 22",
   "tests": [
     {
@@ -45,14 +45,14 @@
   "figures": [
     {
       "id": "js-home-gz",
-      "value": 10862,
+      "value": 10864,
       "unit": "bytes",
       "label": "JavaScript on the home page, gzipped",
       "source": "site/scripts/lib-budget.mjs"
     },
     {
       "id": "js-certificate-gz",
-      "value": 11568,
+      "value": 11570,
       "unit": "bytes",
       "label": "JavaScript on the certificate page, gzipped",
       "source": "site/scripts/lib-budget.mjs"
@@ -62,12 +62,12 @@
     {
       "id": "js-home-gz",
       "limit": 15360,
-      "actual": 10862
+      "actual": 10864
     },
     {
       "id": "js-certificate-gz",
       "limit": 20480,
-      "actual": 11568
+      "actual": 11570
     },
     {
       "id": "image-max",
