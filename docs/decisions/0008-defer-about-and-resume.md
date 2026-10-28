@@ -15,3 +15,5 @@ Leave the About section's content unchanged in this initiative. Styling changes 
 
 - The hero and footer do not link a PDF yet.
 - When the resume ships, add it at `/resume.pdf`, link it from the hero actions and footer, and add it to the sitemap.
+
+Amended 2026-10-28 by the owner: About keeps its roles but drops the career numbers ("eight", "four", "six months"). The photo, career arc and resume stay deferred.

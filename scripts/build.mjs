@@ -42,13 +42,15 @@ function picture(p) {
   return `<figure class="shot"><picture><source type="image/webp" srcset="${esc(img)}.webp"><img src="${esc(img)}.png" width="${w}" height="${h}" loading="lazy" decoding="async" alt="${esc(p.imageAlt || "")}"></picture></figure>`;
 }
 
+// Badge per status: "live" is hosted, "local" runs from the repository, anything else is not out yet.
+const BADGES = { live: "Live", local: "Runs locally" };
 const meta = (p, live) =>
-  `<div class="meta"><span class="${live ? "badge live" : "badge"}">${live ? "Live" : "Coming soon"}</span><p class="proves"><b>Proves </b>${esc(p.proves)}</p></div>`;
+  `<div class="meta"><span class="${p.status === "live" ? "badge live" : "badge"}">${live ? BADGES[p.status] : "Coming soon"}</span><p class="proves"><b>Proves </b>${esc(p.proves)}</p></div>`;
 
 function pcr(p) {
   const rows = [["Problem", p.problem], ["Build", p.build], ["Result", p.result]]
     .filter((r) => r[1])
-    .map(([k, v]) => `<div><dt>${k}</dt><dd>${k === "Result" ? withNumbers(v) : esc(v)}</dd></div>`);
+    .map(([k, v]) => `<div><dt>${k}</dt><dd>${k === "Result" ? withNumbers(v) + (p.resultSource ? `<!-- src: ${esc(p.resultSource)} -->` : "") : esc(v)}</dd></div>`);
   return rows.length ? `<dl class="pcr">${rows.join("")}</dl>` : "";
 }
 
@@ -61,11 +63,12 @@ function figures(p) {
   if (!p.figures || !p.figures.length) return "";
   const nums = new Set(numbersIn(p.result));
   for (const f of p.figures) {
+    if (!f.source) throw new Error(`${p.title}: figure ${f.value} has no source`);
     for (const n of numbersIn(f.value)) {
       if (!nums.has(n)) throw new Error(`${p.title}: figure number ${n} does not appear in result`);
     }
   }
-  const items = p.figures.map((f) => `<li><span class="fig num">${esc(f.value)}</span><span class="fig-label">${esc(f.label)}</span></li>`);
+  const items = p.figures.map((f) => `<li><span class="fig num">${esc(f.value)}</span><span class="fig-label">${esc(f.label)}</span>${f.source ? `<!-- src: ${esc(f.source)} -->` : ""}</li>`);
   return `<ul class="figures" role="list" aria-label="${esc(p.title + " in numbers")}">${items.join("")}</ul>`;
 }
 
@@ -93,7 +96,7 @@ function featured(p, i) {
 }
 
 function card(p, i) {
-  if (p.status !== "live") {
+  if (!BADGES[p.status]) {
     return lines([
       `<article class="case soon reveal" id="work-${esc(p.slug)}" style="--i:${i}">`,
       `  ${meta(p, false)}`,
@@ -159,9 +162,9 @@ function update(file, blocks) {
   console.log(rel, after !== before ? "updated" : "already up to date");
 }
 
-// Hero "Now" line from site.json, so it can be updated without touching the HTML.
+// Hero "Now" line from site.json, so it can be updated without touching the HTML. An empty line renders nothing.
 const site = JSON.parse(fs.readFileSync(path.join(root, "site.json"), "utf8"));
-const now = `    <p class="now">${esc(site.now)}</p>`;
+const now = site.now ? `    <p class="now">${esc(site.now)}</p>` : "";
 
 update(indexPath, [["header", header("")], ["now", now], ["cards", cards], ["noscript", noscript], ["footer", footer()]]);
 
