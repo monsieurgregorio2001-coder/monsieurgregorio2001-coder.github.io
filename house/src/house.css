@@ -93,7 +93,13 @@
 @media (max-width: 599px) {
   .house-crumb-inner { gap: var(--h-sp-1); }
   .house-crumb-inner .house-capsule { padding-inline: var(--h-sp-4); }
+  /* Room crumb on a phone (2.0.1): the longest name, Online Paluwagan, must fit at 360 without ellipsis.
+     The wordmark steps down to 17 px, the Email capsule moves into the Menu, and the row stays 52 px with 44 px targets. */
+  .house-crumb-inner:has(.house-crumb-room) .house-wordmark { font-size: 17px; }
+  .house-crumb-inner:has(.house-crumb-room) > a[href^="mailto:"] { display: none; }
+  .house-crumb-inner:has(.house-crumb-room) .house-menu-email { display: list-item; }
 }
+.house-menu-email { display: none; }
 
 /* Menu: native popover, fixed top-right fallback, anchored where supported */
 .house-menu {

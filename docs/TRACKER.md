@@ -144,6 +144,13 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | 1: Fraunces fallback `size-adjust` | later | 108 percent is an estimate. Measure against Georgia in a real browser |
 | 1: doorway on the live host | todo | per-release gate after merge. Local Chromium run of enter and leave passes with types and names set |
 
+## Wave 3: house 2.0.1
+
+| Item | Status | Notes |
+| --- | --- | --- |
+| `/house/2.0.1/`: room crumb fits at 360 and 390, room links slot, doorway rejection guard | review | `phase-3w/house-2.0.1`. boot.js 210 B, doorway.js 1.8 KB gz. Hub pages moved to 2.0.1. Rooms bump later |
+| `house/MOTION.md` room lines | review | Paluwagan and Mindmap added. PaperLab and Slop Editorial have no `docs/MOTION.md` yet |
+
 ## Phase 2: Foyer (release V1, wave 2)
 
 | Item | Status | Notes |

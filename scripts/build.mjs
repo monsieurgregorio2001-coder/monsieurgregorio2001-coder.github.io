@@ -15,7 +15,7 @@ import { colophonBody } from "./lib/colophon.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://monsieurgregorio2001-coder.github.io";
-const HOUSE = "2.0.0";
+const HOUSE = "2.0.1";
 const H = `/house/${HOUSE}`;
 const rd = (f) => fs.readFileSync(path.join(root, f), "utf8");
 const wr = (f, s) => {

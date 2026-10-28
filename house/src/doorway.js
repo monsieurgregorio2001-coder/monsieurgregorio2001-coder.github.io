@@ -17,6 +17,9 @@
   const typeOf = (from, to) => !from || !to || from === to ? null : from === "foyer" ? "enter-room" : to === "foyer" ? "leave-room" : "room-to-room";
   const name = (el, n) => { if (el) { el.style.viewTransitionName = n; named.push(el); } };
   const clear = () => { root.classList.remove("h-door-offscreen"); while (named.length) named.pop().style.viewTransitionName = ""; };
+  // A skipped transition rejects ready, finished and updateCallbackDone (InvalidStateError during fast keyboard navigation).
+  // The navigation itself is fine, so the rejections are swallowed here and never reach the console as unhandled.
+  const quiet = (vt) => { if (vt) for (const k of ["ready", "finished", "updateCallbackDone"]) try { vt[k].catch(() => {}); } catch { /* absent */ } };
   const common = (vt, type) => {
     vt.types.add(type);
     name(document.querySelector(".house-crumb"), "house-crumb");
@@ -30,7 +33,9 @@
   addEventListener("click", (e) => { last = e.target.closest?.("a[data-room]") || null; }, true);
 
   addEventListener("pageswap", (e) => {
-    const vt = e.viewTransition, from = slugOf(location.href), to = e.activation && slugOf(e.activation.entry.url), type = typeOf(from, to);
+    const vt = e.viewTransition;
+    quiet(vt);
+    const from = slugOf(location.href), to = e.activation && slugOf(e.activation.entry.url), type = typeOf(from, to);
     if (!vt || !type || root.dataset.motion === "calm") return;
     common(vt, type);
     if (type === "enter-room") {
@@ -46,6 +51,7 @@
 
   addEventListener("pagereveal", (e) => {
     const vt = e.viewTransition, act = window.navigation && navigation.activation;
+    quiet(vt);
     const from = act && act.from && slugOf(act.from.url), at = slugOf(location.href), type = typeOf(from, at);
     if (!vt || !type || root.dataset.motion === "calm") return;
     common(vt, type);

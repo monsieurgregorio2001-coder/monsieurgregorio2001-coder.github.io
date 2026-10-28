@@ -7,7 +7,7 @@ import { serve, launch } from "./lib/serve.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const out = path.resolve(process.argv[2] || path.join(root, "docs/audits/shots/phase-1-house"));
-const version = process.argv[3] || "2.0.0";
+const version = process.argv[3] || "2.0.1";
 fs.mkdirSync(out, { recursive: true });
 const srv = await serve({ "/": root });
 const browser = await launch();

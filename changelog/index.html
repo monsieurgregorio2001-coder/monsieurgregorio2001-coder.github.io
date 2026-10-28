@@ -12,8 +12,8 @@
 <link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/changelog/">
 <link rel="alternate" type="text/markdown" href="index.md">
 <!-- house:boot --><script>(function(){var d=document.documentElement,m;try{m=localStorage.getItem("house.motion")}catch(e){}d.dataset.motion=m=="full"||m=="calm"?m:matchMedia("(prefers-reduced-motion:reduce)").matches?"calm":"full"})()</script><!-- /house:boot -->
-<link rel="preload" href="/house/2.0.0/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/house/2.0.0/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.1/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.1/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Changelog · Garfield Lim">
 <meta property="og:description" content="What changed in the house and in each room.">
@@ -27,11 +27,11 @@
 <meta name="twitter:description" content="What changed in the house and in each room.">
 <meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og-image.png">
 <meta name="twitter:image:alt" content="Garfield Lim changelog.">
-<link rel="stylesheet" href="/house/2.0.0/tokens.css">
-<link rel="stylesheet" href="/house/2.0.0/house.css">
+<link rel="stylesheet" href="/house/2.0.1/tokens.css">
+<link rel="stylesheet" href="/house/2.0.1/house.css">
 <link rel="stylesheet" href="/hub.css">
-<script src="/house/2.0.0/doorway.js"></script>
-<script type="module" src="/house/2.0.0/house.js"></script>
+<script src="/house/2.0.1/doorway.js"></script>
+<script type="module" src="/house/2.0.1/house.js"></script>
 </head>
 <body>
 <a class="house-skip" href="#main">Skip to content</a>
@@ -61,6 +61,7 @@
   </ul>
   <p class="house-menu-h" id="house-menu-out">Elsewhere</p>
   <ul aria-labelledby="house-menu-out">
+    <li class="house-menu-email"><a href="mailto:lim.ggreg@outlook.com">Email</a></li>
     <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
     <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
   </ul>
@@ -86,6 +87,8 @@
         <ul><li>Living Mindmap door, receipt and case CTA now open <code>/mindmap-mcp/</code> (&quot;Open the room&quot;) with a &quot;Recorded demo&quot; chip. <code>build.mjs</code> knows a <code>demo</code> status.</li><li>Order from noise (ADR 0012): on fine-pointer hover or keyboard focus of a door, the glyph cells nearest the door snap into that room&#39;s ASCII vocabulary from <code>house.json</code> in its hue over 320 ms, then relax after 1.2 s. Off in Calm. About 1.2 KB gz added to <code>field.js</code>.</li><li><code>scripts/check-keyboard.mjs</code>: skip link first, visible focus on every stop, no trap, Esc closes the menu and returns focus. In <code>npm run check</code> and <code>check.yml</code>.</li><li>Screenshots in <code>docs/audits/shots/wave-3/</code>.</li></ul>
         <h4>Changed (foyer polish, phase 4)</h4>
         <ul><li>Receipts are compact slot rows. Problem and What I built are 120 characters or less. &quot;How it is checked&quot; sits in a drawer below 700 px and opens from 700 px up. The featured poster is hidden on phones because the hero door above shows it. Phone page length 6,471 px to 4,207 px.</li><li>Try this lines match today&#39;s rooms. Slop door poster re-shot from the current Slop build.</li></ul>
+        <h4>Added (house 2.0.1)</h4>
+        <ul><li>House 2.0.1, released as <code>/house/2.0.1/</code> from <code>house/src/</code>. 2.0.0 is untouched. The hub pages now run on 2.0.1 (<code>house.lock.json</code>).</li><li>The room crumb fits at 360 and 390 for every room name, &quot;Online Paluwagan&quot; included, with no ellipsis: under 600 px the wordmark steps to 17 px and Email moves into the Menu. The row stays 52 px and targets stay 44 px.</li><li>Room links in the Menu. <code>house-sync</code> takes <code>--links links.json</code> or <code>&quot;links&quot;</code> in <code>house.lock.json</code> and lists a room&#39;s own pages under its name. A room that passes nothing is unchanged.</li><li><code>doorway.js</code> swallows rejections of <code>viewTransition.ready</code>, <code>finished</code> and <code>updateCallbackDone</code>, so a skipped transition (InvalidStateError in fast keyboard navigation) never surfaces as an unhandled error.</li><li><code>house/MOTION.md</code> lists the Paluwagan and Living Mindmap animations. PaperLab and Slop Editorial still owe their lines.</li><li><code>check-house.mjs</code> checks the room crumb for all four names at 360, 390, 1024 and 1440, and runs the contract on every release&#39;s demo.</li></ul>
         <h4>Added (foyer, phase 2)</h4>
         <ul><li>Every hub page runs on house 2.0.0: house crumb, menu, footer (Calm switch, Plain text, live receipts), focus rules and 44 px targets. <code>hub.css</code> replaces <code>style.css</code> and <code>case.css</code>, and <code>main.js</code> is gone.</li><li>First screen per DIRECTION 5.2 and 5.3 with the interim headline kept in <code>site.json</code>, four static doors (PaperLab featured and dark, a grouped list for the rest) with proof lines, status chips and hidden &quot;Proves&quot; text. Posters in AVIF with WebP fallback, captured by <code>scripts/posters.mjs</code>.</li><li>Work as receipts on the house Receipt partial, one CTA set (&quot;Open the room&quot;, &quot;Read the case&quot;, &quot;Code&quot;). Case pages use the same Receipt.</li><li>Evidence slots: <code>data/evidence/</code>, <code>npm run evidence:pull</code>, the &quot;Refresh evidence&quot; workflow. Typed figures are gone from <code>projects.json</code> and the case pages.</li><li><code>/colophon/</code> (tokens and springs computed from <code>tokens.css</code>), <code>/changelog/</code>, a static 404, <code>llms.txt</code>, an <code>index.md</code> twin beside every page, <code>.nojekyll</code>.</li><li>Glyph field per ADR 0012: settles within 5 s of load or the last input, lighter on phones, weighted to the text column. The decode on load stays.</li><li>CI: the 10-second gate, copy lint, budgets, axe on every page.</li></ul>
         <h4>Added (house 2.0.0, phase 1)</h4>
@@ -125,7 +128,7 @@
 <footer class="house-footer" data-house-footer>
   <div class="house-footer-inner">
     <ul class="house-footer-links">
-      <li><a href="/changelog/">House 2.0.0</a></li>
+      <li><a href="/changelog/">House 2.0.1</a></li>
       <li><a href="/colophon/">Colophon</a></li>
       <li><a href="/llms.txt">llms.txt</a></li>
       <li><a href="/index.md" data-house-plain>Plain text</a></li>
@@ -136,7 +139,7 @@
         <span>Calm motion</span> <span class="house-switch-state" data-state>Off</span>
       </button>
     </div>
-    <details class="house-drawer" data-house-receipts data-house-version="2.0.0">
+    <details class="house-drawer" data-house-receipts data-house-version="2.0.1">
       <summary>Live receipts</summary>
       <div class="house-drawer-body">
         <dl class="house-live">
@@ -144,7 +147,7 @@
           <div><dt>Largest paint</dt><dd data-r="lcp">not reported by this browser</dd></div>
           <div><dt>Layout shift</dt><dd data-r="cls">not reported by this browser</dd></div>
           <div><dt>Slowest interaction</dt><dd data-r="inp">not reported by this browser</dd></div>
-          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.0</dd></div>
+          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.1</dd></div>
           <div><dt>Commit</dt><dd data-r="commit">not reported by this page</dd></div>
           <div><dt>Build date</dt><dd data-r="built">not reported by this page</dd></div>
         </dl>

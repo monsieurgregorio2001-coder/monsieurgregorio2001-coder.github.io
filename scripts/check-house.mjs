@@ -68,17 +68,20 @@ if (latest) {
   if (door > 3072) fail(`doorway.js is ${door} bytes gzipped, budget 3072`);
 }
 
-// 4. Contract and CLS on the demo page (both themes, 390 and 1440).
+// 4. Contract on every release's demo, then CLS and the room crumb on the latest (both themes, 360, 390 and 1440).
+for (const v of versions) {
+  const d = `house/${v}/demo.html`;
+  try {
+    execFileSync("node", [path.join(houseRoot, v, "tools", "house-contract.mjs"), d, "--root", root], { cwd: root, stdio: "pipe", env: { ...process.env, PLAYWRIGHT_MODULE: pathToFileURL(createRequire(import.meta.url).resolve("playwright")).href } });
+    console.log(`house contract: ${d} passes`);
+  } catch (e) { fail(`house contract on ${d}:\n${e.stderr?.toString() || e.message}`); }
+}
 if (latest) {
   const demo = `house/${latest}/demo.html`;
-  try {
-    execFileSync("node", [path.join(houseRoot, latest, "tools", "house-contract.mjs"), demo, "--root", root], { cwd: root, stdio: "pipe", env: { ...process.env, PLAYWRIGHT_MODULE: pathToFileURL(createRequire(import.meta.url).resolve("playwright")).href } });
-    console.log(`house contract: ${demo} passes`);
-  } catch (e) { fail(`house contract on ${demo}:\n${e.stderr?.toString() || e.message}`); }
   const srv = await serve({ "/": root });
   const browser = await launch();
   try {
-    for (const colorScheme of ["light", "dark"]) for (const width of [390, 1440]) {
+    for (const colorScheme of ["light", "dark"]) for (const width of [360, 390, 1440]) {
       const page = await browser.newPage({ viewport: { width, height: 900 }, colorScheme });
       await page.addInitScript(() => { window.__cls = 0; new PerformanceObserver((l) => l.getEntries().forEach((e) => { if (!e.hadRecentInput) window.__cls += e.value; })).observe({ type: "layout-shift", buffered: true }); });
       await page.goto(`${srv.base}/${demo}`, { waitUntil: "networkidle" });
@@ -89,6 +92,21 @@ if (latest) {
       console.log(`demo ${colorScheme} ${width}px: CLS ${cls}, horizontal overflow ${overflow}px`);
       if (cls !== 0) fail(`${demo} ${colorScheme} ${width}px: CLS ${cls}`);
       if (overflow > 0) fail(`${demo} ${colorScheme} ${width}px: horizontal overflow ${overflow}px`);
+      // The room crumb (2.0.1): every room name fits on one 52 px row with no ellipsis and no horizontal overflow, 44 px targets.
+      if (!/^2\.0\.0$/.test(latest)) for (const w of [360, 390, 1024, 1440]) {
+        await page.setViewportSize({ width: w, height: 900 });
+        for (const r of JSON.parse(fs.readFileSync(path.join(houseRoot, latest, "house.json"), "utf8")).rooms) {
+          const m = await page.evaluate((title) => {
+            const c = document.querySelector("[data-house-crumb]"), old = c.querySelector(".house-crumb-sep, .house-crumb-room");
+            c.querySelectorAll(".house-crumb-sep, .house-crumb-room").forEach((e) => e.remove());
+            c.querySelector(".house-wordmark").insertAdjacentHTML("afterend", `<span class="house-crumb-sep" aria-hidden="true">/</span><a class="house-crumb-room" href="/x/">${title}</a>`);
+            const room = c.querySelector(".house-crumb-room"), btn = c.querySelector(".house-menu-btn").getBoundingClientRect();
+            const targets = [...c.querySelectorAll(".house-crumb-inner > a, .house-crumb-inner > button")].filter((e) => e.offsetParent);
+            return { cut: room.scrollWidth > room.clientWidth, h: c.getBoundingClientRect().height, over: document.documentElement.scrollWidth - innerWidth, edge: btn.right <= innerWidth, small: targets.filter((e) => e.getBoundingClientRect().height < 44).length };
+          }, r.title);
+          if (m.cut || m.h !== 52 || m.over > 0 || !m.edge || m.small) fail(`${demo} ${colorScheme} ${w}px room crumb "${r.title}": ${JSON.stringify(m)}`);
+        }
+      }
       await page.close();
     }
   } finally { await browser.close(); srv.close(); }

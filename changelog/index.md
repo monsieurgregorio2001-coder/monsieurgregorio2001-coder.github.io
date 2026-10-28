@@ -20,6 +20,15 @@ Changelog
 - Receipts are compact slot rows. Problem and What I built are 120 characters or less. "How it is checked" sits in a drawer below 700 px and opens from 700 px up. The featured poster is hidden on phones because the hero door above shows it. Phone page length 6,471 px to 4,207 px.
 - Try this lines match today's rooms. Slop door poster re-shot from the current Slop build.
 
+ Added (house 2.0.1)
+
+- House 2.0.1, released as `/house/2.0.1/` from `house/src/`. 2.0.0 is untouched. The hub pages now run on 2.0.1 (`house.lock.json`).
+- The room crumb fits at 360 and 390 for every room name, "Online Paluwagan" included, with no ellipsis: under 600 px the wordmark steps to 17 px and Email moves into the Menu. The row stays 52 px and targets stay 44 px.
+- Room links in the Menu. `house-sync` takes `--links links.json` or `"links"` in `house.lock.json` and lists a room's own pages under its name. A room that passes nothing is unchanged.
+- `doorway.js` swallows rejections of `viewTransition.ready`, `finished` and `updateCallbackDone`, so a skipped transition (InvalidStateError in fast keyboard navigation) never surfaces as an unhandled error.
+- `house/MOTION.md` lists the Paluwagan and Living Mindmap animations. PaperLab and Slop Editorial still owe their lines.
+- `check-house.mjs` checks the room crumb for all four names at 360, 390, 1024 and 1440, and runs the contract on every release's demo.
+
  Added (foyer, phase 2)
 
 - Every hub page runs on house 2.0.0: house crumb, menu, footer (Calm switch, Plain text, live receipts), focus rules and 44 px targets. `hub.css` replaces `style.css` and `case.css`, and `main.js` is gone.

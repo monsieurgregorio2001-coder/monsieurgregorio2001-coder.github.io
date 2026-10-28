@@ -114,13 +114,13 @@ Colophon
 
  Family | Use | Size | Licence |
 
-Fraunces | wordmark, H1, section titles | 65.7 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.0/fonts/LICENSE-Fraunces.txt) |
+Fraunces | wordmark, H1, section titles | 65.7 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.1/fonts/LICENSE-Fraunces.txt) |
 
-Inter | UI, body, money | 47.1 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.0/fonts/LICENSE-Inter.txt) |
+Inter | UI, body, money | 47.1 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.1/fonts/LICENSE-Inter.txt) |
 
-JetBrains Mono 400 | the glyph field, after the first paint | 20.7 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.0/fonts/LICENSE-JetBrainsMono.txt) |
+JetBrains Mono 400 | the glyph field, after the first paint | 20.7 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.1/fonts/LICENSE-JetBrainsMono.txt) |
 
-JetBrains Mono 500 | figures and code | 21.3 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.0/fonts/LICENSE-JetBrainsMono.txt) |
+JetBrains Mono 500 | figures and code | 21.3 KB | [SIL Open Font License 1.1](https://monsieurgregorio2001-coder.github.io/house/2.0.1/fonts/LICENSE-JetBrainsMono.txt) |
 
 ## Stack
 
