@@ -50,7 +50,7 @@ const meta = (p, live) =>
 function pcr(p) {
   const rows = [["Problem", p.problem], ["Build", p.build], ["Result", p.result]]
     .filter((r) => r[1])
-    .map(([k, v]) => `<div><dt>${k}</dt><dd>${k === "Result" ? withNumbers(v) : esc(v)}</dd></div>`);
+    .map(([k, v]) => `<div><dt>${k}</dt><dd>${k === "Result" ? withNumbers(v) + (p.resultSource ? `<!-- src: ${esc(p.resultSource)} -->` : "") : esc(v)}</dd></div>`);
   return rows.length ? `<dl class="pcr">${rows.join("")}</dl>` : "";
 }
 
@@ -63,11 +63,12 @@ function figures(p) {
   if (!p.figures || !p.figures.length) return "";
   const nums = new Set(numbersIn(p.result));
   for (const f of p.figures) {
+    if (!f.source) throw new Error(`${p.title}: figure ${f.value} has no source`);
     for (const n of numbersIn(f.value)) {
       if (!nums.has(n)) throw new Error(`${p.title}: figure number ${n} does not appear in result`);
     }
   }
-  const items = p.figures.map((f) => `<li><span class="fig num">${esc(f.value)}</span><span class="fig-label">${esc(f.label)}</span></li>`);
+  const items = p.figures.map((f) => `<li><span class="fig num">${esc(f.value)}</span><span class="fig-label">${esc(f.label)}</span>${f.source ? `<!-- src: ${esc(f.source)} -->` : ""}</li>`);
   return `<ul class="figures" role="list" aria-label="${esc(p.title + " in numbers")}">${items.join("")}</ul>`;
 }
 

@@ -10,6 +10,16 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 - Lighthouse figures removed from the cards and case pages until CI measures them.
 - The hero drops the "Now" line and the "8 developers" proof point. A Paluwagan ledger figure takes that slot.
 
+- Cards are never hidden by opacity. The reveal is a small lift only, and anything above the fold or targeted by the URL hash shows at once.
+- `src` comments beside every home-page number, generated from `source` on figures and `resultSource` in `projects.json`.
+- Slop (143 browser checks) and Paluwagan (53 tests) sources updated to runs on 2026-10-28. Notes mentioning 150 and 42 removed.
+- Slop diagram label reads "mock or paid, then ledger".
+- "Proves" lines: Paluwagan "Money logic you can check", Slop "A paid pipeline that asks before it spends". Work heading reads "Four projects I built and tested."
+- Shorter Mindmap and Slop pitches, in cards, noscript, case leads, meta, og and twitter.
+- 44 px tap targets on the wordmark, hero proof links and footer links.
+- 404 copy reads "That page does not exist."
+- About keeps the roles and drops the numbers (amends ADR 0008 for these figures).
+
 ### Added
 - A "Now" line under the hero lead, from `site.json`.
 - Hero proof points link to their cards; a PaperLab Lighthouse figure replaces the degree line.

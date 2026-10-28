@@ -121,3 +121,9 @@ Plan: [`portfolio/design/DIRECTION.md`](portfolio/design/DIRECTION.md), section 
 | "Now" line and "8 developers" out of the hero | review | `site.json` `now` empty; proof point swapped for the Paluwagan ledger figure. About unchanged (ADR 0008) |
 | Slop figure 143 on the hub | done | already 143 on `main` |
 | Section 9 ADRs (0009 to 0017) | review | branch `docs/show-your-work-adrs` |
+| Cards never hidden by opacity | review | `style.css`, `main.js`. Above-fold and hash targets reveal at once |
+| `src` comments beside home-page numbers | review | `source` on figures, `resultSource` per project, hero proof list by hand |
+| Stale src: Slop 143, Paluwagan 53 (2026-10-28) | review | 150 and 42 notes removed |
+| Slop diagram label, "Proves" lines, Work heading, shorter pitches | review | `projects.json`, regenerated |
+| 44 px targets, 404 copy | review | wordmark, proof links, footer |
+| About numbers cut | review | roles kept, owner decision 2026-10-28 |
