@@ -17,8 +17,8 @@ Plain HTML, CSS, and a small amount of vanilla JavaScript. There is no build ste
 - `index.html` holds the page.
 - `projects.json` holds the case card data. `scripts/build.mjs` renders it into `index.html`.
 - `main.js` only adds the reveal-on-scroll effect.
-- `style.css` holds the design tokens and styles, with a dark theme through `prefers-color-scheme`.
-- `work/<slug>/index.html` holds one case-study page per project (ADR 0006), styled by `style.css` plus `case.css`.
+- `hub.css` holds the hub styles on house 2.0.0 tokens. Dark mode follows `prefers-color-scheme`.
+- `work/<slug>/index.html` holds one case-study page per project (ADR 0006), styled by `hub.css`.
 - `scripts/lib/chrome.mjs` holds the shared header, footer and case-page `<head>`.
 - `assets/shots/<slug>/` holds the case-page detail crops; `assets/og/<slug>.png` the case-page Open Graph images.
 - `assets/shots/` holds the card crops (`<name>-hero`, 1600 by 1000, shot at 2x) and the older 1200 by 750 full shots, as WebP and PNG.

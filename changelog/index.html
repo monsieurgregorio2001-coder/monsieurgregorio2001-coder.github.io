@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog · Garfield Lim</title>
+<meta name="description" content="What changed in the house and in each room.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/changelog/">
+<link rel="alternate" type="text/markdown" href="index.md">
+<!-- house:boot --><script>(function(){var d=document.documentElement,m;try{m=localStorage.getItem("house.motion")}catch(e){}d.dataset.motion=m=="full"||m=="calm"?m:matchMedia("(prefers-reduced-motion:reduce)").matches?"calm":"full"})()</script><!-- /house:boot -->
+<link rel="preload" href="/house/2.0.0/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.0/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Changelog · Garfield Lim">
+<meta property="og:description" content="What changed in the house and in each room.">
+<meta property="og:url" content="https://monsieurgregorio2001-coder.github.io/changelog/">
+<meta property="og:image" content="https://monsieurgregorio2001-coder.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Garfield Lim changelog.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Changelog · Garfield Lim">
+<meta name="twitter:description" content="What changed in the house and in each room.">
+<meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og-image.png">
+<meta name="twitter:image:alt" content="Garfield Lim changelog.">
+<link rel="stylesheet" href="/house/2.0.0/tokens.css">
+<link rel="stylesheet" href="/house/2.0.0/house.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/house/2.0.0/doorway.js"></script>
+<script type="module" src="/house/2.0.0/house.js"></script>
+</head>
+<body>
+<a class="house-skip" href="#main">Skip to content</a>
+<!-- house:crumb -->
+<header class="house-crumb" data-house-crumb>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+    
+    <span class="house-crumb-spacer"></span>
+    <nav class="house-crumb-links" aria-label="Sections"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" popovertarget="house-menu" aria-expanded="false" aria-controls="house-menu">Menu</button>
+    <div id="house-menu" class="house-menu" popover>
+  <p class="house-menu-h" id="house-menu-rooms">Rooms</p>
+  <ul aria-labelledby="house-menu-rooms">
+    <li><a href="/paperlab/">PaperLab</a></li>
+    <li><a href="/mindmap-mcp/">Living Mindmap</a></li>
+    <li><a href="/slop-editorial/">Slop Editorial</a></li>
+    <li><a href="/paluwagan/">Online Paluwagan</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-pages">The house</p>
+  <ul aria-labelledby="house-menu-pages">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-out">Elsewhere</p>
+  <ul aria-labelledby="house-menu-out">
+    <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
+    <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-set">Settings</p>
+  <ul aria-labelledby="house-menu-set">
+    <li><button type="button" data-house-calm aria-pressed="false">Calm motion <span class="house-switch-state" data-state>Off</span></button></li>
+    <li><a href="/index.md" data-house-plain>Plain text</a></li>
+  </ul>
+</div>
+  </div>
+</header>
+<!-- /house:crumb -->
+<main id="main">
+  <div class="wrap doc">
+    <p class="eyebrow">Changelog</p>
+    <h1 class="title">What changed</h1>
+    <p class="lede">Each repository keeps its own changelog. This page reads them at build time, newest first. The dates are when each file last changed.</p>
+    <section class="log-room" aria-labelledby="log-hub">
+      <h2 id="log-hub" class="cs-h">Hub and house</h2>
+      <div class="log-entry">
+        <h3>Unreleased <span class="log-date">2026-10-28</span></h3>
+        <h4>Added (foyer, phase 2)</h4>
+        <ul><li>Every hub page runs on house 2.0.0: house crumb, menu, footer (Calm switch, Plain text, live receipts), focus rules and 44 px targets. <code>hub.css</code> replaces <code>style.css</code> and <code>case.css</code>, and <code>main.js</code> is gone.</li><li>First screen per DIRECTION 5.2 and 5.3 with the interim headline kept in <code>site.json</code>, four static doors (PaperLab featured and dark, a grouped list for the rest) with proof lines, status chips and hidden &quot;Proves&quot; text. Posters in AVIF with WebP fallback, captured by <code>scripts/posters.mjs</code>.</li><li>Work as receipts on the house Receipt partial, one CTA set (&quot;Open the room&quot;, &quot;Read the case&quot;, &quot;Code&quot;). Case pages use the same Receipt.</li><li>Evidence slots: <code>data/evidence/</code>, <code>npm run evidence:pull</code>, the &quot;Refresh evidence&quot; workflow. Typed figures are gone from <code>projects.json</code> and the case pages.</li><li><code>/colophon/</code> (tokens and springs computed from <code>tokens.css</code>), <code>/changelog/</code>, a static 404, <code>llms.txt</code>, an <code>index.md</code> twin beside every page, <code>.nojekyll</code>.</li><li>Glyph field per ADR 0012: settles within 5 s of load or the last input, lighter on phones, weighted to the text column. The decode on load stays.</li><li>CI: the 10-second gate, copy lint, budgets, axe on every page.</li></ul>
+        <h4>Added (house 2.0.0, phase 1)</h4>
+        <ul><li>The immutable <code>/house/2.0.0/</code> folder: tokens, house components (crumb, menu, footer, capsule, label, receipt, drawer, toast, Calm switch), the 210 byte <code>boot.js</code>, the head <code>doorway.js</code>, the deferred <code>house.js</code>, partials, <code>house.json</code>, self-hosted fonts, <code>manifest.json</code> and the room tools. No current hub page uses it yet.</li><li><code>/house/2.0.0/demo.html</code>: every component in every state, in light and dark. axe 0 violations at 390 and 1440, CLS 0.</li><li><code>npm run house:release &lt;version&gt;</code>, <code>house/MOTION.md</code>, <code>scripts/check-house.mjs</code> (immutability, token lint, budgets, room contract and CLS on the demo) and <code>scripts/shoot-house.mjs</code>. <code>check.yml</code> runs them.</li></ul>
+        <h4>Fixed</h4>
+        <ul><li>Hub figures follow the 2026-10-28 evidence runs: Paluwagan 56 tests, Slop 70 unit tests. The Mindmap card drops the 0.5 ms median, which today&#39;s run did not reproduce.</li></ul>
+        <h4>Added (doorway bench)</h4>
+        <ul><li>Unlinked, noindex <code>/lab/doorway/a/</code> and <code>/b/</code> fixtures and <code>scripts/bench-doorway.mjs</code>, which runs 20 navigations each way in Chromium and WebKit and probes how Pages resolves missing paths. A weekly <code>doorway-bench</code> workflow runs it against the live host.</li></ul>
+        <h4>Fixed (honesty sweep)</h4>
+        <ul><li>Living Mindmap shows &quot;Runs locally&quot; instead of &quot;Live&quot;, since it has no hosted demo.</li><li>Online Paluwagan copy says pre-written reminder templates a person approves, and a seeded payout draw.</li><li>Lighthouse figures removed from the cards and case pages until CI measures them.</li><li>The hero drops the &quot;Now&quot; line and the &quot;8 developers&quot; proof point. A Paluwagan ledger figure takes that slot.</li><li>Cards are never hidden by opacity. The reveal is a small lift only, and anything above the fold or targeted by the URL hash shows at once.</li><li><code>src</code> comments beside every home-page number, generated from <code>source</code> on figures and <code>resultSource</code> in <code>projects.json</code>.</li><li>Slop (143 browser checks) and Paluwagan (53 tests) sources updated to runs on 2026-10-28. Notes mentioning 150 and 42 removed.</li><li>Slop diagram label reads &quot;mock or paid, then ledger&quot;.</li><li>&quot;Proves&quot; lines: Paluwagan &quot;Money logic you can check&quot;, Slop &quot;A paid pipeline that asks before it spends&quot;. Work heading reads &quot;Four projects I built and tested.&quot;</li><li>Shorter Mindmap and Slop pitches, in cards, noscript, case leads, meta, og and twitter.</li><li>44 px tap targets on the wordmark, hero proof links and footer links.</li><li>404 copy reads &quot;That page does not exist.&quot;</li><li>About keeps the roles and drops the numbers (amends ADR 0008 for these figures).</li></ul>
+        <h4>Added</h4>
+        <ul><li>A &quot;Now&quot; line under the hero lead, from <code>site.json</code>.</li><li>Hero proof points link to their cards; a PaperLab Lighthouse figure replaces the degree line.</li><li>Footer links to Work and the four case pages, and to ADR 0001 (&quot;Built without a framework&quot;).</li><li>The 404 page shows a static frame of the hero glyph field.</li><li>Pressed state (<code>scale(.98)</code>) on buttons and cards, off under reduced motion.</li></ul>
+        <h4>Changed</h4>
+        <ul><li>Favicon is a &quot;GL&quot; monogram in JetBrains Mono on the accent colour, flipping with the theme.</li><li>Tags trimmed to three per project.</li><li><code>docs/</code> with audit, ADRs 0001–0008, the October 2026 polish plan, this changelog and a tracker.</li><li><code>CLAUDE.md</code> with site conventions.</li><li><code>scripts/build.mjs</code> renders the Work cards and the noscript list into <code>index.html</code> from <code>projects.json</code>; cards are now in the HTML with no loading state (ADR 0007).</li><li>Featured PaperLab block leads Work with large proof figures, &quot;Open the demo&quot; and &quot;Read the case&quot; (ADR 0004).</li><li>&quot;Read the case&quot; link and <code>id=&quot;work-&lt;slug&gt;&quot;</code> on every card.</li><li>2x hero crops (1600x1000) for all four projects via <code>capture.mjs --crop</code>.</li><li>CI: build-output check, html-validate, axe in light and dark, link check.</li><li>Case-study pages for PaperLab, Living Mindmap, Slop Editorial and Online Paluwagan at <code>/work/&lt;slug&gt;/</code>, each with an architecture diagram, decisions, sourced results, detail screenshots and prev/next navigation (ADR 0006).</li><li><code>case.css</code>, shared header/footer partials (<code>scripts/lib/chrome.mjs</code>), and case-page header blocks, screens and navigation rendered from <code>projects.json</code>.</li><li>Detail crops per project via <code>capture.mjs --detail</code>; an Open Graph image per case page in <code>assets/og/</code>.</li><li>Sitemap lists the five URLs.</li><li>Interactive hero: a glyph field behind the hero with click ripples and cursor glow, and a headline that decodes on load (<code>hero.js</code>, ADR 0005). Static under reduced motion.</li></ul>
+        <h4>Changed</h4>
+        <ul><li>Slop Editorial card result updated to the README&#39;s current figures; Paluwagan pitch says template drafts, not AI drafts; PaperLab proof point reads &quot;19 tests on PaperLab&#39;s attention math&quot;.</li><li>Card order follows ADR 0004: PaperLab, Living Mindmap, Slop Editorial, Online Paluwagan.</li><li>Cards lift 2 px with an accent-tinted border on hover, the screenshot scales to 1.02, and cards reveal with a 60 ms stagger; all off under reduced motion.</li><li><code>main.js</code> only handles reveal-on-scroll.</li><li>Screenshot and review scripts use Playwright.</li><li><code>og.mjs</code> uses the shared Playwright launcher instead of puppeteer-core; <code>check-axe.mjs</code> covers every case page; the link check no longer treats <code>/work/</code> as pending.</li></ul>
+      </div>
+      <div class="log-entry">
+        <h3>2026-10-14 <span class="log-date">2026-10-28</span></h3>
+        <h4>Added</h4>
+        <ul><li>Portfolio hub: hero, four case cards rendered from <code>projects.json</code>, About, Contact.</li><li>Editorial design with self-hosted Fraunces, Inter and JetBrains Mono; dark theme via <code>prefers-color-scheme</code>.</li><li>Screenshot pipeline (<code>scripts/capture.mjs</code>), OG image render (<code>scripts/og.mjs</code>), review shots (<code>scripts/shoot.mjs</code>).</li><li>Slop Editorial card marked live with measured results.</li></ul>
+        <h4>Changed</h4>
+        <ul><li>Contact email switched to Outlook address.</li><li>Living Mindmap pitch corrected to match the shipped tool count.</li></ul>
+      </div>
+    </section>
+    <section class="log-room" aria-labelledby="log-paperlab">
+      <h2 id="log-paperlab" class="cs-h">PaperLab</h2>
+      <div class="log-entry">
+        <h3>Unreleased <span class="log-date">2026-10-28</span></h3>
+        <h4>Added</h4>
+        <ul><li>Attention room at <code>/paperlab/</code> (phase 3a): designed heads on the tested kernel (ADR 0009), Break the math switches, Show the numbers drawer, receipt from <code>evidence.json</code>, house 2.0.0 crumb and footer, <code>404.html</code>.</li><li>First version kept at <code>/paperlab/legacy/</code>.</li><li><code>tests/fixtures/attention.json</code> from <code>scripts/attention_fixture.py</code>, checked at 1e-6.</li><li>ADRs 0008 to 0010, proposed by Claude, reversible.</li><li><code>docs/</code> with vision, ADRs 0001–0007, the ladder plan, v1 audit, tracker.</li><li><code>CLAUDE.md</code> conventions.</li><li>Phase K kernels for Line, Boundary, Net and Memory in <code>src/labs/*/math.ts</code>, tested against NumPy fixtures from <code>scripts/fixtures.py</code>; tiny RNN/LSTM weights from <code>models/memory/train.py</code>.</li></ul>
+      </div>
+    </section>
+  </div>
+</main>
+<!-- house:footer -->
+<footer class="house-footer" data-house-footer>
+  <div class="house-footer-inner">
+    <ul class="house-footer-links">
+      <li><a href="/changelog/">House 2.0.0</a></li>
+      <li><a href="/colophon/">Colophon</a></li>
+      <li><a href="/llms.txt">llms.txt</a></li>
+      <li><a href="/index.md" data-house-plain>Plain text</a></li>
+    </ul>
+    <div>
+      <button type="button" class="house-switch" data-house-calm aria-pressed="false">
+        <span class="house-switch-track" aria-hidden="true"><span class="house-switch-thumb"></span></span>
+        <span>Calm motion</span> <span class="house-switch-state" data-state>Off</span>
+      </button>
+    </div>
+    <details class="house-drawer" data-house-receipts data-house-version="2.0.0">
+      <summary>Live receipts</summary>
+      <div class="house-drawer-body">
+        <dl class="house-live">
+          <div><dt>Bytes transferred</dt><dd data-r="bytes">not reported by this browser</dd></div>
+          <div><dt>Largest paint</dt><dd data-r="lcp">not reported by this browser</dd></div>
+          <div><dt>Layout shift</dt><dd data-r="cls">not reported by this browser</dd></div>
+          <div><dt>Slowest interaction</dt><dd data-r="inp">not reported by this browser</dd></div>
+          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.0</dd></div>
+          <div><dt>Commit</dt><dd data-r="commit">not reported by this page</dd></div>
+          <div><dt>Build date</dt><dd data-r="built">not reported by this page</dd></div>
+        </dl>
+      </div>
+    </details>
+    <p class="house-footer-meta">Measured in your browser. Nothing is stored or sent.</p>
+  </div>
+</footer>
+<!-- /house:footer -->
+</body>
+</html>

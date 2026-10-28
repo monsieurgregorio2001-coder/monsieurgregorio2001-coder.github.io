@@ -1,61 +1,112 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- head:start -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- head:start -->
-<title>Living Mindmap (MCP) case study | Garfield Lim</title>
-<meta name="description" content="A mind map I edit by hand and AI agents extend through 12 MCP tools. It refuses near-duplicates and marks every node an agent adds.">
+<title>Living Mindmap case study · Garfield Lim</title>
+<meta name="description" content="A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/work/mindmap/">
-<link rel="preload" href="../../assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="alternate" type="text/markdown" href="index.md">
+<!-- house:boot --><script>(function(){var d=document.documentElement,m;try{m=localStorage.getItem("house.motion")}catch(e){}d.dataset.motion=m=="full"||m=="calm"?m:matchMedia("(prefers-reduced-motion:reduce)").matches?"calm":"full"})()</script><!-- /house:boot -->
+<link rel="preload" href="/house/2.0.0/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.0/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="article">
-<meta property="og:title" content="Living Mindmap (MCP) case study | Garfield Lim">
-<meta property="og:description" content="A mind map I edit by hand and AI agents extend through 12 MCP tools. It refuses near-duplicates and marks every node an agent adds.">
+<meta property="og:title" content="Living Mindmap case study · Garfield Lim">
+<meta property="og:description" content="A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.">
 <meta property="og:url" content="https://monsieurgregorio2001-coder.github.io/work/mindmap/">
 <meta property="og:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/mindmap.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Living Mindmap (MCP). Proves Agents and MCP.">
+<meta property="og:image:alt" content="Living Mindmap. Proves Agents and MCP.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Living Mindmap (MCP) case study | Garfield Lim">
-<meta name="twitter:description" content="A mind map I edit by hand and AI agents extend through 12 MCP tools. It refuses near-duplicates and marks every node an agent adds.">
+<meta name="twitter:title" content="Living Mindmap case study · Garfield Lim">
+<meta name="twitter:description" content="A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.">
 <meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og/mindmap.png">
-<meta name="twitter:image:alt" content="Living Mindmap (MCP). Proves Agents and MCP.">
-<link rel="stylesheet" href="../../style.css">
-<link rel="stylesheet" href="../../case.css">
+<meta name="twitter:image:alt" content="Living Mindmap. Proves Agents and MCP.">
+<link rel="stylesheet" href="/house/2.0.0/tokens.css">
+<link rel="stylesheet" href="/house/2.0.0/house.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/house/2.0.0/doorway.js"></script>
+<script type="module" src="/house/2.0.0/house.js"></script>
 <!-- head:end -->
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<!-- header:start -->
-<header class="site-header">
-  <div class="wrap bar">
-    <a class="wordmark" href="/" aria-label="Garfield Lim, home">Garfield Lim</a>
-    <nav aria-label="Primary">
-      <ul class="nav" role="list">
-        <li><a href="/#work">Work</a></li>
-        <li><a href="/#about">About</a></li>
-        <li><a href="/#contact">Contact</a></li>
-      </ul>
-    </nav>
+<a class="house-skip" href="#main">Skip to content</a>
+<!-- house:crumb -->
+<header class="house-crumb" data-house-crumb>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+    
+    <span class="house-crumb-spacer"></span>
+    <nav class="house-crumb-links" aria-label="Sections"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" popovertarget="house-menu" aria-expanded="false" aria-controls="house-menu">Menu</button>
+    <div id="house-menu" class="house-menu" popover>
+  <p class="house-menu-h" id="house-menu-rooms">Rooms</p>
+  <ul aria-labelledby="house-menu-rooms">
+    <li><a href="/paperlab/">PaperLab</a></li>
+    <li><a href="/mindmap-mcp/">Living Mindmap</a></li>
+    <li><a href="/slop-editorial/">Slop Editorial</a></li>
+    <li><a href="/paluwagan/">Online Paluwagan</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-pages">The house</p>
+  <ul aria-labelledby="house-menu-pages">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-out">Elsewhere</p>
+  <ul aria-labelledby="house-menu-out">
+    <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
+    <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-set">Settings</p>
+  <ul aria-labelledby="house-menu-set">
+    <li><button type="button" data-house-calm aria-pressed="false">Calm motion <span class="house-switch-state" data-state>Off</span></button></li>
+    <li><a href="/index.md" data-house-plain>Plain text</a></li>
+  </ul>
+</div>
   </div>
 </header>
-<!-- header:end -->
+<!-- /house:crumb -->
 <main id="main">
   <section class="case-hero wrap" aria-labelledby="case-h">
     <!-- case-head:start -->
 <p class="eyebrow">Case study</p>
-<h1 id="case-h" class="display">Living Mindmap (MCP)</h1>
-<p class="lead">A mind map I edit by hand and AI agents extend through 12 MCP tools. It refuses near-duplicates and marks every node an agent adds.</p>
-<p class="proves"><b>Proves </b>Agents and MCP</p>
-<p class="actions"><a class="btn primary" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start" rel="noopener" aria-label="Run locally for Living Mindmap (MCP)">Run locally</a><a class="btn" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp" rel="noopener" aria-label="Code for Living Mindmap (MCP)">Code</a></p>
+<h1 id="case-h" class="display">Living Mindmap</h1>
+<p class="lede">A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.</p>
+<p class="proves-line"><b>Proves </b>Agents and MCP</p>
+<p class="work-actions"><a class="house-capsule is-filled" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp#quick-start">Run it locally<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-ghost" href="/work/mindmap/">Read the case<span class="vh"> for Living Mindmap</span></a><a class="house-capsule is-text" href="https://github.com/monsieurgregorio2001-coder/mindmap-mcp">Code<span class="vh"> for Living Mindmap</span></a></p>
 <ul class="tags" role="list"><li>MCP</li><li>TypeScript</li><li>SQLite</li></ul>
     <!-- case-head:end -->
+  </section>
+
+  <section class="wrap receipt-sec">
+    <!-- receipt:start -->
+<h2 class="vh">Receipt</h2>
+<article class="house-receipt" data-room="mindmap-mcp">
+  <div class="house-receipt-head">
+    <h3 class="house-receipt-name">Living Mindmap</h3>
+    <span class="house-label">Runs locally</span>
+  </div>
+  <dl class="house-receipt-rows">
+    <div><dt>Proves</dt><dd>Agents and MCP</dd></div>
+    <div><dt>Problem</dt><dd>Ideas from long AI conversations vanish into chat history.</dd></div>
+    <div><dt>What I built</dt><dd>One SQLite store shared by a web app, a REST API, and a stdio MCP server that refuses near-duplicates.</dd></div>
+    <div><dt>Result</dt><dd><span class="house-fig">12</span> MCP tools registered by the stdio server<!-- src: data/evidence/mindmap.json, commit d5bf7e8, 2026-10-28T12:00:56Z --></dd></div>
+    <div><dt>Try this</dt><dd>Clone it, run it locally, and point an agent at the MCP server.</dd></div>
+    <div><dt>How it is checked</dt><dd><ul class="checks"><li><span class="house-fig">42 of 42</span> Unit tests<span class="cmd"><code>npm test</code></span></li><li><span class="house-fig">12 of 12</span> MCP server lists all 12 tools<span class="cmd"><code>npm run verify:mcp</code></span></li></ul><!-- src: data/evidence/mindmap.json, commit d5bf7e8, 2026-10-28T12:00:56Z --></dd></div>
+  </dl>
+  </article>
+<h2 class="cs-h limits-h">What this does not do</h2>
+<ul class="limits"><li>Lexical matching only.</li><li>No model runs in the browser.</li><li>The agent session is recorded, not live.</li></ul>
+    <!-- receipt:end -->
   </section>
 
   <section class="cs wrap" aria-labelledby="problem-h">
@@ -70,7 +121,7 @@
   <section class="cs wrap" aria-labelledby="approach-h">
     <h2 id="approach-h" class="cs-h">Approach</h2>
     <div class="prose">
-      <p>Living Mindmap is a local app. A React Flow canvas shows the graph. An Express API serves it on loopback only. A separate stdio MCP server gives agents <span class="num">12</span> tools<!-- src: mindmap-mcp/README.md "MCP tools" table, 12 rows, 2026-10-15 --> over the same data: list and read maps, search, create and update nodes, connect them, attach sources, and export a branch as context.</p>
+      <p>Living Mindmap is a local app. A React Flow canvas shows the graph. An Express API serves it on loopback only. A separate stdio MCP server gives agents a set of MCP tools over the same data: list and read maps, search, create and update nodes, connect them, attach sources, and export a branch as context.</p>
       <p>Both processes open the same SQLite file. The UI polls, so a node an agent adds shows up in an open browser tab a few seconds later.</p>
       <p>Two rules keep agent writes honest. <code>create_node</code> rejects near-duplicate titles and returns the candidates, unless the agent passes <code>allow_duplicate: true</code>. Every node written through MCP carries <code>provenance: ai</code>, and the canvas marks it.</p>
     </div>
@@ -120,9 +171,9 @@
     <ul class="decisions" role="list">
       <li><strong>Chose one shared SQLite store over separate data for the UI and the agent</strong><span>because two copies drift. With one Store class, the duplicate check and provenance apply to every write, whichever door it came through.</span></li>
       <li><strong>Chose rejecting near-duplicates over merging them silently</strong><span>because the agent gets the candidates back and can decide. An explicit <code>allow_duplicate</code> flag covers the cases where two nodes really should share a name.</span></li>
-      <li><strong>Chose provenance on every MCP write over trusting the agent to label itself</strong><span>because the server sets <code>provenance: ai</code>, not the client. A person can always see what they did not write.</span></li>
+      <li><strong>Chose provenance on every MCP write over trusting the agent to label itself</strong><span>because the server sets <code>provenance: ai</code>, not the client. A person can see what they did not write.</span></li>
       <li><strong>Chose structured errors over exceptions</strong><span>because an agent can read <code>{ error, code, details }</code> and retry sensibly. A crashed stdio server just ends the session.</span></li>
-      <li><strong>Chose local-first with no accounts over a hosted demo</strong><span>because the data is personal notes. The cost is that reviewers have to run it, so the README starts with a four-line quick start.</span></li>
+      <li><strong>Chose local-first with no accounts over a hosted demo</strong><span>because the data is personal notes. The cost is that reviewers have to run it, so the README starts with a short quick start.</span></li>
     </ul>
   </section>
 
@@ -130,10 +181,9 @@
     <h2 id="res-h" class="cs-h">Results</h2>
     <div>
       <ul class="results" role="list">
-        <li><span class="fig num">42 tests</span><span class="how"><code>npm test</code> runs <span class="num">42</span> Vitest tests across <span class="num">6</span> files: store, graph layout, context export, REST API, seed data, and the MCP tool handlers through an in-memory MCP client.<!-- src: mindmap-mcp/README.md "Tests", 2026-10-14; tests/*.test.ts, 6 files, 2026-10-15 --></span></li>
-        <li><span class="fig num">160 calls, 0 failures</span><span class="how"><code>scripts/bench.ts</code> starts the real stdio server and runs a scripted <span class="num">16</span>-call task ten times: list, create ten nodes, read the map back five ways.<!-- src: mindmap-mcp/README.md "Measured results", scripts/bench.ts, 2026-10-14 --></span></li>
-        <li><span class="fig num">0.5 ms</span><span class="how">Median round trip per call in that benchmark, about <span class="num">1.2</span> ms at the 95th percentile, on Node <span class="num">26</span> on one machine.<!-- src: mindmap-mcp/README.md "Measured results", 2026-10-14 --></span></li>
-        <li><span class="fig num">12 tools</span><span class="how"><code>npm run verify:mcp</code> starts the server with a real MCP client and lists the tools. CI runs it on Node <span class="num">20</span> and <span class="num">22</span>.<!-- src: mindmap-mcp/README.md "Quick start" and "Tests", 2026-10-14 --></span></li>
+        <li><span class="fig"><span class="house-fig">12</span> MCP tools registered by the stdio server<!-- src: data/evidence/mindmap.json, commit d5bf7e8, 2026-10-28T12:00:56Z --></span><span class="how"><code>npm run verify:mcp</code> starts the server with a real MCP client and lists the tools.</span></li>
+        <li><span class="fig"><span class="house-fig">42 of 42</span> Unit tests<!-- src: data/evidence/mindmap.json, commit d5bf7e8, 2026-10-28T12:00:56Z --></span><span class="how"><code>npm test</code> covers the store, graph layout, context export, REST API, seed data, and the MCP tool handlers through an in-memory MCP client.</span></li>
+        <li><span class="fig"><span class="house-fig">1.3 ms</span> median round trip over 160 stdio tool calls<!-- src: data/evidence/mindmap.json, commit d5bf7e8, 2026-10-28T12:00:56Z --></span><span class="how"><code>scripts/bench.ts</code> starts the real stdio server and runs a scripted task: list, create nodes, read the map back.</span></li>
       </ul>
       <p class="fine">Benchmark numbers vary by machine. <code>npm run bench</code> reproduces them.</p>
     </div>
@@ -161,32 +211,43 @@
 </main>
 <!-- case-nav:start -->
 <nav class="case-nav wrap" aria-label="More case studies">
-  <a class="prev" href="/work/paperlab/"><span class="eyebrow">Previous</span><span class="t">PaperLab</span></a>
+  <a class="prev" href="/work/paperlab/"><span class="cn-l">Previous</span><span class="t">PaperLab</span></a>
   <a class="back" href="/#work-mindmap">Back to work</a>
-  <a class="next" href="/work/slop-editorial/"><span class="eyebrow">Next</span><span class="t">Slop Editorial</span></a>
+  <a class="next" href="/work/slop-editorial/"><span class="cn-l">Next</span><span class="t">Slop Editorial</span></a>
 </nav>
 <!-- case-nav:end -->
-<!-- footer:start -->
-<footer class="site-footer">
-  <div class="wrap foot">
-    <p>Built by Garfield Greg Lim III. <a href="https://github.com/monsieurgregorio2001-coder/monsieurgregorio2001-coder.github.io/blob/main/docs/decisions/0001-no-framework-no-build.md" rel="noopener">Built without a framework</a>.</p>
-    <nav aria-label="Pages">
-      <ul role="list">
-        <li><a href="/#work">Work</a></li>
-        <li><a href="/work/paperlab/">PaperLab</a></li>
-        <li><a href="/work/mindmap/">Living Mindmap</a></li>
-        <li><a href="/work/slop-editorial/">Slop Editorial</a></li>
-        <li><a href="/work/paluwagan/">Online Paluwagan</a></li>
-      </ul>
-    </nav>
-    <ul role="list">
-      <li><a href="/">Portfolio</a></li>
-      <li><a href="https://github.com/monsieurgregorio2001-coder" rel="noopener">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9" rel="noopener">LinkedIn</a></li>
-      <li><a href="mailto:lim.ggreg@outlook.com">lim.ggreg@outlook.com</a></li>
+<!-- house:footer -->
+<footer class="house-footer" data-house-footer>
+  <div class="house-footer-inner">
+    <ul class="house-footer-links">
+      <li><a href="/changelog/">House 2.0.0</a></li>
+      <li><a href="/colophon/">Colophon</a></li>
+      <li><a href="/llms.txt">llms.txt</a></li>
+      <li><a href="/index.md" data-house-plain>Plain text</a></li>
     </ul>
+    <div>
+      <button type="button" class="house-switch" data-house-calm aria-pressed="false">
+        <span class="house-switch-track" aria-hidden="true"><span class="house-switch-thumb"></span></span>
+        <span>Calm motion</span> <span class="house-switch-state" data-state>Off</span>
+      </button>
+    </div>
+    <details class="house-drawer" data-house-receipts data-house-version="2.0.0">
+      <summary>Live receipts</summary>
+      <div class="house-drawer-body">
+        <dl class="house-live">
+          <div><dt>Bytes transferred</dt><dd data-r="bytes">not reported by this browser</dd></div>
+          <div><dt>Largest paint</dt><dd data-r="lcp">not reported by this browser</dd></div>
+          <div><dt>Layout shift</dt><dd data-r="cls">not reported by this browser</dd></div>
+          <div><dt>Slowest interaction</dt><dd data-r="inp">not reported by this browser</dd></div>
+          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.0</dd></div>
+          <div><dt>Commit</dt><dd data-r="commit">not reported by this page</dd></div>
+          <div><dt>Build date</dt><dd data-r="built">not reported by this page</dd></div>
+        </dl>
+      </div>
+    </details>
+    <p class="house-footer-meta">Measured in your browser. Nothing is stored or sent.</p>
   </div>
 </footer>
-<!-- footer:end -->
+<!-- /house:footer -->
 </body>
 </html>

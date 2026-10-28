@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-28",
+  "commit": "8938fa6",
+  "rows": [
+    {
+      "id": "js",
+      "label": "JavaScript before interaction",
+      "limit": 20480,
+      "actual": 10148
+    },
+    {
+      "id": "css",
+      "label": "CSS",
+      "limit": 14336,
+      "actual": 10600
+    },
+    {
+      "id": "fonts",
+      "label": "Fonts",
+      "limit": 163840,
+      "actual": 158560
+    },
+    {
+      "id": "total",
+      "label": "First load at 390 px",
+      "limit": 307200,
+      "actual": 227066
+    }
+  ]
+}

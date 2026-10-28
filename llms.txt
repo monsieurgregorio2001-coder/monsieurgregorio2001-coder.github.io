@@ -1,0 +1,26 @@
+# Garfield Lim
+
+> Applied AI engineer in Cebu, Philippines, open to remote. Four projects. Each one lets you check its claim. Every number on these pages comes from a test run or from your own browser.
+
+## Pages
+
+- [Home](https://monsieurgregorio2001-coder.github.io/index.md): Applied AI engineer in Cebu, Philippines, open to remote. Four projects. Each one lets you check its claim.
+- [PaperLab case study](https://monsieurgregorio2001-coder.github.io/work/paperlab/index.md): Type a sentence and watch it travel through one layer of the Transformer from Attention Is All You Need.
+- [Living Mindmap case study](https://monsieurgregorio2001-coder.github.io/work/mindmap/index.md): A mind map I edit by hand and AI agents extend through MCP tools. It refuses near-duplicates and marks every node an agent adds.
+- [Slop Editorial case study](https://monsieurgregorio2001-coder.github.io/work/slop-editorial/index.md): A satire of AI content sites, with fake metrics and fake upsells. Behind it is a real image pipeline that will not spend money without approval.
+- [Online Paluwagan case study](https://monsieurgregorio2001-coder.github.io/work/paluwagan/index.md): A demo rotating-savings group with a reconciling ledger, a seeded payout draw, and pre-written reminder templates a person approves before anything is sent.
+- [Changelog](https://monsieurgregorio2001-coder.github.io/changelog/index.md): What changed in the house and in each room.
+- [Colophon](https://monsieurgregorio2001-coder.github.io/colophon/index.md): Tokens, springs, fonts, stack, budgets and the AI policy behind this site.
+
+## Rooms
+
+- [PaperLab](https://monsieurgregorio2001-coder.github.io/paperlab/): Break the attention math.
+- [Living Mindmap](https://monsieurgregorio2001-coder.github.io/work/mindmap/): Agents edit through MCP. You review.
+- [Slop Editorial](https://monsieurgregorio2001-coder.github.io/slop-editorial/): Generation is cheap. Spend is capped.
+- [Online Paluwagan](https://monsieurgregorio2001-coder.github.io/paluwagan/): Try to cheat the ledger.
+
+## Contact
+
+- Email: lim.ggreg@outlook.com
+- [LinkedIn](https://www.linkedin.com/in/garfield-lim-8239242a9)
+- [GitHub](https://github.com/monsieurgregorio2001-coder)

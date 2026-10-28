@@ -18,6 +18,8 @@ function htmlFiles(dir) {
   });
 }
 
+// Room paths belong to other repositories on the same origin (DIRECTION 4.1).
+const roomPaths = JSON.parse(fs.readFileSync(path.join(root, "house/2.0.0/house.json"), "utf8")).rooms.map((r) => r.path);
 const errors = [], warnings = [], external = new Map();
 
 for (const file of htmlFiles(root)) {
@@ -40,6 +42,7 @@ for (const file of htmlFiles(root)) {
       continue;
     }
     const clean = ref.split(/[?#]/)[0];
+    if (roomPaths.some((r) => clean === r || clean.startsWith(r))) continue;
     const target = clean.startsWith("/") ? path.join(root, clean) : path.join(path.dirname(file), clean);
     const ok = fs.existsSync(target) && (!fs.statSync(target).isDirectory() || fs.existsSync(path.join(target, "index.html")));
     if (ok) continue;

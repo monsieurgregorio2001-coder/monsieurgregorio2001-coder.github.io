@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colophon · Garfield Lim</title>
+<meta name="description" content="Tokens, springs, fonts, stack, budgets and the AI policy behind this site.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://monsieurgregorio2001-coder.github.io/colophon/">
+<link rel="alternate" type="text/markdown" href="index.md">
+<!-- house:boot --><script>(function(){var d=document.documentElement,m;try{m=localStorage.getItem("house.motion")}catch(e){}d.dataset.motion=m=="full"||m=="calm"?m:matchMedia("(prefers-reduced-motion:reduce)").matches?"calm":"full"})()</script><!-- /house:boot -->
+<link rel="preload" href="/house/2.0.0/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/house/2.0.0/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Colophon · Garfield Lim">
+<meta property="og:description" content="Tokens, springs, fonts, stack, budgets and the AI policy behind this site.">
+<meta property="og:url" content="https://monsieurgregorio2001-coder.github.io/colophon/">
+<meta property="og:image" content="https://monsieurgregorio2001-coder.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Garfield Lim colophon.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Colophon · Garfield Lim">
+<meta name="twitter:description" content="Tokens, springs, fonts, stack, budgets and the AI policy behind this site.">
+<meta name="twitter:image" content="https://monsieurgregorio2001-coder.github.io/assets/og-image.png">
+<meta name="twitter:image:alt" content="Garfield Lim colophon.">
+<link rel="stylesheet" href="/house/2.0.0/tokens.css">
+<link rel="stylesheet" href="/house/2.0.0/house.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/house/2.0.0/doorway.js"></script>
+<script type="module" src="/house/2.0.0/house.js"></script>
+</head>
+<body>
+<a class="house-skip" href="#main">Skip to content</a>
+<!-- house:crumb -->
+<header class="house-crumb" data-house-crumb>
+  <div class="house-crumb-inner">
+    <a class="house-wordmark" href="/">Garfield Lim</a>
+    
+    <span class="house-crumb-spacer"></span>
+    <nav class="house-crumb-links" aria-label="Sections"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav>
+    <span class="house-crumb-action" data-house-action></span>
+    <a class="house-capsule is-ghost" href="mailto:lim.ggreg@outlook.com">Email</a>
+    <button type="button" class="house-capsule is-ghost house-menu-btn" popovertarget="house-menu" aria-expanded="false" aria-controls="house-menu">Menu</button>
+    <div id="house-menu" class="house-menu" popover>
+  <p class="house-menu-h" id="house-menu-rooms">Rooms</p>
+  <ul aria-labelledby="house-menu-rooms">
+    <li><a href="/paperlab/">PaperLab</a></li>
+    <li><a href="/mindmap-mcp/">Living Mindmap</a></li>
+    <li><a href="/slop-editorial/">Slop Editorial</a></li>
+    <li><a href="/paluwagan/">Online Paluwagan</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-pages">The house</p>
+  <ul aria-labelledby="house-menu-pages">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-out">Elsewhere</p>
+  <ul aria-labelledby="house-menu-out">
+    <li><a href="https://www.linkedin.com/in/garfield-lim-8239242a9">LinkedIn</a></li>
+    <li><a href="https://github.com/monsieurgregorio2001-coder">GitHub</a></li>
+  </ul>
+  <p class="house-menu-h" id="house-menu-set">Settings</p>
+  <ul aria-labelledby="house-menu-set">
+    <li><button type="button" data-house-calm aria-pressed="false">Calm motion <span class="house-switch-state" data-state>Off</span></button></li>
+    <li><a href="/index.md" data-house-plain>Plain text</a></li>
+  </ul>
+</div>
+  </div>
+</header>
+<!-- /house:crumb -->
+<main id="main">
+  <div class="wrap doc">
+    <p class="eyebrow">Colophon</p>
+    <h1 class="title">How this site is made</h1>
+
+    <p class="lede">Every colour, curve and size below is read from the house tokens when the site is built, so this page cannot disagree with the code.</p>
+
+    <section aria-labelledby="c-colour"><h2 id="c-colour" class="cs-h">Colour</h2>
+    <p>Contrast is measured against the page background in each theme.</p>
+    <div class="table-wrap"><table><thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><th scope="row"><code>--h-bg</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#FAF8F4" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#FAF8F4</code> <span class="muted">1.0:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#0F0F12" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#0F0F12</code> <span class="muted">1.0:1</span></td></tr><tr><th scope="row"><code>--h-surface</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#FFFFFF" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#FFFFFF</code> <span class="muted">1.1:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#17171C" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#17171C</code> <span class="muted">1.1:1</span></td></tr><tr><th scope="row"><code>--h-surface-2</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#F2EFE9" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#F2EFE9</code> <span class="muted">1.1:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#1F1F25" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#1F1F25</code> <span class="muted">1.2:1</span></td></tr><tr><th scope="row"><code>--h-ink</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#17171B" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#17171B</code> <span class="muted">16.9:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#ECEAE5" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#ECEAE5</code> <span class="muted">15.9:1</span></td></tr><tr><th scope="row"><code>--h-ink-2</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#5F5F6B" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#5F5F6B</code> <span class="muted">5.9:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#A3A1AA" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#A3A1AA</code> <span class="muted">7.5:1</span></td></tr><tr><th scope="row"><code>--h-ink-3</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#8C8B94" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#8C8B94</code> <span class="muted">3.2:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#6C6B74" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#6C6B74</code> <span class="muted">3.6:1</span></td></tr><tr><th scope="row"><code>--h-rule</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#E6E2DA" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#E6E2DA</code> <span class="muted">1.2:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#2A2A31" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#2A2A31</code> <span class="muted">1.3:1</span></td></tr><tr><th scope="row"><code>--h-accent</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#2340B8" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#2340B8</code> <span class="muted">7.9:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#9DB0FF" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#9DB0FF</code> <span class="muted">9.2:1</span></td></tr><tr><th scope="row"><code>--h-positive</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#1E7A4F" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#1E7A4F</code> <span class="muted">5.0:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#6FD3A0" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#6FD3A0</code> <span class="muted">10.5:1</span></td></tr><tr><th scope="row"><code>--h-warning</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#9A6200" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#9A6200</code> <span class="muted">4.8:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#F2C46B" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#F2C46B</code> <span class="muted">11.7:1</span></td></tr><tr><th scope="row"><code>--h-negative</code></th><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#B42318" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#B42318</code> <span class="muted">6.2:1</span></td><td><svg class="sw" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="6" fill="#FF8A80" stroke="currentColor" stroke-opacity=".25"/></svg> <code>#FF8A80</code> <span class="muted">8.4:1</span></td></tr></tbody></table></div></section>
+
+    <section aria-labelledby="c-type"><h2 id="c-type" class="cs-h">Type</h2>
+    <div class="table-wrap"><table><tbody><tr><th scope="row"><code>--h-t-display</code></th><td><code>560 clamp(40px, 24px + 4.4vw, 88px) / 1.02 display</code></td></tr><tr><th scope="row"><code>--h-t-title</code></th><td><code>560 clamp(30px, 22px + 2vw, 52px) / 1.06 display</code></td></tr><tr><th scope="row"><code>--h-t-heading</code></th><td><code>600 17px / 22px sans</code></td></tr><tr><th scope="row"><code>--h-t-lede</code></th><td><code>400 clamp(17px, 15.5px + 0.5vw, 22px) / 1.4 sans</code></td></tr><tr><th scope="row"><code>--h-t-body</code></th><td><code>400 16px / 25px sans</code></td></tr><tr><th scope="row"><code>--h-t-callout</code></th><td><code>500 15px / 21px sans</code></td></tr><tr><th scope="row"><code>--h-t-label</code></th><td><code>600 14px / 20px sans</code></td></tr><tr><th scope="row"><code>--h-t-caption</code></th><td><code>400 13px / 18px sans</code></td></tr><tr><th scope="row"><code>--h-t-figure</code></th><td><code>500 15px / 21px mono</code></td></tr><tr><th scope="row"><code>--h-t-wordmark</code></th><td><code>600 19px / 1 display</code></td></tr></tbody></table></div></section>
+
+    <section aria-labelledby="c-shape"><h2 id="c-shape" class="cs-h">Space, shape and time</h2>
+    <div class="table-wrap"><table><tbody><tr><th scope="row"><code>--h-sp-1</code></th><td><code>4px</code></td></tr><tr><th scope="row"><code>--h-sp-2</code></th><td><code>8px</code></td></tr><tr><th scope="row"><code>--h-sp-3</code></th><td><code>12px</code></td></tr><tr><th scope="row"><code>--h-sp-4</code></th><td><code>16px</code></td></tr><tr><th scope="row"><code>--h-sp-5</code></th><td><code>24px</code></td></tr><tr><th scope="row"><code>--h-sp-6</code></th><td><code>32px</code></td></tr><tr><th scope="row"><code>--h-sp-7</code></th><td><code>48px</code></td></tr><tr><th scope="row"><code>--h-sp-8</code></th><td><code>64px</code></td></tr><tr><th scope="row"><code>--h-sp-9</code></th><td><code>96px</code></td></tr><tr><th scope="row"><code>--h-sp-10</code></th><td><code>128px</code></td></tr><tr><th scope="row"><code>--h-r-xs</code></th><td><code>8px</code></td></tr><tr><th scope="row"><code>--h-r-sm</code></th><td><code>12px</code></td></tr><tr><th scope="row"><code>--h-r-md</code></th><td><code>18px</code></td></tr><tr><th scope="row"><code>--h-r-lg</code></th><td><code>28px</code></td></tr><tr><th scope="row"><code>--h-r-pill</code></th><td><code>999px</code></td></tr><tr><th scope="row"><code>--h-dur-press</code></th><td><code>120ms</code></td></tr><tr><th scope="row"><code>--h-dur-quick</code></th><td><code>200ms</code></td></tr><tr><th scope="row"><code>--h-dur-swap</code></th><td><code>240ms</code></td></tr><tr><th scope="row"><code>--h-dur-ui</code></th><td><code>320ms</code></td></tr><tr><th scope="row"><code>--h-dur-page</code></th><td><code>600ms</code></td></tr><tr><th scope="row"><code>--h-dur-calm</code></th><td><code>160ms</code></td></tr></tbody></table></div></section>
+
+    <section aria-labelledby="c-spring"><h2 id="c-spring" class="cs-h">Springs</h2>
+    <p>Each easing is sampled from a damped spring. The dashed line is the end value.</p>
+    <div class="plots"><figure class="plot"><svg viewBox="0 0 240 110" role="img" aria-labelledby="sp-smooth"><title id="sp-smooth">Spring smooth, 590 milliseconds, 17 sampled points</title><line x1="0" x2="240" y1="21.454545454545453" y2="21.454545454545453" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="4 4"/><path d="M0.0 96.0L15.0 90.0L30.0 78.3L45.0 65.7L60.0 54.7L75.0 45.8L90.0 38.9L105.0 33.8L120.0 30.0L135.0 27.3L150.0 25.5L165.0 24.2L180.0 23.3L195.0 22.7L210.0 22.3L225.0 22.1L240.0 21.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg><figcaption><code>--h-spring-smooth</code>, 590 ms, 17 points</figcaption></figure><figure class="plot"><svg viewBox="0 0 240 110" role="img" aria-labelledby="sp-snappy"><title id="sp-snappy">Spring snappy, 430 milliseconds, 17 sampled points</title><line x1="0" x2="240" y1="21.454545454545453" y2="21.454545454545453" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="4 4"/><path d="M0.0 96.0L15.0 90.8L30.0 79.5L45.0 66.7L60.0 54.9L75.0 44.8L90.0 37.0L105.0 31.3L120.0 27.2L135.0 24.5L150.0 22.8L165.0 21.8L180.0 21.3L195.0 21.1L210.0 21.0L225.0 21.0L240.0 21.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg><figcaption><code>--h-spring-snappy</code>, 430 ms, 17 points</figcaption></figure><figure class="plot"><svg viewBox="0 0 240 110" role="img" aria-labelledby="sp-bouncy"><title id="sp-bouncy">Spring bouncy, 560 milliseconds, 17 sampled points</title><line x1="0" x2="240" y1="21.454545454545453" y2="21.454545454545453" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="4 4"/><path d="M0.0 96.0L15.0 90.3L30.0 77.4L45.0 62.7L60.0 48.8L75.0 37.5L90.0 29.1L105.0 23.5L120.0 20.1L135.0 18.5L150.0 18.0L165.0 18.2L180.0 18.8L195.0 19.5L210.0 20.2L225.0 20.7L240.0 21.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg><figcaption><code>--h-spring-bouncy</code>, 560 ms, 17 points</figcaption></figure></div></section>
+
+    <section aria-labelledby="c-fonts"><h2 id="c-fonts" class="cs-h">Fonts</h2>
+    <p>All fonts are self-hosted and served from the same origin.</p>
+    <div class="table-wrap"><table><thead><tr><th scope="col">Family</th><th scope="col">Use</th><th scope="col">Size</th><th scope="col">Licence</th></tr></thead><tbody><tr><th scope="row">Fraunces</th><td>wordmark, H1, section titles</td><td class="num-cell">65.7 KB</td><td><a href="/house/2.0.0/fonts/LICENSE-Fraunces.txt">SIL Open Font License 1.1</a></td></tr><tr><th scope="row">Inter</th><td>UI, body, money</td><td class="num-cell">47.1 KB</td><td><a href="/house/2.0.0/fonts/LICENSE-Inter.txt">SIL Open Font License 1.1</a></td></tr><tr><th scope="row">JetBrains Mono 400</th><td>the glyph field, after the first paint</td><td class="num-cell">20.7 KB</td><td><a href="/house/2.0.0/fonts/LICENSE-JetBrainsMono.txt">SIL Open Font License 1.1</a></td></tr><tr><th scope="row">JetBrains Mono 500</th><td>figures and code</td><td class="num-cell">21.3 KB</td><td><a href="/house/2.0.0/fonts/LICENSE-JetBrainsMono.txt">SIL Open Font License 1.1</a></td></tr></tbody></table></div></section>
+
+    <section aria-labelledby="c-stack"><h2 id="c-stack" class="cs-h">Stack</h2>
+    <div class="table-wrap"><table><tbody><tr><th scope="row">Hub</th><td>Static HTML, CSS and vanilla JavaScript. Node only for the build and checks.</td></tr><tr><th scope="row">PaperLab</th><td>React, TypeScript, Vite.</td></tr><tr><th scope="row">Online Paluwagan</th><td>React, TypeScript, Vite.</td></tr><tr><th scope="row">Living Mindmap</th><td>TypeScript, SQLite, a stdio MCP server, Vite for the browser demo.</td></tr><tr><th scope="row">Slop Editorial</th><td>Astro, with a Python pipeline behind it.</td></tr></tbody></table></div></section>
+
+    <section aria-labelledby="c-browsers"><h2 id="c-browsers" class="cs-h">Browsers</h2>
+    <div class="table-wrap"><table><thead><tr><th scope="col">Feature</th><th scope="col">Chrome and Edge</th><th scope="col">Safari</th><th scope="col">Firefox</th><th scope="col">Fallback</th></tr></thead><tbody><tr><th scope="row">Cross-document view transitions</th><td>yes</td><td>yes</td><td>no</td><td>Normal navigation</td></tr><tr><th scope="row">Same-document view transitions</th><td>yes</td><td>yes</td><td>yes</td><td>Instant swap</td></tr><tr><th scope="row">linear() easing, popover, anchor positioning</th><td>yes</td><td>yes</td><td>yes</td><td>Cubic curves, fixed position</td></tr><tr><th scope="row">Scroll-driven animations</th><td>yes</td><td>yes</td><td>behind a setting</td><td>End state</td></tr><tr><th scope="row">Speculation rules</th><td>yes</td><td>off by default</td><td>no</td><td>Normal fetch</td></tr></tbody></table></div></section>
+
+    <section aria-labelledby="c-budgets"><h2 id="c-budgets" class="cs-h">Budgets</h2>
+    <div class="table-wrap"><table><thead><tr><th scope="col">Budget</th><th scope="col">Limit</th><th scope="col">Last run</th></tr></thead><tbody><tr><th scope="row">JavaScript before interaction</th><td class="num-cell">20.0 KB</td><td class="num-cell">9.9 KB</td></tr><tr><th scope="row">CSS</th><td class="num-cell">14.0 KB</td><td class="num-cell">10.4 KB</td></tr><tr><th scope="row">Fonts</th><td class="num-cell">160.0 KB</td><td class="num-cell">154.8 KB</td></tr><tr><th scope="row">First load at 390 px</th><td class="num-cell">300.0 KB</td><td class="num-cell">221.7 KB</td></tr></tbody></table><p class="muted">Measured on 2026-10-28 at commit 8938fa6, at 390 px, gzipped.</p></div></section>
+
+    <section aria-labelledby="c-ai"><h2 id="c-ai" class="cs-h">How AI is used</h2>
+    <p>Built with AI-assisted development in Claude Code and Cursor. Garfield sets the brief and accepts or rejects each decision. Decisions still waiting for review are marked.</p>
+    <p>No analytics. No requests to any other server.</p></section>
+  </div>
+</main>
+<!-- house:footer -->
+<footer class="house-footer" data-house-footer>
+  <div class="house-footer-inner">
+    <ul class="house-footer-links">
+      <li><a href="/changelog/">House 2.0.0</a></li>
+      <li><a href="/colophon/">Colophon</a></li>
+      <li><a href="/llms.txt">llms.txt</a></li>
+      <li><a href="/index.md" data-house-plain>Plain text</a></li>
+    </ul>
+    <div>
+      <button type="button" class="house-switch" data-house-calm aria-pressed="false">
+        <span class="house-switch-track" aria-hidden="true"><span class="house-switch-thumb"></span></span>
+        <span>Calm motion</span> <span class="house-switch-state" data-state>Off</span>
+      </button>
+    </div>
+    <details class="house-drawer" data-house-receipts data-house-version="2.0.0">
+      <summary>Live receipts</summary>
+      <div class="house-drawer-body">
+        <dl class="house-live">
+          <div><dt>Bytes transferred</dt><dd data-r="bytes">not reported by this browser</dd></div>
+          <div><dt>Largest paint</dt><dd data-r="lcp">not reported by this browser</dd></div>
+          <div><dt>Layout shift</dt><dd data-r="cls">not reported by this browser</dd></div>
+          <div><dt>Slowest interaction</dt><dd data-r="inp">not reported by this browser</dd></div>
+          <div><dt>House version</dt><dd data-r="version" data-r-ok>2.0.0</dd></div>
+          <div><dt>Commit</dt><dd data-r="commit">not reported by this page</dd></div>
+          <div><dt>Build date</dt><dd data-r="built">not reported by this page</dd></div>
+        </dl>
+      </div>
+    </details>
+    <p class="house-footer-meta">Measured in your browser. Nothing is stored or sent.</p>
+  </div>
+</footer>
+<!-- /house:footer -->
+</body>
+</html>
