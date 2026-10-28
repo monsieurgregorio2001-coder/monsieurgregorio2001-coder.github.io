@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "room": "paluwagan",
+  "commit": "8f2f963",
+  "ran_at": "2026-10-28T12:00:48Z",
+  "runner": "local, Node 22",
+  "tests": [
+    {
+      "id": "unit",
+      "label": "Unit and property tests",
+      "passed": 56,
+      "total": 56,
+      "command": "npx vitest run"
+    }
+  ],
+  "evals": [],
+  "figures": [
+    {
+      "id": "ops",
+      "value": 12000,
+      "unit": "operations",
+      "label": "random ledger operations, 0 mismatches",
+      "source": "src/domain/ledger.test.ts"
+    }
+  ],
+  "budgets": [
+    {
+      "id": "js-gz",
+      "limit": 70000,
+      "actual": 61226
+    }
+  ],
+  "limits": [
+    "No real money moves. Sends are simulated.",
+    "No real group has used this yet."
+  ]
+}

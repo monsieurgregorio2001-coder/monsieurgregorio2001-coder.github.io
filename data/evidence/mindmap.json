@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "room": "mindmap",
+  "commit": "d5bf7e8",
+  "ran_at": "2026-10-28T12:00:56Z",
+  "runner": "local linux, Node 22",
+  "tests": [
+    {
+      "id": "unit",
+      "label": "Unit tests",
+      "passed": 42,
+      "total": 42,
+      "command": "npm test"
+    },
+    {
+      "id": "verify-mcp",
+      "label": "MCP server lists all 12 tools",
+      "passed": 12,
+      "total": 12,
+      "command": "npm run verify:mcp"
+    }
+  ],
+  "evals": [],
+  "figures": [
+    {
+      "id": "tools",
+      "value": 12,
+      "unit": "tools",
+      "label": "MCP tools registered by the stdio server",
+      "source": "scripts/verify-mcp.ts"
+    },
+    {
+      "id": "bench-median-ms",
+      "value": 1.3,
+      "unit": "ms",
+      "label": "median round trip over 160 stdio tool calls",
+      "source": "scripts/bench.ts"
+    }
+  ],
+  "budgets": [],
+  "limits": [
+    "Lexical matching only.",
+    "No model runs in the browser.",
+    "The agent session is recorded, not live."
+  ]
+}

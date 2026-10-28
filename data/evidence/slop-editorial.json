@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "room": "slop-editorial",
+  "commit": "7b626de",
+  "ran_at": "2026-10-28T12:03:28Z",
+  "runner": "local run, Node 22",
+  "tests": [
+    {
+      "id": "unit",
+      "label": "Site unit tests",
+      "passed": 21,
+      "total": 21,
+      "command": "npm test"
+    },
+    {
+      "id": "pipeline",
+      "label": "Pipeline Python tests",
+      "passed": 49,
+      "total": 49,
+      "command": "python -m unittest discover -s tests -t ."
+    },
+    {
+      "id": "gates",
+      "label": "Build gates",
+      "passed": 146,
+      "total": 146,
+      "command": "npm run check"
+    },
+    {
+      "id": "browser",
+      "label": "Real-browser checks (Chromium)",
+      "passed": 143,
+      "total": 143,
+      "command": "npm run verify"
+    }
+  ],
+  "evals": [],
+  "figures": [
+    {
+      "id": "js-shared-gz",
+      "value": 82141,
+      "unit": "bytes",
+      "label": "shared JavaScript, gzipped",
+      "source": "site/scripts/check.mjs"
+    },
+    {
+      "id": "js-3d-gz",
+      "value": 388147,
+      "unit": "bytes",
+      "label": "lazy 3D chunk, gzipped",
+      "source": "site/scripts/check.mjs"
+    }
+  ],
+  "budgets": [
+    {
+      "id": "js-shared-gz",
+      "limit": 112640,
+      "actual": 82141
+    },
+    {
+      "id": "js-3d-gz",
+      "limit": 430080,
+      "actual": 388147
+    },
+    {
+      "id": "image-max",
+      "limit": 256000,
+      "actual": 252264
+    }
+  ],
+  "limits": [
+    "Paid providers were tested against fakes only.",
+    "The current nine plates have no generation record."
+  ]
+}

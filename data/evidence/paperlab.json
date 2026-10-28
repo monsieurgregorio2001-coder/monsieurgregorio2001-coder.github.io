@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "room": "paperlab",
+  "commit": "23e8ff9",
+  "ran_at": "2026-10-28T12:00:22Z",
+  "runner": "local, Node 22",
+  "tests": [
+    {
+      "id": "unit",
+      "label": "Unit tests on the attention math",
+      "passed": 19,
+      "total": 19,
+      "command": "npx vitest run src/lib"
+    },
+    {
+      "id": "tooling",
+      "label": "Tests on the evidence tooling",
+      "passed": 2,
+      "total": 2,
+      "command": "npx vitest run scripts"
+    }
+  ],
+  "evals": [],
+  "figures": [
+    {
+      "id": "math-tests",
+      "value": 19,
+      "unit": "tests",
+      "label": "unit tests on the attention math",
+      "source": "src/lib/transformer.test.ts"
+    },
+    {
+      "id": "js-gz",
+      "value": 53480,
+      "unit": "bytes",
+      "label": "gzipped JavaScript in the production build",
+      "source": "dist/**/*.js"
+    }
+  ],
+  "budgets": [
+    {
+      "id": "js-gz",
+      "limit": 120000,
+      "actual": 53480
+    }
+  ],
+  "limits": [
+    "Does not train anything.",
+    "One layer.",
+    "Random weights, not learned ones."
+  ]
+}
