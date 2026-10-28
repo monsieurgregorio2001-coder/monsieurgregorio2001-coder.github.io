@@ -1,7 +1,7 @@
 name: live-gate
 
 # Live gate on the deployed host (DIRECTION 4.5, 4.8, 8): per-pair doorways, smoke, Calm, phone profiles.
-# Each step prints one ::notice per table row and ::error per failure. Steps continue on failure so every table is read.
+# One job per pass so each gets its own 50 annotations. A job prints one ::notice per passing table row and ::error per failure.
 on:
   push:
     branches: [phase-4/doorway-gate]
@@ -21,11 +21,22 @@ permissions:
 
 jobs:
   gate:
+    name: ${{ matrix.name }}
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: pairs-chromium, args: "--mode pairs --browser chromium", browser: chromium }
+          - { name: pairs-webkit, args: "--mode pairs --browser webkit", browser: webkit }
+          - { name: pairs-firefox, args: "--mode pairs --browser firefox", browser: firefox }
+          - { name: smoke, args: "--mode smoke --browser chromium", browser: chromium }
+          - { name: calm, args: "--mode calm --browser chromium", browser: chromium }
+          - { name: phones, args: "--mode phones", browser: chromium }
     env:
-      RUNS: ${{ inputs.runs || '2' }}
       BASE_URL: ${{ inputs.base_url || 'https://monsieurgregorio2001-coder.github.io/' }}
+      RUNS: ${{ inputs.runs || '2' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,37 +47,16 @@ jobs:
       - name: Install tooling
         working-directory: scripts
         run: npm ci
-      - name: Install Playwright browsers
+      - name: Install Playwright browser
         working-directory: scripts
-        run: npx playwright install --with-deps chromium webkit firefox
-      - name: Pairs, Chromium (20 of 20)
-        if: always()
-        timeout-minutes: 25
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser chromium --runs "$RUNS"
-      - name: Pairs, WebKit (19 of 20)
-        if: always()
-        timeout-minutes: 25
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser webkit --runs "$RUNS"
-      - name: Pairs, Firefox (plain navigation)
-        if: always()
-        timeout-minutes: 25
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode pairs --browser firefox
-      - name: Live smoke
-        if: always()
-        timeout-minutes: 25
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode smoke --browser chromium
-      - name: Calm pass
-        if: always()
-        timeout-minutes: 25
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode calm --browser chromium
-      - name: Phone profiles
-        if: always()
-        timeout-minutes: 25
-        run: node scripts/bench-rooms.mjs "$BASE_URL" --mode phones
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Run ${{ matrix.name }}
+        run: |
+          if [ "${{ matrix.name }}" = pairs-firefox ]; then R=5; else R="$RUNS"; fi
+          node scripts/bench-rooms.mjs "$BASE_URL" ${{ matrix.args }} --runs "$R"
       - name: Upload JSON
         if: always()
-        timeout-minutes: 25
         uses: actions/upload-artifact@v4
         with:
-          name: live-gate
+          name: live-gate-${{ matrix.name }}
           path: rooms-*.json

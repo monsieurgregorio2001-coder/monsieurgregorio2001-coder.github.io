@@ -140,8 +140,8 @@ async function modePairs() {
     const types = [...new Set([...r.fwd, ...r.back].flatMap((x) => x.types))].join("+") || "none";
     result.pairs.push({ label: p.label, kind: p.kind, fwd: f, back: b, scrollRestored: sr, focusRestored: fr, maxCls: cls, ok, runs: r });
     const msg = `${r.aborted ? "aborted after " + r.aborted + " runs (3 failures in a row), " : ""}forward ${f}/${RUNS}, back ${b}/${RUNS}, gate ${gate}, scroll ${sr}/${RUNS}, focus ${p.kind === "enter" ? fr + "/" + RUNS : "n/a"}, max CLS ${cls}, types ${types}, ${ok ? "pass" : "FAIL"}`;
-    notice(`${BROWSER} ${p.label}`, msg);
-    if (!ok) {
+    if (ok) notice(`${BROWSER} ${p.label}`, msg);
+    else {
       const bad = [...r.fwd.filter((x) => !x.ok).map((x) => ({ d: "fwd", ...x })), ...r.back.filter((x) => !x.ok).map((x) => ({ d: "back", ...x }))].slice(0, 2)
         .map((x) => `${x.d}#${x.i} reached=${x.reached} vt=${x.hasVT} fin=${x.finished} types=[${x.types}] scrollOk=${x.scrollOk ?? "-"} err=${JSON.stringify(x.errors).slice(0, 160)}`).join(" | ");
       fail(`${BROWSER} ${p.label}`, `${msg}. First failures: ${bad}`);
@@ -168,7 +168,7 @@ async function modeSmoke() {
     await sleep(500);
     const html = await page.content().catch(() => "");
     const ver = [...new Set([...html.matchAll(/\/house\/(\d+\.\d+\.\d+)\//g)].map((m) => m[1]))];
-    results.push({ url: u, status, errors: [...errors], versions: ver });
+    results.push({ url: u, status, errors: [...errors], versions: ver, doorway: /\/house\/\d+\.\d+\.\d+\/doorway\.js/.test(html) });
   }
   await browser.close();
   const group = (s) => results.filter((r) => { const rel = r.url.slice(base.length); return s.slug === "hub" ? !ROOMS.some((x) => rel.startsWith(x.path)) : rel.startsWith(s.path); });
@@ -186,6 +186,7 @@ async function modeSmoke() {
     for (const r of g) {
       if (r.status !== 200) probs.push(`${r.url} status ${r.status}`);
       if (r.errors.length) probs.push(`${r.url} console: ${r.errors[0]}`);
+      if (!r.doorway && r.status === 200 && !/\/404/.test(r.url)) probs.push(`${r.url} does not load house doorway.js`);
       if (!r.versions.length) probs.push(`${r.url} no /house/x.y.z/ reference`);
       for (const v of r.versions) if (!houseDirs.includes(v)) probs.push(`${r.url} house ${v} not in repo house/ (${houseDirs})`);
     }
@@ -197,9 +198,9 @@ async function modeSmoke() {
       if (e.status !== 200 || e.schema !== 1) probs.push(`evidence.json status ${e.status ?? e.error} schema ${e.schema}`);
       if (m.status !== 404 || !m.house) probs.push(`missing path does not serve the room house 404 (status ${m.status ?? m.error}, house=${m.house}, github=${m.github}, title ${m.title})`);
     }
-    const msg = `${g.length} pages, house ${vers}${extra}, ${probs.length ? probs.length + " problems" : "all ok"}`;
-    notice(`smoke ${s.name}`, msg);
-    if (probs.length) fail(`smoke ${s.name}`, probs.slice(0, 6).join(" | "));
+    const msg = `${g.length} pages, doorway.js on ${g.filter((r) => r.doorway).length}, house ${vers}${extra}, ${probs.length ? probs.length + " problems" : "all ok"}`;
+    if (probs.length) fail(`smoke ${s.name}`, msg + ". " + probs.slice(0, 6).join(" | "));
+    else notice(`smoke ${s.name}`, msg);
   }
   fs.writeFileSync(outFile, JSON.stringify({ base, results, evidence, missing }, null, 2));
 }
