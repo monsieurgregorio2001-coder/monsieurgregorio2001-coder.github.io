@@ -24,7 +24,7 @@ One screen, one question. The home answers "How much is in the pot, whose turn i
 | Everything, including all money | Atkinson Hyperlegible Next variable (wght 200 to 800) | SIL OFL 1.1 | Designed by the Braille Institute for low-vision readers. Distinct letterforms (l, I, 1, 0, O). Resolves register conflict 3: one sturdy face for amounts, names and UI, no serif |
 | Optional amount figures | Atkinson Hyperlegible Mono | SIL OFL 1.1 | Only if tabular figures in Next prove insufficient. Prefer one family |
 
-Verify before shipping: the peso sign U+20B1 and tabular figures in the chosen file. If ₱ is missing, add it in the subset step from a metrics-matched source, the same way the hub re-cut Inter.
+B measured the variable Latin file at 33 KB. It has no ₱ and its default digits are proportional. Two Foundation rules: draw a ₱ to Atkinson's stroke and metrics and add it in the subset step (ship nothing until a rendered check shows the glyph comes from this face), and set `font-variant-numeric: tabular-nums` on every amount, the pot and the input. Today house Inter has no ₱ either, so the current peso sign already falls back to a system font.
 
 Scale (phone first): body 18/28, amounts in rows 20 px semibold, pot total 44 px bold, headings 24 px bold. Never below 16 px for anything a member must read. Retire Fraunces and Inter here.
 
@@ -44,7 +44,7 @@ Higher contrast than the current house (ink-2 at 10:1, not 5.9:1), because the a
 
 ## Status badges (conflict 4)
 
-Pill, at least 28 px tall, word at 16 to 17 px semibold, icon plus word plus colour. Paid: check icon, green. Late: clock icon, amber. Short: exclamation icon, amber. Paid out: arrow icon, green. Reversed: undo icon, red. Never colour alone, never a dot alone.
+Pill, at least 28 px tall, word at 16 to 17 px semibold, icon plus word plus colour. Paid: check icon, green. Late: clock icon, amber. Short: exclamation icon, amber. Paid out: arrow icon, green. Reversed: undo icon, red. Never colour alone, never a dot alone. The icons are required, because green, amber and red sit within 1.04:1 of each other in luminance. Pills are status, not controls. A pill that becomes tappable grows to 48 px.
 
 ## Imagery
 
@@ -70,7 +70,7 @@ Plain English by default, with familiar Filipino words where members use them: p
 1. Passbook rows: name, date, amount right-aligned, ruled hairline, status pill.
 2. The thick pot ring with the total inside.
 3. Initials avatars.
-4. A printed-stamp look for confirmed entries ("Recorded" stamp in green outline) that appears on save.
+4. The saved row: after a write, the new passbook row shows a check icon and a green left rule with "Saved" in words. No stamp.
 
 ## Anti-patterns
 
@@ -83,7 +83,7 @@ Only Paluwagan is white-page, large-type, high-contrast and built from familiar 
 ## Signature cost budget
 
 - Fonts: Atkinson Hyperlegible Next variable Latin with ₱ and tabular figures, 80 KB or less.
-- Motion only confirms: the recorded line enters, the ring fills, the "Recorded" stamp fades in at 160 ms with no bounce, always after the ledger has committed.
+- Motion only confirms: the recorded line enters and the ring fills, on transform and opacity at 200 to 320 ms with no bounce, always after the ledger has committed.
 
 ## Changes after review
 
@@ -94,3 +94,10 @@ Only Paluwagan is white-page, large-type, high-contrast and built from familiar 
 - A-OP-08 closed as not reproducible on live. The empty state must not mention a dev server.
 - Return link rule added (header, trailing, 44 px). Calm motion lives in the app's settings.
 - Language stays an owner decision. If bilingual, Filipino copy gets a native review before any user session.
+
+### After B's review and the joint calls
+
+- ₱ drawn to Atkinson's metrics and forced tabular figures are Foundation items (joint calls, carried items).
+- Status icons are required, not optional.
+- Fonts live in the paluwagan repository (joint call 1).
+- Differentiation review: the "Recorded" stamp was removed. Stamps and seals are Slop's language (the Certificate of Human Touch, the seal poster). Paluwagan confirms with a saved row, a check icon and words (see 04).

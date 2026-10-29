@@ -1,47 +1,51 @@
 # Cross-project differentiation
 
-Pass 1 consolidation, 2026-10-29. Merges Agent A's brand comparison ([02](02-agent-a-brand-audit.md) section 5) and Agent B's interaction comparison ([03](03-agent-b-ux-audit.md), cross-project UX comparison). It records where the four converge today and why. It does not propose a new direction.
+Final form, Pass 2, 2026-10-29. Agent A. Compares the four final directions in the brand strategies ([portfolio](portfolio/brand-strategy.md), [paperlabs](paperlabs/brand-strategy.md), [slop-editorial](slop-editorial/brand-strategy.md), [online-paluwagan](online-paluwagan/brand-strategy.md)) with the UX strategies and the [joint calls](pass-2-joint-calls.md). All proposed, nothing accepted. "Today" is the Pass 1 state, kept short for contrast.
 
-## The root cause
+## The four in one line each
 
-[DIRECTION.md](../design/DIRECTION.md) principle 7 reads: "One vocabulary. Type, colour, radii, and motion live once, in the house." The house is called "quiet and identical everywhere". The owner's new goal is four unmistakably different products. The two cannot both hold. Most convergence below is the direction working as written, not drift (A-X-01). Any redesign under principle 7 would be another skin. A superseding portfolio ADR is needed before Pass 2 designs anything.
+- **Portfolio:** a cool engineering instrument panel that shows the mechanism and the measurement.
+- **PaperLabs:** a warm annotated notebook that you play with until the idea makes sense.
+- **Slop Editorial:** a theatrical couture magazine that frames AI slop like haute couture.
+- **Online Paluwagan:** a plain, large, white passbook that never surprises anyone.
 
-## Convergence by dimension
+## Test used
 
-| Dimension | Hub | PaperLab | Slop Editorial | Paluwagan | Where they converge | Why |
+A dimension passes only if each project differs from the other three in at least two of: the face or form used, the role it plays, the treatment, and the feeling it is meant to produce. Swapping an accent colour does not count.
+
+## Dimension by dimension
+
+| Dimension | Today | Portfolio | PaperLabs | Slop Editorial | Online Paluwagan | Proof of difference |
 | --- | --- | --- | --- | --- | --- | --- |
-| Typography | Fraunces, Inter, JetBrains Mono | Inter, JBM (Recursive planned, not shipped) | Bricolage, Inter, JBM | Fraunces headings and pot, Inter body and rows | Inter body everywhere, Fraunces crumb on all, JBM figures on all | House type ramp by rule. ADR 0010 for Recursive is pending |
-| Palette | Warm paper, ink, blue links | Same paper, coral | Same paper or graphite, yellow fill | Same paper, green | Identical neutrals, one accent each | Rooms may change only seven colour tokens (`house/2.0.1/tokens.css`) |
-| Layout language | Centred 1120 column, hairline cards | Same column, bordered tiles | Same column, framed grid | Same column, list rows | Same max width, radii, hairlines, gutters | House radii and spacing tokens |
-| Chrome | Crumb, Email, Menu | Same | Same | Same | Identical header and footer, "Garfield Lim / Room" crumb, developer footer links | House components |
-| Imagery and illustration | Room screenshots | One live arc diagram | Nine generated images | One donut | No shared imagery, but none is art-directed except Slop's content | No illustration language exists for any product |
-| Motion character | Glyph field, doorway clip reveal | Arc transitions | HUD notices | Ring | One motion vocabulary, one Calm toggle, same springs | House springs and the doorway are shared by rule |
-| Content presentation | Label grids, receipts | Receipt, How this was built | Tracker, footer receipts | Receipt, How this was built | Every room ends with the same process and receipt blocks | The hub's thesis ("tools you can check") is reused as each room's positioning (A-X-04) |
-| Tone of voice | Plain, honest | Plain, curious | Dry satire | Plain, careful | Honesty labels shared, same short cadence | One author, one copy rule set (DIRECTION section 7) |
-| Emotional impression | Calm credibility | Tidy tool | Polite gallery | Calm app | All four feel calm, quiet, careful | Same neutrals, type and chrome |
-| Interaction conventions | Static pages, view transitions, pills | Single page, URL state, switches, chips | Astro ClientRouter, caps toggles, intent prefetch, service worker | Hash routes, tabs, dialogs | Same pills, switches, focus style, menu. But Back, prefetch, caching and success feedback each solved per repo | House components converge on purpose. Engineering patterns diverge by accident (B cross-project comparison) |
+| Typography | Inter body and Fraunces crumb everywhere, JetBrains Mono figures everywhere | IBM Plex Mono display and labels, Plex Sans body. Mono leads | Recursive in three instances: linear sans, casual note hand, mono for maths | Bodoni Moda didone at 28 px and up, Newsreader body, Courier Prime typed cards, SVG masthead | Atkinson Hyperlegible Next for everything, money tabular | Four unrelated families, no face used by two products. Classes differ too: engineered mono, casual variable, high-contrast didone, legibility sans |
+| Colour | Same warm paper and ink, one accent each | Cool grey paper #F4F5F2, near-black dark, signal orange for measured things, underlined blue links | Cream dot-grid #FFF9EE, violet-navy chalkboard dark, three meaning markers (marigold highlighter, teal reads, violet notes) | Bone #F3EDE4 and oxblood-black stage, lipstick #9E1030, gilt, sticker yellow fill | Pure white, very dark ink, ink-2 at 10:1, green, blue, amber and red only as statuses with icons | Different grounds (cool grey, cream, bone, white), different dark modes (instrument, chalkboard, stage, plain) and different colour logic (one signal, three markers, theatrical pair, status set) |
+| Layout language | One centred 1120 column, hairline cards, same radii | Visible 8-column grid with faint guides, rows composed per project, diagram plus one number | Diagram as interface, controls on the drawing, margin notes, a shelf of paper covers | Full-bleed plates, one plate per screen on works, curtain covers, gilt-framed specimens | Single column on phones, ruled passbook rows, big buttons, two columns on tablet | Grid shown, margin used, page bled, rows ruled. No shared column, card or radius rule |
+| Imagery and illustration | Room screenshots, one diagram, nine generated images, one donut | Hand-drawn SVG mechanism diagrams in ink, signature crops of each product | Redrawn paper figures, 2 px imperfect ink line, marker washes, circled step numbers | Labelled slop specimens plus a commissioned human-art-directed cover set and masthead | Initials avatars, one small line illustration for empty and success, the pot ring | Technical drawing, hand sketch, staged photography, near-none. Each answers a different job |
+| Motion character | One house motion vocabulary and doorway | Precise and minimal: press response, the doorway handoff, a still glyph field unless it shows data | Drawing on: arcs retarget, notes write on in under 400 ms, no bounce on numbers | Theatrical: curtain covers, plate morphs, page turns, every long move pausable | Confirming only: the saved row enters, the ring fills, no bounce on money | Measure, draw, perform, confirm. Four different reasons to move |
+| Content presentation | Every room ends with receipts and "How this was built" | Proof front and centre, receipts and commands in drawers, case pages | Lesson first, numbers one press away, process moved to the hub | Plate, caption, typed label, price. The joke is never explained | Group home, Record, Passbook, Who owes. Proof moved off the member path | Only the hub shows process. The other three show their own subject |
+| Tone of voice | Plain and honest everywhere, same cadence | First person, mechanism and number, sourced | Second person invitation, plain then precise, jargon defined after the idea | Deadpan curator, dry, never explains | Plain, kind, always who, how much and which cycle, familiar Filipino words | Engineer, teacher, critic, kahera |
+| Emotional impression | Calm, quiet, careful in all four | "This person builds hard things and shows the hard part" | "I want to try that" | "I should not laugh at this, and I am" | "My money is safe and I understand it" | Confidence, curiosity, amusement, safety |
+| Interaction conventions | Same pills, switches, Menu and Email capsules | Plain links and underlines, drawers, one primary per screen | Direct manipulation: tap, scrub and keys on the sentence, switches on the formula | Page turns, Previous and Next as a programme strip, a once-per-session parody banner | Native-feeling lists, 56 px buttons, one confirmation naming member, amount and cycle, no gestures for money | Each product's primary input matches its job. No shared button or switch look |
 
-The only true visual divergence today is Slop's image content and PaperLab's arc diagram.
+## Leaks found in this review and fixed
 
-## Shared infrastructure vs shared identity
+| Leak | Where | Fix (now in the strategy) |
+| --- | --- | --- |
+| Red-orange emphasis on "the one element under discussion" | Portfolio signal #C2410C and PaperLabs "changed" marker #C2362B, same role, near-identical hue | PaperLabs replaced its red with a marigold highlighter wash and dashed underline. Signal orange is hub-only |
+| Uppercase tracked mono labels | Portfolio labels and Slop museum labels (MEDIUM, EDITION in caps mono today) | Slop labels became sentence-case Courier Prime on typed cards with a gilt rule. Uppercase tracked mono is hub-only |
+| Stamps and seals | Paluwagan "Recorded" stamp and Slop's certificate and seal imagery | Paluwagan confirms with a saved row, a check icon and the word "Saved". Stamps are Slop-only |
+| Three mono faces | Plex Mono (hub), Recursive mono (PaperLabs), Courier Prime (Slop) | Kept, with separate roles: hub mono leads headings, PaperLabs mono sets maths only, Slop mono is a typewriter label only. Paluwagan has no mono at all |
+| Yellow used twice | Slop sticker yellow and PaperLabs marigold highlighter | Kept with different treatment: Slop is a flat, hard-edged, saturated sticker with ink text for prices. PaperLabs is a translucent wash with rough edges behind words. Never a sticker shape in PaperLabs, never a wash in Slop |
 
-Keep shared, and make more consistent where it diverges by accident:
+No other leak found. The return link to the hub is the only visible element common to all four, and each product styles it.
 
-- Accessibility floor: contrast, focus visibility, skip link, accessible names, one H1, 44 px targets, status-message pattern.
-- Reduced-motion and pause contract.
-- Font hosting and the cached `/house/` distribution (Slop currently duplicates fonts, B-X-02).
-- Performance budgets, measurement method, prefetch policy, cache policy (B-X-01, B-X-04).
-- Back and focus restoration rules.
-- One success and one error feedback behaviour (B-X-03). The behaviour is shared, its look can be per product.
-- Receipts data and build checks. Honesty labelling rules.
+## What stays shared (not visual)
 
-Shared visual identity that conflicts with the goal (per Agent A):
-
-- The common type ramp and the Fraunces crumb on every room.
-- Identical neutrals with only an accent swapped.
-- Identical header, footer, Menu and Email capsules, Calm toggle and Live receipts drawer styling.
-- Shared radii, hairlines, column and card treatment.
-- One motion character for a lab, a satire magazine and a savings app.
-- Portfolio process blocks (How this was built, ADR lists, receipts) as the ending of each product.
-
-Open question for Pass 2: Agent B lists "one crumb, one menu, one footer, one focus style" as a strength. Agent A lists the same crumb, menu and footer as the main identity problem. Focus style is infrastructure in both readings. Crumb, menu and footer are the disputed middle (see the [register](pass-1-register.md), conflicts).
+- Accessibility floor: WCAG 2.2 AA contrast in both themes, focus visibility and focus return, skip link, landmarks, one H1, 44 px targets (48 px for Paluwagan money controls), never colour alone.
+- Behaviour primitives, styled per product: dialog with unique names, status and alert regions, drawer, menu popover, the success and error contract (B-X-03).
+- Motion contract: reduced motion and the Calm or Still setting, pause for anything over 5 s, business state before animation.
+- Return link behaviour and position: header, trailing, 44 px, the doorway's exit target.
+- Performance: budgets per route, measurement method, prefetch and cache policy, Back and scroll restoration.
+- Honesty rules: every number sourced, demo labels on the first screen, receipts data and build checks.
+- Font hosting rule: product faces in product repositories, the house hosts only faces two products share (none today), never a duplicate download.
+- Privacy: no tracking, no third-party requests.

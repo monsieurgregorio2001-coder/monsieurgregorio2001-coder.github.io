@@ -56,7 +56,7 @@ A-PF-04 vs B-PF-02: A High, B Medium. Consolidated High because it is the hub's 
 | A-PL-09 | First chip is a jargon disclaimer | Low | OBSERVED | A | Open |
 | B-PL-03 | Head rail tight at 390 | Low | OBSERVED | B | Open |
 | B-PL-04 | Transformer chunk preloaded before first interaction | Low | OBSERVED | B | Open |
-| B-PL-05 | No scrub gesture across the sentence | Low | HYPOTHESIS | B | Open |
+| B-PL-05 | No scrub gesture across the sentence | Medium (raised in Pass 2, A and B agreed: the signature interaction) | HYPOTHESIS | B | Open |
 
 ### Slop Editorial
 

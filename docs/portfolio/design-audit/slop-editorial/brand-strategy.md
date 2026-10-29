@@ -19,18 +19,18 @@ Pacing is theatrical: one plate per screen on the works pages, a curtain (cover)
 
 ## Visual identity direction
 
-"Couture catalogue for garbage." Bone paper or a deep oxblood-black stage, extreme-scale didone headlines, full-bleed plates with generous margins, thin rules, and one hot accent (lipstick red) plus the existing sticker yellow used only for "price" and "offer" parodies. Dark mode is the default evening edition, light mode the day edition.
+"Couture catalogue for garbage." Bone paper or a deep oxblood-black stage, extreme-scale didone headlines, full-bleed plates with generous margins, thin rules, and one hot accent (lipstick red) plus the existing sticker yellow used only for "price" and "offer" parodies. The page follows the OS colour scheme. The Room toggle overrides it, with "Evening edition" (dark) and "Day edition" (light) as its choices (joint call 2).
 
 ## Typography
 
 | Role | Face | Licence | Why |
 | --- | --- | --- | --- |
 | Masthead | custom lettering or a modified Bodoni Moda | OFL base, commission | A satire magazine lives on its masthead (A-SE-02). Commission a drawn masthead, or as a fallback set "SLOP" in Bodoni Moda 900 italic with tightened spacing and a hand-adjusted ligature |
-| Display and headlines | Bodoni Moda variable (opsz 6 to 96, wght 400 to 900, italic) | SIL OFL 1.1 | The fashion-magazine didone. High contrast at large sizes reads as Vogue-grade seriousness, which is the joke |
-| Body and long-form | Newsreader variable (opsz, wght, italic) | SIL OFL 1.1 | Comfortable reading for future essays, with optical sizes for captions |
-| Museum labels, prices, metadata | Courier Prime | SIL OFL 1.1 | Typewriter press-release voice, a little camp, clearly not the hub's engineering mono |
+| Display and headlines | Bodoni Moda, weight axis only, roman 25 KB, italic 30 KB | SIL OFL 1.1 | The fashion-magazine didone. High contrast at large sizes reads as Vogue-grade seriousness, which is the joke. Used at 28 px and above only, because its hairlines thin out below that without the optical size axis |
+| Body, captions and long-form | Newsreader, weight axis only, roman 57 KB. Italic after first paint only if the page needs it | SIL OFL 1.1 | Comfortable reading for captions now and essays later |
+| Museum labels, prices, metadata | Courier Prime regular, 18 KB, sentence case, no tracking, set on a typed card with a gilt rule | SIL OFL 1.1 | Typewriter press-release voice. Never uppercase tracked labels, which belong to the hub |
 
-Retire Bricolage Grotesque, Inter and JetBrains Mono from Slop. Display sizes up to 160 px on desktop, 56 px on phones, set with `text-wrap: balance`. Body 18/29 at a 62ch measure. Captions in Newsreader italic 15/22.
+Retire Bricolage Grotesque, Inter and JetBrains Mono from Slop. Display sizes up to 160 px on desktop, 56 px on phones, set with `text-wrap: balance`. Body 18/29 at a 62ch measure. Captions in Newsreader roman 16/24, italic only after first paint. Nothing a reader must read (prices, captions, buttons) is set in Bodoni.
 
 ## Colour
 
@@ -116,3 +116,13 @@ Only Slop is theatrical, high-contrast serif, gilt and lipstick, with full-bleed
 - Visible Previous and Next stay the primary page turn, styled as a programme strip. Swipe is secondary.
 - Return link rule added (header, trailing, 44 px, product-styled). "Still" is the Slop name for Calm motion, in its menu.
 - No video is commissioned until the media host is decided (owner item).
+
+### After B's review and the joint calls
+
+- Fonts fit 129 KB (joint call 3): Bodoni roman and italic without optical size, Newsreader roman, Courier Prime, masthead as inline SVG. B measured about 130 KB against 386 KB for the first plan. Newsreader italic and long-form styles load only when needed.
+- Bodoni at 28 px and above only. Captions 16 px or more.
+- Follows the OS scheme. The Room toggle offers Evening and Day editions (joint call 2).
+- Sticker yellow is a fill only (1.31:1 as text on bone). Make it a lint rule.
+- Courier Prime has no ₱. Prices stay in USD, as the satire uses today.
+- Fonts live in the slop-editorial repository (joint call 1). The house fonts Slop downloads today are removed with B-X-02.
+- Differentiation review: labels moved from uppercase tracked mono to sentence-case typewriter cards, so they no longer echo the hub (see 04).

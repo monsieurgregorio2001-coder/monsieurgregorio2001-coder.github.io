@@ -21,9 +21,9 @@ The diagram is the interface. Controls live on the drawing (heads as lenses over
 
 | Role | Face | Licence | Why |
 | --- | --- | --- | --- |
-| Everything | Recursive variable (axes MONO, CASL, wght 300 to 900, slnt) | SIL OFL 1.1 | Already chosen in ADR 0010 (proposed). One file gives a linear sans for UI and words, a casual style for margin notes, and a mono for numbers. The CASL axis is the brand: the same voice switches between "teacher writing on the board" and "exact maths" |
+| Everything | Recursive, three instances cut from the variable source: sans (CASL 0, MONO 0, wght 300 to 800, 45 KB), mono for numbers (MONO 1, wght 400 to 600, 40 KB), notes (CASL 1, slnt -8, wght 500, 31 KB) | SIL OFL 1.1 | Already chosen in ADR 0010 (proposed). One family gives a linear sans, a casual note hand and a mono for numbers. The casual axis is the brand: the same voice switches between "teacher writing on the board" and "exact maths" |
 
-Settings: UI and body at CASL 0, MONO 0. Margin annotations at CASL 1, slnt -8, wght 500. Numbers and formulas at MONO 1, CASL 0, tabular. Sentence words in the diagram at wght 800 large (keep the current scale). Body 17/27. Subset Latin plus maths symbols (√, ×, Σ, ≈, minus). Retire house Inter and Fraunces here. Budget the variable file at 70 KB or less per DIRECTION.
+Settings: UI and body at CASL 0, MONO 0. Margin annotations at CASL 1, slnt -8, wght 500. Numbers and formulas at MONO 1, CASL 0, tabular. Sentence words in the diagram at wght 800 large (keep the current scale). Body 17/27. Sans and mono load on first paint (85 KB of the 92 KB budget). The notes instance loads after first paint. Notes never below 16 px. Retire house Inter and Fraunces here.
 
 ## Colour
 
@@ -32,12 +32,12 @@ Settings: UI and body at CASL 0, MONO 0. Margin annotations at CASL 1, slnt -8, 
 | paper bg | #FFF9EE | #16142A | |
 | ink | #1D1A2E | #F2EEE3 | 16.2 / 15.5 |
 | ink-2 | #55506B | #B3ADC6 | 7.3 / 8.3 |
-| marker red: what you changed, the focus word | #C2362B | #FF8A7A | 5.2 / 7.9 |
-| marker teal: what the model reads, attention arcs | #1F6E8C | #6CC7E6 | 5.5 / 9.4 |
-| marker violet: annotations and explanations | #7A4FBF | #C4A7FF | 5.4 / 8.8 |
+| highlighter marigold: what you changed. Used as a wash behind ink text (#FCE3B2 light, #4E3D30 dark, ink on it 13.5 / 8.9) plus a dashed underline in #8F5A00 / #F5B942 | #8F5A00 | #F5B942 | 5.5 / 10.2 |
+| marker teal: what the model reads, attention arcs (solid line) | #1F6E8C | #6CC7E6 | 5.5 / 9.4 |
+| marker violet: annotations (dotted leader line to the note) | #7A4FBF | #C4A7FF | 5.4 / 8.8 |
 | dot grid | ink at 8 percent | paper at 8 percent | decoration |
 
-One colour, one meaning, used the same way in every lab. This splits the current coral's many jobs (A-PL-07). Dark mode is a chalkboard, not a black app.
+One colour, one meaning, used the same way in every lab. This splits the current coral's many jobs (A-PL-07). Every marker carries a second cue besides hue: dashed underline for changed, solid line for reads, dotted leader for notes. Text on any wash is ink, never the marker colour (B measured marker on its own wash at 3.85 to 4.12). Dark mode is a chalkboard, not a black app.
 
 ## Imagery and illustration
 
@@ -83,3 +83,11 @@ Only PaperLabs is warm, hand-drawn and annotated, with one variable face that sh
 - Switches keep `role="switch"` and their keyboard behaviour while sitting on the formula. Their result sentence is the margin note.
 - Added the return link rule (header, trailing, 44 px, product-styled) and Calm motion inside the PaperLabs menu.
 - A-PL-06 closed as not reproducible on live. Kept one rule: no dev-server wording in any empty state.
+
+### After B's review and the joint calls
+
+- Recursive ships as three instances (joint call 4). The single all-axes file measured 187 KB and cannot meet the budget.
+- √, Σ and ≈ are missing from the Fontsource subsets. Check the upstream files before adoption. If missing, formulas take those glyphs from a metric-matched system maths font, or from SVG.
+- Every marker has a second cue (line style), and washes carry ink text only.
+- Fonts live in the paperlab repository (joint call 1).
+- Differentiation review: the red marker was replaced by a marigold highlighter. Red-orange emphasis on the one element under discussion is the hub's signal, so PaperLabs no longer uses it (see 04).

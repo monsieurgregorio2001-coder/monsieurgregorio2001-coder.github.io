@@ -28,7 +28,7 @@ The hub leaves the editorial serif behind. Fraunces goes (it now belongs to nobo
 | Body and UI | IBM Plex Sans variable (wght 300 to 700) | SIL OFL 1.1 | Same skeleton as the mono, so headings and body read as one engineered family. Not the Inter or Geist default of every AI startup |
 | Figures and code | IBM Plex Mono 400 | SIL OFL 1.1 | One family for prose numbers, code and figures. Keep `.num` as the class |
 
-Scale: display clamp(36px, 22px + 3.6vw, 72px) / 1.05, tracking -0.02em. Section head 28 to 40 px. Body 17/27. Labels 13 px mono uppercase with +0.06em tracking, used sparingly. Self-host as Latin WOFF2 subsets under the house font path. Retire Fraunces and Inter from the hub once shipped. Mindmap is frozen and keeps house 2.0.1.
+Scale: display clamp(36px, 22px + 3.6vw, 72px) / 1.05, tracking -0.02em. Section head 28 to 40 px. Body 17/27. Labels 13 px Plex Mono uppercase with +0.06em tracking, labels only, never sentences. Uppercase tracked mono labels belong to the hub alone. Self-host as Latin WOFF2 subsets in the hub repository (joint call 1: product-only faces live with the product). Retire Fraunces and Inter from the hub once shipped. Mindmap is frozen and keeps house 2.0.1.
 
 Risk to check: Plex can read corporate (IBM). The mono-led headings and the grid motif are what keep it from that. If a review says "IBM", fall back to Commit Mono (OFL) for display and keep Plex Sans.
 
@@ -40,7 +40,7 @@ Risk to check: Plex can read corporate (IBM). The mono-led headings and the grid
 | ink | #101316 | #E6E8EA | 17.0 / 15.8 |
 | ink-2 secondary | #4A5058 | #9AA1AA | 7.4 / 7.5 |
 | signal (measured values, the one element under discussion, focus) | #C2410C | #FF9A62 | 4.7 / 9.3 |
-| link | #1F5FD6 | #7FB0FF | 5.2 / 8.9 |
+| link (always underlined) | #1F5FD6 | #7FB0FF | 5.2 / 8.9 |
 | grid guide (decoration only) | ink at 6 percent | ink at 8 percent | not text |
 
 Ratios computed for this draft with the WCAG formula. Rule: signal orange marks a number or element that was measured. No gradients. No purple. Products' colours never appear on the hub except inside their own thumbnails.
@@ -93,3 +93,12 @@ The hub is the only one that is mono-led, cool grey and diagrammatic. It speaks 
 - Added the signature cost budget above (B-PF-04 caution, B audit long tasks).
 - The hub's font host serves every product's families under one cached path. The hub page itself loads only Plex.
 - Sticky claim index on case pages deferred.
+
+### After B's review and the joint calls
+
+- Fonts measured by B: Plex Sans variable 44 KB plus Plex Mono 400, 500, 600 at 14 to 15 KB each, about 89 KB against a 160 KB hub budget. Plex digits are tabular by default.
+- The Plex Mono H1 is a Foundation gate (joint call 5): the two-line check at 360, 390 and 1440 must pass. If it fails, the H1 uses Commit Mono, then Plex Sans. Lowering the display size at 360 is allowed inside the gate.
+- Signal and link differ by hue only (1.11:1). Links are always underlined. Signal orange marks a measured value and is always paired with the measured tick, so neither relies on colour.
+- Signal orange in light mode sits at 4.7:1. It is used only on `bg`, never on a tinted panel.
+- Fonts live in the hub repository, not the house folder (joint call 1).
+- Differentiation review: uppercase tracked mono labels are reserved for the hub. Slop's labels changed so they no longer echo them (see 04).
