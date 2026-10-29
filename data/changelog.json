@@ -2,11 +2,17 @@
   "rooms": {
     "hub": {
       "title": "Hub and house",
-      "date": "2026-10-28",
+      "date": "2026-10-29",
       "sections": [
         {
           "title": "Unreleased",
           "groups": [
+            {
+              "title": "Fixed",
+              "items": [
+                "Desktop door tiles show the full room name again. The phone no-wrap rule had squeezed the names to nothing beside the status chip from 1024 px up."
+              ]
+            },
             {
               "title": "Fixed",
               "items": [
