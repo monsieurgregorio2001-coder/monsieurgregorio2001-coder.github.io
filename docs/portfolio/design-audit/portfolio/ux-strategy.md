@@ -16,7 +16,7 @@ Headline: **a fast developer front door: claim, four doors, proof one step away,
 | Door to product and back | Tap a door, a useful product screen in 1.0 s warm on the phone profile, Back to the same scroll and focus (live gate already proves the return). |
 | Inspect the engineering | One tap from a door to its case page, where tests, evals, budgets and commands live in disclosure, grouped by claim. |
 | Contact | Email, copy address with toast, LinkedIn, GitHub, reachable from every screen. |
-| From a product to the hub | One consistent return link in every product (see challenges, conflict 1). |
+| From a product to the hub | Credit line "A Garfield Lim project" first in every product footer, same position in all four, and a home link in every product menu. |
 
 ## Information architecture
 
@@ -41,7 +41,7 @@ Headline: **a fast developer front door: claim, four doors, proof one step away,
 
 ## Motion and gesture principles
 
-- The doorway stays the signature, but it must never cost a tap. Validate that input during the 600 ms reveal reaches the new page (B-PF-04). If it does not, shorten the reveal or make the clip purely decorative over a live page.
+- The doorway stays the hub-to-product handoff and ends on the product's own colours and mark, not house chrome. The named elements are the door poster and the product's mark (`house-crumb` and `house-wordmark` go with the crumb). It must never cost a tap. Validate that input during the 600 ms reveal reaches the new page (B-PF-04). If it does not, shorten the reveal or make the clip purely decorative over a live page.
 - The glyph field must fit the budget it already has: no long task over 50 ms in the first 5 s. Today 262 ms locally on the phone profile. Move field work to idle time, cap glyph count by device class, draw one still frame on touch until first input.
 - Reduced motion and Calm: current behaviour verified complete. Keep.
 
@@ -95,7 +95,7 @@ Phone profile, live host, Chromium and WebKit.
 
 The hub owns the shared engineering layer and publishes it as versioned files, as today:
 
-- **Shared engineering (behaviour, token driven, unstyled or minimally styled)**: font hosting, motion contract and Calm state, focus contract, dialog, status and alert regions, popover menu behaviour, drawer behaviour, doorway script, return-link position, budgets, checks, evidence pipeline.
+- **Shared engineering (behaviour, token driven, unstyled or minimally styled)**: hosting of any face two products share (product-only faces live in the product repo), motion contract and Calm state, focus contract, dialog, status and alert regions, popover menu behaviour, drawer behaviour, doorway script, return-link position, budgets, checks, evidence pipeline.
 - **Per product**: everything a visitor would call the look. Wordmark, header and footer content, type, palette, radii, motion character.
 - The hub is also a product with its own look (A's developer direction).
 
@@ -104,3 +104,12 @@ The hub owns the shared engineering layer and publishes it as versioned files, a
 - Splitting the house changes DIRECTION principle 7 and needs a portfolio ADR first.
 - Each product depends on the shared layer's version pin. Keep immutable versions and the upgrade smoke test.
 - Moving proof to case pages must happen before the products remove their receipts, or proof disappears for a while.
+
+## Changes after review
+
+- Doorway: now ends on the product's own brand. Its morph is rebuilt around the door poster and the product mark, because the crumb it used to target goes away (A, B-PF-04).
+- Return path: A's footer credit line accepted, with a home link in every product menu.
+- Door thumbnails: become each product's signature crop (A-PF-03). Budget them as small single images.
+- Fonts: if Plex Sans and Plex Mono are adopted (about 89 KB measured), rerun the two-line H1 gate at 360 before shipping. Mono display text sets about 16 characters per line at 36 px.
+- Links get an underline, because A's signal orange and link blue differ by hue only (1.11:1).
+- Product-only faces live in product repos, not in `/house/` (open for a joint call).

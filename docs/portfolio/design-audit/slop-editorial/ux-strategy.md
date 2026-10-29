@@ -28,7 +28,7 @@ Headline: **read like a magazine, turn pages instantly, and give every future fo
 
 - Page turns stay ClientRouter swaps with the existing intent prefetch. Add horizontal swipe between works on touch as a convenience, with the visible Previous and Next links kept, and never inside an image that can be zoomed.
 - Rating and "views" stay local-only satire. Their controls are 44 px and announce their result.
-- The parody cookie banner: show once per session, dismiss on any button, never return after a client navigation (B-SE-02). Whether it stays at all is A's call.
+- The parody cookie banner plays once per session, is styled as part of the magazine, dismisses on any button and never returns after a client navigation (B-SE-02, agreed with A).
 
 ## Responsive behaviour by device class
 
@@ -108,3 +108,12 @@ Phone profile on the live host.
 - GitHub Pages limits for large media (file size, bandwidth) may force a separate media host. That is an owner decision.
 - Swipe between works must not conflict with iOS back swipe or image zoom. Real device test needed.
 - Service worker scope must stay inside `/slop-editorial/`, proved by the existing CI test.
+
+## Changes after review
+
+- Banner: plays once per session and looks deliberate (A's challenge to B-SE-02).
+- Future media stays Medium for Slop only. The masthead, grid and caption system must already allow a video plate, a long-form measure and a game frame.
+- Fonts: A's four-family plan measures about 386 KB on a work page against 129 KB. The strategy now assumes Bodoni Moda and Newsreader without the optical-size axis, the masthead as SVG, captions in Newsreader roman or italic after LCP: about 130 KB.
+- Bodoni only at 28 px and above. Prices, captions and controls never set in the didone. Captions 16 px or more on phones.
+- Colour scheme follows the OS by default with an edition toggle (B position, joint call with A's "evening edition" default).
+- Sticker yellow is fill only, enforced by lint (1.31:1 as text on bone).

@@ -35,13 +35,13 @@ Headline: **every money action is one explicit screen, one confirmation, one ann
 - Confirmation states member, amount with ₱ and centavos, cycle and what changes. One confirmation per action, never two.
 - Back always means "leave without saving" and warns only if the form has edits.
 - No swipe, long-press or drag for any money action, approval or reversal. Swipes are allowed only for read-only movement (for example between cycles in the passbook), always with visible Previous and Next buttons.
-- Amount input: ₱ prefix inside the field, `inputmode="decimal"`, prefilled with the expected amount, grouped on blur, "short by" message live below.
+- Amount input: in the money face, at the same size as the figure it produces, ₱ prefix inside the field, `inputmode="decimal"`, prefilled with the expected amount, grouped on blur, "short by" message live below.
 - Double submit: the primary button disables for the duration of the write and the duplicate rule still returns a plain message.
 
 ## Responsive behaviour by device class
 
 - **390 phone**: one column. The record form fits in one screen without the keyboard covering the primary button (use `scrollIntoView` on focus and `env(keyboard-inset-height)` fallback by padding).
-- **820 tablet**: two columns. Group summary and actions on the left, passbook on the right (B-OP-08). Forms open as a centred sheet, max 560 px.
+- **820 tablet**: two columns. Group summary, actions and the trust cues (organiser, next payout) on the left, passbook on the right (B-OP-08). The gap is specific to 820: 1024 already has two columns. Forms open as a centred sheet, max 560 px.
 - **1280 desktop**: three regions: summary, passbook, who owes. Tables become real tables with column headers.
 - Text scales to 200 percent with no loss of the primary button or amounts. Test with Android font scale 1.3.
 
@@ -54,8 +54,8 @@ Headline: **every money action is one explicit screen, one confirmation, one ann
 
 ## Accessibility requirements (WCAG 2.2 AA plus older users)
 
-- Body text 17 px minimum on phones, amounts 20 px or more in rows, 40 px or more for the pot. Status words at body size (conflict 4).
-- Targets 48 px for every money control, 8 px apart. No standalone text links under 44 px (B-OP-10).
+- Body 18 px on phones, amounts 20 px semibold in rows, 44 px for the pot, buttons 56 px tall (A's scale, adopted). Status pills 28 px tall with icon, word at 17 px and colour (conflict 4).
+- Targets 56 px for every money button, 48 px for any other control, 8 px apart. No standalone text links under 44 px (B-OP-10).
 - Status by word plus dot plus shape. Never colour alone.
 - Unique accessible names for every dialog (`useId`) (B-OP-03).
 - Every write ends with a `role="status"` message naming member, amount and cycle, and focus moves to it or to the new line (B-OP-02, B-OP-04). Errors use `role="alert"` and clear when the ledger changes (B-OP-05).
@@ -120,3 +120,11 @@ Phone profile: 390 x 844, 4x CPU, 1.6 Mbps, 150 ms RTT, Chromium and WebKit, liv
 - Filipino copy needs a native-speaker review before any user session.
 - localStorage is per origin and shared by five sites. Keep the `online-paluwagan:` prefix rule.
 - Real-device checks (mid-range Android, iOS Safari with VoiceOver) are still owner items.
+
+## Changes after review
+
+- Type scale and sizes: A's passbook scale adopted (18 px body, 44 px pot, 56 px buttons, 28 px icon-plus-word pills).
+- Money face: Atkinson Hyperlegible Next, conditional on two measured gaps. It has no ₱ (neither does house Inter today, so every peso sign now renders from a fallback font), and its default digits are proportional. The build adds a ₱ drawn to its metrics and sets `tabular-nums` on every amount, including the pot and the input.
+- Status colours differ by hue only (green, amber, red within 1.04:1). The icons in the pills are required, not optional.
+- Tablet: the 820 layout carries the trust cues (A's challenge to B-OP-08).
+- Amount input renders in the money face at the size of the figure it produces (A's challenge to B-OP-11).

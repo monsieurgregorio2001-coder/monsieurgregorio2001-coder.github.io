@@ -29,7 +29,7 @@ Headline: **a map of lessons you can open in one tap, each lesson a direct-manip
 ## Navigation and interaction patterns
 
 - Lesson map to lesson: same-document navigation (client route) with a shared-element morph of the lesson card still into the lesson's hero visual, interruptible.
-- In a lesson: tap a word, scrub across words with a pointer (B-PL-05), arrows to move, Home and End. The head rail keeps its roving tabindex radiogroup.
+- In a lesson: tap a word, scrub across words with a pointer, arrows to move, Home and End. The scrub is the brand's signature interaction (B-PL-05 raised to Medium with A), so it ships with the first lesson map, not later. The head rail keeps its roving tabindex radiogroup.
 - Switches stay real `role="switch"` buttons. Their result is described in one sentence below.
 - The truth label stays, reworded so it welcomes before it warns (A-PL-09). Wording is A's.
 
@@ -107,3 +107,11 @@ Phone profile on the live host, cold and warm.
 - New lessons are content work. The map is only worth building when a second lesson is finished. Until then the map is one card and the strategy still holds.
 - Moving Attention to `/paperlab/attention/` must keep the doorway target and the live gate's PaperLab pair green.
 - Scrub on iOS Safari must be tested on a real device for conflict with the system back swipe.
+
+## Changes after review
+
+- Scrub raised from optional to the signature interaction, with tap and arrow keys kept (A's challenge to B-PL-05).
+- Fonts: A's Recursive plan is 187 KB as one file. The strategy now assumes three measured instances: sans 45 KB and mono 40 KB on first paint (85 KB, inside the 92 KB budget), margin-note static 31 KB after LCP.
+- Maths glyphs (√, Σ, ≈) are missing from every Fontsource subset of Recursive. Formulas need a verified upstream file, a metric-matched fallback or SVG.
+- Marker colours: text in a marker colour never sits on that marker's 20 percent wash (3.85 to 4.12:1). Arcs and annotations add a non-colour cue (line style or shape), because the three markers differ by hue only.
+- Margin notes at 16 px or more.
