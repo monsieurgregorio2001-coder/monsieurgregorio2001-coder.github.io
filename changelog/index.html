@@ -82,14 +82,14 @@
     <section class="log-room" aria-labelledby="log-hub">
       <h2 id="log-hub" class="cs-h">Hub and house</h2>
       <div class="log-entry">
-        <h3>Unreleased <span class="log-date">2026-10-28</span></h3>
+        <h3>Unreleased <span class="log-date">2026-10-29</span></h3>
         <h4>Fixed</h4>
         <ul><li>Desktop door tiles show the full room name again. The phone no-wrap rule had squeezed the names to nothing beside the status chip from 1024 px up.</li></ul>
         <h4>Fixed</h4>
         <ul><li>The hero lede sets one sentence per line on phones, so a wide fallback font cannot add a line that the web font takes back. The live gate measured CLS 0.0304 on the Pixel 7 profile from this.</li><li>Hub door rows no longer wrap the name and label line, which removed a phone layout shift when web fonts swapped in. Live gate bench now reads house versions from link/script attributes and logs layout-shift sources.</li></ul>
       </div>
       <div class="log-entry">
-        <h3>House 2.0.1 / Release V1, 2026-10-28 <span class="log-date">2026-10-28</span></h3>
+        <h3>House 2.0.1 / Release V1, 2026-10-28 <span class="log-date">2026-10-29</span></h3>
         <h4>Fixed (live gate, phase 5)</h4>
         <ul><li>Hub CLS before any tap. Cause: the H1 wrapped by <code>ch</code> width, so the line count changed when the web font replaced the fallback (measured 0.18 Pixel 7 and 0.21 iPhone 13 with the font swap delayed, 4x CPU, 1.6 Mbps, 150 ms RTT). The H1 now sets two fixed <code>nowrap</code> lines (<code>headlineBreakAfter</code> in <code>site.json</code>, <code>.ln</code> spans), and <code>field.js</code> decodes inside them. After: 0.003 and 0.0045 with fonts delayed 0, 0.3, 1.5 and 3 s.</li><li>Back from a room returns focus to the door the visitor left from (<code>field.js</code>, traversals only, also after a bfcache restore). Chromium 0 of 20 before, 20 of 20 after.</li><li><code>/changelog/</code> house links are 2.0.1 only. The 2.0.0 lines are history text.</li></ul>
         <h4>Launch (phase 5)</h4>
@@ -120,7 +120,7 @@
         <ul><li>Slop Editorial card result updated to the README&#39;s current figures; Paluwagan pitch says template drafts, not AI drafts; PaperLab proof point reads &quot;19 tests on PaperLab&#39;s attention math&quot;.</li><li>Card order follows ADR 0004: PaperLab, Living Mindmap, Slop Editorial, Online Paluwagan.</li><li>Cards lift 2 px with an accent-tinted border on hover, the screenshot scales to 1.02, and cards reveal with a 60 ms stagger; all off under reduced motion.</li><li><code>main.js</code> only handles reveal-on-scroll.</li><li>Screenshot and review scripts use Playwright.</li><li><code>og.mjs</code> uses the shared Playwright launcher instead of puppeteer-core; <code>check-axe.mjs</code> covers every case page; the link check no longer treats <code>/work/</code> as pending.</li></ul>
       </div>
       <div class="log-entry">
-        <h3>2026-10-14 <span class="log-date">2026-10-28</span></h3>
+        <h3>2026-10-14 <span class="log-date">2026-10-29</span></h3>
         <h4>Added</h4>
         <ul><li>Portfolio hub: hero, four case cards rendered from <code>projects.json</code>, About, Contact.</li><li>Editorial design with self-hosted Fraunces, Inter and JetBrains Mono; dark theme via <code>prefers-color-scheme</code>.</li><li>Screenshot pipeline (<code>scripts/capture.mjs</code>), OG image render (<code>scripts/og.mjs</code>), review shots (<code>scripts/shoot.mjs</code>).</li><li>Slop Editorial card marked live with measured results.</li></ul>
         <h4>Changed</h4>
