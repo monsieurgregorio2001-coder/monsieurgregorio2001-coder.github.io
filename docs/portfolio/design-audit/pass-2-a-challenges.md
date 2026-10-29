@@ -1,0 +1,24 @@
+# Pass 2: Agent A challenges to Agent B
+
+Agent A (brand, creative direction). 2026-10-29. Read against [03](03-agent-b-ux-audit.md) and the [register](pass-1-register.md). Short by request. Nothing here is accepted. Garfield decides.
+
+## Challenges to B's findings and assumptions
+
+- **B-PF-01 (truncated names, High).** Agree on the defect. The cause is identity, not only width: the hero door cards are screenshot thumbnails of identical rooms, so the name is the only differentiator and it gets cut. Fix the name and replace the thumbnails with each brand's signature crop (A-PF-03). Keep High.
+- **B-PF-02 (Work section density, Medium).** Agree with the drawer fix. Challenge the framing that the evidence is the brand on the home page. Moving commands into a drawer still leaves four identical forms. See conflict 5.
+- **B-PF-04 (600 ms clip reveal).** The doorway is the hub's only "wild beat" in DIRECTION. If each product gets its own identity, a single shared doorway into four different brands becomes a hub-owned transition. I support keeping it as a hub-to-product handoff only if it ends on the product's own colours and mark, not house chrome. Its timing is B's call.
+- **B-PL-05 (scrub gesture, Low HYPOTHESIS).** Support raising to Medium as a brand question. Sweeping across the sentence is the most "explore and learn" interaction PaperLabs could have. Keep tap and arrow keys.
+- **B-SE-02 (cookie banner returns, Low).** If it is satire it must look deliberate (A-SE-01 "accidental-looking camp"). A banner that reappears looks like a bug. Recommend it plays once per session and is styled as part of the magazine, not as a browser-default bar.
+- **B-OP-08 (tablet is a widened phone, Medium).** Agree. Note my 1024 shot shows a good two-column layout, so the gap is specific to 820. The tablet layout is also where the product's trust cues (organiser, next payout) fit best.
+- **B-OP-11 (amount field format).** Agree. The new money face (below) must render in the input too, at the same size as the figure it produces.
+- **B cross-cutting strength "0 contrast failures".** True for current palettes. Every new palette in the four brand strategies was computed against its own background (ratios inside each file). The measurement must be rerun after implementation, not inherited.
+- **B's assumption that one house serves all fonts (B-X-02).** Agree on caching and dedup. Disagree if it implies one font set. The house can host many families under one path and cache policy. Shared hosting is infrastructure, shared faces are identity.
+
+## Positions on the six register conflicts
+
+1. **Shared crumb, menu, footer.** Split it. Infrastructure that stays shared: the skip link, the focus ring behaviour, landmark order, the Calm motion contract and its keyboard behaviour, the receipts data and its accessible drawer. Identity that becomes per brand: the masthead or wordmark, the menu's look and contents, the footer's content and styling, button shapes. The "Garfield Lim /" crumb is replaced by one small, consistent credit line ("A Garfield Lim project", linking home) placed in each footer. B's strength (one predictable way out) survives as a rule: every product has a visible link home in the same reading position (footer, first item), styled by the product.
+2. **Shared feedback patterns.** Shared behaviour, per-brand look. One spec for timing, `role=status` or `alert`, focus, and wording rules (say who, what amount, which cycle). Each product draws it in its own type and colour. Paluwagan's version is the most explicit and slowest to dismiss.
+3. **Paluwagan money type.** Neither Fraunces nor Inter. Atkinson Hyperlegible Next, tabular figures, for every amount including the pot and the input field. Group names move off Fraunces too. See [online-paluwagan/brand-strategy.md](online-paluwagan/brand-strategy.md). The register's spot-check (pot in Fraunces, rows in Inter) shows exactly the inconsistency the new face removes.
+4. **Badge size.** Both are right. The pairing of dot and word is correct (B). The size is too small for people in their 60s (A). Resolve as: keep the pairing, set the word at body size (17 px minimum on phones), add a shape per status (check, clock, exclamation) so it reads without colour, as a pill at least 28 px tall. Severity stays Low because nothing is wrong, only small.
+5. **Hub Work section severity.** High. Identity and density together: four identical forms are the most visible evidence that the portfolio presents products as one website. B's drawer fix and A's per-project presentation are the same work item.
+6. **Future media severity.** Medium for Slop only. The masthead, grid and caption system designed now must anticipate video plates, a long-form measure and a game frame, or each later becomes a fresh skin. For other projects it is out of scope.
