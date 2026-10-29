@@ -52,5 +52,5 @@ Agent A, 2026-10-29. Reviews [portfolio](portfolio/ux-strategy.md), [paperlabs](
 
 ## Unresolved items for a joint call
 
-1. Language for Paluwagan: bilingual with a visible switch (B) or English with Filipino words (A's default). Owner decision, item 5 in [06](06-open-decisions-draft-a.md).
+1. Language for Paluwagan: bilingual with a visible switch (B) or English with Filipino words (A's default). Owner decision, decision 5 in [06](06-open-decisions.md).
 2. Slop font hosting wording: align B's cache table with the new faces before implementation. Expected to resolve without the owner.

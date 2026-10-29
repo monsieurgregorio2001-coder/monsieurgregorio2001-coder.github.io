@@ -48,7 +48,7 @@ Items OP-F1 to OP-F5 run on house 2.0.1 and need nothing from the house split. T
 **OP-F6 · Peso sign and tabular figures in the money face** · M
 - Rationale: joint calls (₱ missing from house Inter 2.0.1 and from Atkinson Hyperlegible Next), A-OP-02, conflict 3.
 - Areas: new `fonts/` in the paluwagan repo (joint call 1), a subset script in `scripts/`, `src/styles.css`.
-- Prerequisites: owner accepts the passbook direction (A open decision 2). The glyph work itself is reversible.
+- Prerequisites: owner accepts the passbook direction (decision 2 in 06). The glyph work itself is reversible.
 - Impact: High. Every amount renders from the product face.
 - Acceptance: the subset WOFF2 contains U+20B1 (fontTools cmap check in CI). A rendered check shows ₱ from the product face, not a fallback. Font file 80 KB or less. Every amount, the pot and the amount input use `font-variant-numeric: tabular-nums` (lint).
 

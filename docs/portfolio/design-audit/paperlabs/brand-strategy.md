@@ -1,6 +1,6 @@
 # Brand strategy: PaperLabs
 
-Agent A, Pass 2 draft, 2026-10-29. Proposed, not accepted. Implements against A-PL-01 to A-PL-09, B-PL-01 to B-PL-05, A-X-04. Name: the owner calls it PaperLabs, the repo is paperlab. Which one is public is an owner decision (see [06](../06-open-decisions-draft-a.md)).
+Agent A, Pass 2 draft, 2026-10-29. Proposed, not accepted. Implements against A-PL-01 to A-PL-09, B-PL-01 to B-PL-05, A-X-04. Name: the owner calls it PaperLabs, the repo is paperlab. Which one is public is an owner decision (see [06](../06-open-decisions.md)).
 
 ## Positioning and personality
 
@@ -11,7 +11,7 @@ Agent A, Pass 2 draft, 2026-10-29. Proposed, not accepted. Implements against A-
 
 ## Design philosophy
 
-The diagram is the interface. Controls live on the drawing (heads as lenses over the sentence, switches as parts of the formula), not in a settings column (A-PL-04). Explanation arrives in the margin, handwritten-style, only after you act. A home page shows the papers as a shelf of explorable objects, even if one lab is live at first,. It shows only live labs unless the owner accepts listing unbuilt ones by title (DIRECTION principle 6, see 06 item 7).
+The diagram is the interface. Controls live on the drawing (heads as lenses over the sentence, switches as parts of the formula), not in a settings column (A-PL-04). Explanation arrives in the margin, handwritten-style, only after you act. A home page shows the papers as a shelf of explorable objects, even if one lab is live at first,. It shows only live labs unless the owner accepts listing unbuilt ones by title (DIRECTION principle 6, see 06 decision 7).
 
 ## Visual identity direction
 

@@ -57,7 +57,7 @@ Effort: S under a day, M one to three days, L more than three days. Phone profil
 - Acceptance: 390 visual first with controls in thumb reach, 820 side by side in landscape, 1280 numbers as a side panel. No horizontal overflow 360 to 1440.
 
 **PL-C5 · Lesson URL `/paperlab/attention/`** · S
-- Prerequisites: owner choice on the map (B open decision 4).
+- Prerequisites: owner choice on the map (decision 7 in 06).
 - Acceptance: old links render the same lesson. Doorway target and live gate pair unchanged.
 
 ## Phase 3: Polish

@@ -9,6 +9,7 @@ Recorded 2026-10-29 by the lead after both cross-reviews. These were left open b
 | 3 | Slop font budget | Keep the 129 KB budget. Drop the optical size axis, draw the masthead as inline SVG, load Newsreader only when long-form ships. | B measured about 130 KB on this plan against 386 KB on the full plan. The look survives, the budget holds. |
 | 4 | PaperLabs Recursive | Three static instances (sans, mono, casual notes). Sans and mono on first paint (85 KB of a 92 KB budget), notes after first paint. Check the maths glyphs (√, Σ, ≈) in the upstream files before adoption, and fall back to a system maths font for them if missing. | The only measured setup that fits. |
 | 5 | Portfolio Plex Mono H1 | A Foundation gate: the two-line H1 check at 360, 390 and 1440 must pass with Plex Mono before it is adopted. If it fails, the H1 uses Commit Mono, then Plex Sans. | Decided by measurement, not taste. |
+| 6 | Where the way home to the hub sits | A 44 px "Garfield Lim" home link in every product header, top and trailing, before the menu, same position in all four, styled by each product, and the doorway exit target. The "A Garfield Lim project" footer credit is a second path. | The handover drafts disagreed (header in 04 and the brand strategies, footer plus menu in the portfolio UX strategy). A header link is visible on a 7,000 px phone page without scrolling, which was B's own reason to keep a way home. The footer credit keeps the attribution A wanted. Recorded after the handover review. |
 
 Also carried into the roadmaps from the reviews:
 

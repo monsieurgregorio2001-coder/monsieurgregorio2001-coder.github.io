@@ -20,7 +20,7 @@ Pass 2, 2026-10-29. This project's slice of the [Pass 1 register](../pass-1-regi
 | B-PL-04 | Transformer chunk preloaded before first interaction | Low | OBSERVED | B | Open |
 | B-PL-05 | No scrub gesture across the sentence | Medium (raised in Pass 2, A and B agreed: the signature interaction) | HYPOTHESIS | B | Open |
 
-Cross-cutting findings that also apply here: A-X-01 to A-X-05 and B-X-01 to B-X-04 (see the register). The root cause, DIRECTION.md principle 7, is addressed by the draft ADR in [06](../06-open-decisions-draft-a.md).
+Cross-cutting findings that also apply here: A-X-01 to A-X-05 and B-X-01 to B-X-04 (see the register). The root cause, DIRECTION.md principle 7, is addressed by the draft ADR in [06](../06-open-decisions.md).
 
 ## Strengths to preserve
 

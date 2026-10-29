@@ -28,7 +28,7 @@ Pass 2, 2026-10-29. This project's slice of the [Pass 1 register](../pass-1-regi
 
 A-OP-02 spot-check: `paluwagan/src/styles.css` sets `.display` (group name) and `.dial-pot` (pot total) in the house display face (Fraunces). Ledger and passbook amounts use the body face with tabular figures. So A and B are each right about different numbers.
 
-Cross-cutting findings that also apply here: A-X-01 to A-X-05 and B-X-01 to B-X-04 (see the register). The root cause, DIRECTION.md principle 7, is addressed by the draft ADR in [06](../06-open-decisions-draft-a.md).
+Cross-cutting findings that also apply here: A-X-01 to A-X-05 and B-X-01 to B-X-04 (see the register). The root cause, DIRECTION.md principle 7, is addressed by the draft ADR in [06](../06-open-decisions.md).
 
 ## Strengths to preserve
 

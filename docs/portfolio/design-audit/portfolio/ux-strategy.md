@@ -16,7 +16,7 @@ Headline: **a fast developer front door: claim, four doors, proof one step away,
 | Door to product and back | Tap a door, a useful product screen in 1.0 s warm on the phone profile, Back to the same scroll and focus (live gate already proves the return). |
 | Inspect the engineering | One tap from a door to its case page, where tests, evals, budgets and commands live in disclosure, grouped by claim. |
 | Contact | Email, copy address with toast, LinkedIn, GitHub, reachable from every screen. |
-| From a product to the hub | Credit line "A Garfield Lim project" first in every product footer, same position in all four, and a home link in every product menu. |
+| From a product to the hub | A 44 px "Garfield Lim" home link in every product header, top and trailing, before the menu, same position in all four, styled by the product and used as the doorway exit target, plus the "A Garfield Lim project" credit line first in every product footer as a second path (joint call 6). |
 
 ## Information architecture
 
@@ -108,7 +108,7 @@ The hub owns the shared engineering layer and publishes it as versioned files, a
 ## Changes after review
 
 - Doorway: now ends on the product's own brand. Its morph is rebuilt around the door poster and the product mark, because the crumb it used to target goes away (A, B-PF-04).
-- Return path: A's footer credit line accepted, with a home link in every product menu.
+- Return path: header home link plus footer credit line, per joint call 6.
 - Door thumbnails: become each product's signature crop (A-PF-03). Budget them as small single images.
 - Fonts: if Plex Sans and Plex Mono are adopted (about 89 KB measured), rerun the two-line H1 gate at 360 before shipping. Mono display text sets about 16 characters per line at 36 px.
 - Links get an underline, because A's signal orange and link blue differ by hue only (1.11:1).

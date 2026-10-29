@@ -14,7 +14,7 @@ Effort: S under a day, M one to three days, L more than three days. Phone profil
 - Acceptance: a committed report with live `Cache-Control` and `ETag` per asset type, tap-to-useful-room cold and warm for all four doors, input delivered at 100, 300 and 500 ms after a doorway navigation (yes or no per engine), Chromium room-to-room CLS cause, Slop works index LCP.
 
 **H-F2 · Accept the ADR "Shared engineering, separate brands"** · S (owner)
-- Rationale: A-X-01. Draft in [06-open-decisions-draft-a.md](../06-open-decisions-draft-a.md).
+- Rationale: A-X-01. Draft in [06-open-decisions.md](../06-open-decisions.md).
 - Areas: `docs/portfolio/decisions/` (next number), `docs/portfolio/design/DIRECTION.md` principle 7.
 - Prerequisites: none.
 - Acceptance: ADR merged as accepted by Garfield. Everything in phase 2 waits on it.

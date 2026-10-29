@@ -22,7 +22,7 @@ Pass 2, 2026-10-29. This project's slice of the [Pass 1 register](../pass-1-regi
 
 A-PF-04 vs B-PF-02: A High, B Medium. Consolidated High because it is the hub's main content block and fails both the brand and the minimal-text principle.
 
-Cross-cutting findings that also apply here: A-X-01 to A-X-05 and B-X-01 to B-X-04 (see the register). The root cause, DIRECTION.md principle 7, is addressed by the draft ADR in [06](../06-open-decisions-draft-a.md).
+Cross-cutting findings that also apply here: A-X-01 to A-X-05 and B-X-01 to B-X-04 (see the register). The root cause, DIRECTION.md principle 7, is addressed by the draft ADR in [06](../06-open-decisions.md).
 
 ## Strengths to preserve
 
