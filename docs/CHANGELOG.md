@@ -5,6 +5,9 @@ All user-visible changes to the hub. Newest first. Follows [Keep a Changelog](ht
 ## Unreleased
 
 ### Fixed
+- Desktop door tiles show the full room name again. The phone no-wrap rule had squeezed the names to nothing beside the status chip from 1024 px up.
+
+### Fixed
 - The hero lede sets one sentence per line on phones, so a wide fallback font cannot add a line that the web font takes back. The live gate measured CLS 0.0304 on the Pixel 7 profile from this.
 
 - Hub door rows no longer wrap the name and label line, which removed a phone layout shift when web fonts swapped in. Live gate bench now reads house versions from link/script attributes and logs layout-shift sources.

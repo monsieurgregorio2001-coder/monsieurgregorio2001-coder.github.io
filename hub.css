@@ -105,6 +105,9 @@ section.wrap { padding-block: var(--h-sp-5); }
   .door-list:not(.door-list-404) .door-proof { font-size: 15px; line-height: 20px; }
   .door-list:not(.door-list-404) .door-fig { display: block; }
   .door-list:not(.door-list-404) .door-chev { display: none; }
+  /* Desktop tiles are narrow: the name gets its own line above the chip, never an ellipsis. */
+  .door-list:not(.door-list-404) .door-line { flex-wrap: wrap; }
+  .door-list:not(.door-list-404) .door-line .door-name { flex-basis: 100%; overflow: visible; white-space: normal; }
 }
 @media (hover: hover) and (pointer: fine) {
   .door:hover { translate: 0 var(--h-lift); box-shadow: var(--h-shadow-lift); }
