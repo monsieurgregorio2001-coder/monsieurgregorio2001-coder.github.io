@@ -61,9 +61,9 @@ Plain English by default, with familiar Filipino words where members use them: p
 | --- | --- |
 | "₱4,000.00 in the pot of ₱6,000.00" | "Check the books, then try to cheat them" on the member view. Move to the demo mode |
 | "Demo group · No real money · Sends are simulated" | "Forge a line" (developer joke). In demo mode: "Try changing a past payment" |
-| "Record a payment" | "Risk" as a tab name. Use "Who is behind" |
+| "Record a payment" | "Risk" as a tab name. Use "Who owes" |
 | "Barkada Weekly Ipon" (real local warmth) | "E25, cycle 4, Oct 24, 2026" as the line under a name. Lead with "Paid Oct 24", put the entry id in the detail view |
-| Confirmation pattern to adopt: "Liza Mercado paid ₱1,000.00 for cycle 4. Saved." | "not measured yet" rows on the member page (A-OP-08) |
+| Confirmation pattern to adopt: "Liza Mercado paid ₱1,000.00 for cycle 4. Saved." | "Edit entry" button that always refuses (B-OP-07) |
 
 ## Distinctive motifs
 
@@ -79,3 +79,18 @@ Crypto or trading aesthetics, dark neon, charts and graphs, dashboards with many
 ## What distinguishes this brand from the other three
 
 Only Paluwagan is white-page, large-type, high-contrast and built from familiar banking patterns, with the Atkinson face designed for legibility. The hub is a cool engineering panel, PaperLabs a warm notebook to play in, Slop a theatrical magazine. Paluwagan is the one that must never surprise anyone.
+
+## Signature cost budget
+
+- Fonts: Atkinson Hyperlegible Next variable Latin with ₱ and tabular figures, 80 KB or less.
+- Motion only confirms: the recorded line enters, the ring fills, the "Recorded" stamp fades in at 160 ms with no bounce, always after the ledger has committed.
+
+## Changes after review
+
+- Primary user is the treasurer (B). Members are the second audience. IA follows B: Group home, Record a payment, Passbook, Who owes. "Who is behind" becomes "Who owes".
+- Money screens follow B's pattern: one screen, a primary button that repeats the amount ("Record ₱1,000.00 from Joel"), one confirmation naming member, amount and cycle, and an announced result. This file sets their look: Atkinson Next, 56 px buttons, status pills.
+- "Edit entry" that always refuses is removed with the proof toy (B-OP-07).
+- Status word size confirmed at body size. The current dot is 8 px and the word 13 px (my earlier "6 px" was wrong).
+- A-OP-08 closed as not reproducible on live. The empty state must not mention a dev server.
+- Return link rule added (header, trailing, 44 px). Calm motion lives in the app's settings.
+- Language stays an owner decision. If bilingual, Filipino copy gets a native review before any user session.

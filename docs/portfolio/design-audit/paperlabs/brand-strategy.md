@@ -71,3 +71,15 @@ LMS dashboards, progress bars and points, course-card grids, corporate SaaS card
 ## What distinguishes this brand from the other three
 
 Only PaperLabs is warm, hand-drawn and annotated, with one variable face that shifts between casual and exact. The hub is cool and mechanical, Slop is theatrical and high-contrast, Paluwagan is plain and calm. PaperLabs is the one place that invites play.
+
+## Signature cost budget
+
+- Fonts: one Recursive variable Latin file with maths symbols, 70 KB or less.
+- Arcs and margin notes are SVG on transform and opacity, retargeted from the current value on every input, never queued. Stroke reveals finish in 400 ms or less. Reduced motion shows them complete.
+
+## Changes after review
+
+- Paper shelf equals B's lesson map. Each card's still is the redrawn paper figure. Built only after a second lesson exists. Progress tracking deferred with it.
+- Switches keep `role="switch"` and their keyboard behaviour while sitting on the formula. Their result sentence is the margin note.
+- Added the return link rule (header, trailing, 44 px, product-styled) and Calm motion inside the PaperLabs menu.
+- A-PL-06 closed as not reproducible on live. Kept one rule: no dev-server wording in any empty state.

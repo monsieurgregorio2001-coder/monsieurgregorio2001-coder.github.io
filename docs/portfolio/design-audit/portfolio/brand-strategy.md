@@ -80,3 +80,16 @@ Each project gets its own row composition, not a shared form: name, one-line pro
 ## What distinguishes this brand from the other three
 
 The hub is the only one that is mono-led, cool grey and diagrammatic. It speaks about engineering. PaperLabs is warm and illustrated, Slop is theatrical and serif, Paluwagan is plain and large. The hub is the only place where receipts, commands and process are front and centre.
+
+## Signature cost budget
+
+- Fonts: IBM Plex Sans variable Latin plus Plex Mono 400 and 500, 130 KB or less in total, only the display weight preloaded.
+- Grid guides and diagrams are static SVG or CSS. No script.
+- The glyph field: one still frame by default, live only for a desktop pointer and never in Calm, with no long task over 50 ms in the first 5 s. If it cannot show real data within that, remove it.
+
+## Changes after review
+
+- Return link to the hub: every product's header carries a 44 px "Garfield Lim" link, top and trailing, before its menu, styled by the product. The doorway "leave" targets it. The footer credit is a second path. The hub's own doorway reveal ends on the product's colours and wordmark.
+- Added the signature cost budget above (B-PF-04 caution, B audit long tasks).
+- The hub's font host serves every product's families under one cached path. The hub page itself loads only Plex.
+- Sticky claim index on case pages deferred.

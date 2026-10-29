@@ -102,3 +102,17 @@ Meme-page layouts, impact font, random tilts and stickers everywhere, glitch eff
 ## What distinguishes this brand from the other three
 
 Only Slop is theatrical, high-contrast serif, gilt and lipstick, with full-bleed imagery as the main content. The hub is a cool diagram, PaperLabs is a warm notebook, Paluwagan is plain and safe. Slop is the one brand allowed to be excessive, and only in its specimens.
+
+## Signature cost budget
+
+- Fonts at launch: Bodoni Moda variable roman, Latin, display range only, plus Courier Prime regular. Total 129 KB or less (DIRECTION section 8). Bodoni italic only if it fits. Newsreader ships only with the first long-form piece.
+- Masthead as inline SVG, not a font.
+- Curtain cover and plate morphs on transform and opacity, interruptible by Back. No motion over 5 s without a pause.
+
+## Changes after review
+
+- Slop's faces are served from the shared font host, and Slop loads no other product's faces. Bricolage, Inter and JetBrains Mono are retired here. B's cache table needs this wording.
+- Cookie banner: plays once per session, styled as a magazine page element, never returns after a client navigation (B-SE-02).
+- Visible Previous and Next stay the primary page turn, styled as a programme strip. Swipe is secondary.
+- Return link rule added (header, trailing, 44 px, product-styled). "Still" is the Slop name for Calm motion, in its menu.
+- No video is commissioned until the media host is decided (owner item).
