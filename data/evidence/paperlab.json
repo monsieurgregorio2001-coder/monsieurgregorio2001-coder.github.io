@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "room": "paperlab",
-  "commit": "f6b89a4",
-  "ran_at": "2026-10-28T15:05:46Z",
+  "commit": "97496f6",
+  "ran_at": "2026-10-28T16:07:35Z",
   "runner": "GitHub Actions ubuntu24, Node 20",
   "tests": [
     {
@@ -45,7 +45,7 @@
     },
     {
       "id": "js-gz",
-      "value": 55491,
+      "value": 55623,
       "unit": "bytes",
       "label": "gzipped JavaScript before interaction",
       "source": "dist/index.html and the chunks it loads"
@@ -55,7 +55,7 @@
     {
       "id": "js-gz",
       "limit": 120000,
-      "actual": 55491
+      "actual": 55623
     }
   ],
   "limits": [
