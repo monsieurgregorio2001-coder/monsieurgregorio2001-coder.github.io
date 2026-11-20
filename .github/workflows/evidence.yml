@@ -33,4 +33,13 @@ jobs:
           git add -A
           git commit -m "Refresh evidence"
           git push --force origin "$branch"
-          gh pr create --base main --head "$branch" --title "Refresh evidence" --body "Snapshots of each room's live evidence.json, and the pages rebuilt from them." || gh pr edit "$branch" --body "Snapshots of each room's live evidence.json, and the pages rebuilt from them."
+          body="Snapshots of each room's live evidence.json, and the pages rebuilt from them."
+          # Only reuse an OPEN pull request. Looking up by branch name alone finds
+          # old merged ones (#20), so a failed create used to pass silently.
+          open_pr="$(gh pr list --head "$branch" --base main --state open --json number --jq '.[0].number')"
+          if [ -n "$open_pr" ]; then
+            gh pr edit "$open_pr" --body "$body"
+          elif ! gh pr create --base main --head "$branch" --title "Refresh evidence" --body "$body"; then
+            echo "::error::Could not open the Refresh evidence pull request. If the log says Actions is not permitted to create pull requests, turn on Settings > Actions > General > Allow GitHub Actions to create and approve pull requests."
+            exit 1
+          fi
